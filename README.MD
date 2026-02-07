@@ -22,6 +22,14 @@ Sempre que eu indicar um item novo no canal, ele pode ser adicionado aqui.
 
 ---
 
+## 👨‍💻 Portfólio (no mesmo domínio)
+
+Além da vitrine do canal, eu também estou usando este domínio para hospedar meu **portfólio pessoal**, aproveitando a estrutura e centralizando tudo em um único lugar.
+
+👉 Portfólio: https://otimizandooaltar.com/portfolio
+
+---
+
 ## 🚀 Tecnologias utilizadas
 
 ### Front-End
@@ -58,5 +66,5 @@ Comprando pelos links você ajuda o canal sem pagar nada a mais ❤️
 
 Gabriel — criador do canal **Otimizando o Altar**
 
-> “Tudo o que fizerem, façam de todo o coração, como para o Senhor.”
+> “Tudo o que fizerem, façam de todo o coração, como para o Senhor.”  
 > Colossenses 3:23
