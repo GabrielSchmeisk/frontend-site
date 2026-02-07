@@ -20,7 +20,6 @@
       --radius: 18px;
       --max: 1100px;
 
-      /* ✅ header menor */
       --header-h: 78px;
     }
 
@@ -77,7 +76,6 @@
       align-items:center;
       justify-content:space-between;
 
-      /* ✅ menor */
       min-height: var(--header-h);
       padding: 6px 0;
 
@@ -86,7 +84,6 @@
       border-bottom:1px solid var(--border);
     }
 
-    /* ✅ menor */
     .brand{display:flex; align-items:center; gap:10px; padding:8px 0;}
     .logo{
       width:34px;height:34px;border-radius:10px;overflow:hidden;
@@ -99,7 +96,6 @@
 
     nav{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
     .tab{
-      /* ✅ menor */
       padding:8px 10px;
       border:1px solid var(--border);
       background: rgba(255,255,255,.04);
@@ -550,7 +546,6 @@
 
     @media (max-width: 640px){
       .wrap{ padding: 16px; }
-      /* ✅ ajuda no mobile ficar mais compacto */
       :root{ --header-h: 72px; }
       .tab{ padding:7px 9px; font-size:12px; }
     }
@@ -734,13 +729,22 @@
   </div>
 
   <script>
-    const PROXY_BASE = "https://otimizando-o-altar.onrender.com";
+  
+    const PROXY_PRIMARY  = "https://otimizando-o-altar.onrender.com";  // Render (principal)
+    const PROXY_FALLBACK = "https://backend-site-iol5.vercel.app/";          // Vercel (reserva)
+
     const FALLBACK_IMAGE = "https://i.imgur.com/OqRCKIx.jpeg";
     const PIX_KEY = "gabrielsanto.gs31@gmail.com";
 
     const PREVIEW_CACHE_KEY = "oa_preview_cache_v1";
     const PREVIEW_TTL_MS = 1000 * 60 * 60 * 12;
     const previewMem = new Map();
+
+    const backendHealth = {
+      lastOk: null,          // "primary" | "fallback" | null
+      lastError: null,       // string
+      failoverCount: 0
+    };
 
     function loadPreviewCache(){
       try{
@@ -862,6 +866,74 @@
       }catch{}
     }
 
+    // =============================
+    // ✅ FETCH COM TIMEOUT + FAILOVER
+    // =============================
+    function stripSlashEnd(s){ return String(s || "").replace(/\/+$/,""); }
+    function joinUrl(base, path){
+      const b = stripSlashEnd(base);
+      const p = String(path || "");
+      if (!b) return p;
+      if (!p) return b;
+      if (p.startsWith("/")) return b + p;
+      return b + "/" + p;
+    }
+
+    async function fetchWithTimeout(url, options = {}, timeoutMs = 8500){
+      const controller = new AbortController();
+      const id = setTimeout(() => controller.abort(), timeoutMs);
+      try{
+        return await fetch(url, { ...options, signal: controller.signal });
+      } finally {
+        clearTimeout(id);
+      }
+    }
+
+    async function apiFetch(path, options = {}, timeoutMs = 8500){
+      const primaryUrl = joinUrl(PROXY_PRIMARY, path);
+      const fallbackUrl = joinUrl(PROXY_FALLBACK, path);
+
+      // 1) tenta primário
+      try{
+        const r1 = await fetchWithTimeout(primaryUrl, options, timeoutMs);
+
+        // se deu ok, beleza
+        if (r1.ok){
+          backendHealth.lastOk = "primary";
+          backendHealth.lastError = null;
+          return r1;
+        }
+
+        // 4xx normalmente é erro do pedido, não do servidor -> não adianta fallback
+        if (r1.status >= 400 && r1.status < 500){
+          backendHealth.lastOk = "primary";
+          backendHealth.lastError = `Primário retornou ${r1.status}`;
+          return r1;
+        }
+
+        // 5xx -> tenta fallback
+        throw new Error(`Primário 5xx (${r1.status})`);
+      } catch (e){
+        // 2) fallback
+        try{
+          const r2 = await fetchWithTimeout(fallbackUrl, options, timeoutMs);
+          if (r2.ok){
+            backendHealth.lastOk = "fallback";
+            backendHealth.lastError = null;
+            backendHealth.failoverCount++;
+          } else {
+            backendHealth.lastOk = "fallback";
+            backendHealth.lastError = `Fallback retornou ${r2.status}`;
+          }
+          return r2;
+        } catch (e2){
+          backendHealth.lastOk = null;
+          backendHealth.lastError = "Falha no primário e no fallback";
+          throw e2;
+        }
+      }
+    }
+
     async function fetchPreview(product){
       const productUrl = product.productUrl;
 
@@ -874,13 +946,10 @@
         return v;
       }
 
-      const base = (PROXY_BASE || "").replace(/\/+$/,"");
-      const endpoint = base
-        ? `${base}/api/preview?url=${encodeURIComponent(productUrl)}`
-        : `/api/preview?url=${encodeURIComponent(productUrl)}`;
+      const path = `/api/preview?url=${encodeURIComponent(productUrl)}`;
 
       try{
-        const res = await fetch(endpoint, { headers: { "Accept": "application/json" }, cache: "no-store" });
+        const res = await apiFetch(path, { headers: { "Accept": "application/json" }, cache: "no-store" }, 9000);
         if(!res.ok) throw new Error(`Proxy HTTP ${res.status}`);
         const data = await res.json();
         data.title = safeTitle(data?.title, product.label);
@@ -1170,8 +1239,14 @@
       grid.innerHTML = sorted.map(x => x.html).join("");
       wireShareButtons();
 
+      // Hint inteligente (mostra se teve failover)
+      const ok = backendHealth.lastOk;
       if (fallbackCount > 0){
         apiHint.textContent = `Observação: alguns item(ns) estão com dados simplificados (bloqueio da loja/captcha).`;
+      } else if (ok === "fallback"){
+        apiHint.textContent = `Aviso: o servidor principal falhou e o site usou o servidor reserva (Vercel).`;
+      } else if (backendHealth.lastError){
+        apiHint.textContent = `Aviso: ${backendHealth.lastError}.`;
       } else {
         apiHint.textContent = "";
       }
