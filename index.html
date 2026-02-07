@@ -1,0 +1,1354 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Otimizando o Altar</title>
+  <meta name="description" content="Vitrine de produtos recomendados do canal Otimizando o Altar." />
+  <link rel="icon" href="https://i.imgur.com/OqRCKIx.jpeg" />
+  <link rel="apple-touch-icon" href="https://i.imgur.com/OqRCKIx.jpeg" />
+
+  <style>
+    :root{
+      --bg:#0b0d12;
+      --muted:#8b93a7;
+      --text:#e9ecf5;
+      --brand:#7c5cff;
+      --brand2:#24d3ee;
+      --border: rgba(255,255,255,.08);
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 18px;
+      --max: 1100px;
+      --header-h: 104px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth; background: var(--bg);}
+    body{
+      margin:0;
+      min-height:100vh;
+      overflow-x:hidden;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background: var(--bg);
+      color:var(--text);
+      padding-top: var(--header-h);
+    }
+
+    a{color:inherit; text-decoration:none}
+
+    button{
+      color: inherit;
+      font: inherit;
+      -webkit-tap-highlight-color: transparent;
+    }
+    button:disabled{
+      opacity:.65;
+      cursor:not-allowed;
+    }
+
+    .wrap{max-width:var(--max); margin:0 auto; padding:22px}
+
+    .bg{
+      position:fixed;
+      inset:-25%;
+      z-index:0;
+      pointer-events:none;
+      background:
+        radial-gradient(900px 520px at 20% 15%, rgba(124,92,255,.22), transparent 60%),
+        radial-gradient(820px 520px at 85% 20%, rgba(36,211,238,.20), transparent 58%),
+        radial-gradient(900px 520px at 60% 85%, rgba(36,211,238,.12), transparent 60%);
+      transform: translate3d(0,0,0) scale(1);
+      opacity: .9;
+      animation: bgBreath 12s ease-in-out infinite;
+    }
+
+    @keyframes bgBreath{
+      0%   { transform: translate3d(0,0,0) scale(1); opacity:.80; }
+      50%  { transform: translate3d(-1.5%, 1.2%, 0) scale(1.08); opacity:1; }
+      100% { transform: translate3d(0,0,0) scale(1); opacity:.80; }
+    }
+
+    header, main, footer{
+      position: relative;
+      z-index: 1;
+    }
+
+    header{
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 999;
+
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+
+      min-height: var(--header-h);
+      padding: 10px 0;
+
+      background: linear-gradient(to bottom, rgba(11,13,18,.92), rgba(11,13,18,.72));
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid var(--border);
+    }
+
+    .brand{display:flex; align-items:center; gap:12px; padding:14px 0;}
+    .logo{
+      width:40px;height:40px;border-radius:12px;overflow:hidden;
+      box-shadow: 0 10px 25px rgba(124,92,255,.25);
+      flex:0 0 auto;
+    }
+    .logo img{width:100%;height:100%;object-fit:cover;display:block}
+    .title h1{margin:0;font-size:16px;letter-spacing:.2px}
+    .title p{margin:2px 0 0;font-size:12px;color:var(--muted)}
+
+    nav{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+    .tab{
+      padding:10px 12px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      border-radius: 999px;
+      font-size: 13px;
+      color: rgba(233,236,245,.92);
+      cursor:pointer;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease, color .12s ease;
+      user-select:none;
+      white-space:nowrap;
+    }
+    .tab:hover{transform: translateY(-1px); background: rgba(255,255,255,.06)}
+    .tab.active{
+      background: linear-gradient(135deg, rgba(124,92,255,.25), rgba(36,211,238,.12));
+      border-color: rgba(124,92,255,.45);
+      color: rgba(233,236,245,1);
+    }
+
+    .hero{ padding:18px 0 8px; }
+    .hero h2{ margin:10px 0 6px; font-size: 26px; line-height: 1.15; }
+    .hero p{ margin:0; color: var(--muted); max-width: 70ch; }
+
+    .notice{
+      margin-top:14px;
+      padding:12px 14px;
+      border:1px dashed rgba(255,255,255,.15);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.03);
+      color: rgba(233,236,245,.9);
+      font-size: 13px;
+    }
+
+    .controls{
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+      margin: 18px 0 8px;
+      overflow-x:auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 6px;
+    }
+    .controls::-webkit-scrollbar{height:6px}
+    .controls::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:999px}
+
+    .search{
+      flex:1;
+      min-width: 220px;
+      display:flex; gap:10px; align-items:center;
+      padding: 12px 14px;
+      border-radius: 999px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      position:relative;
+    }
+    .search input{
+      width:100%;
+      border:0; outline:0;
+      background: transparent;
+      color: var(--text);
+      font-size: 14px;
+      padding-right: 34px;
+    }
+    .clearBtn{
+      position:absolute;
+      right:10px;
+      top:50%;
+      transform: translateY(-50%);
+      width:28px;height:28px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      color: var(--muted);
+      cursor:pointer;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      transition: transform .12s ease, background .12s ease;
+    }
+    .clearBtn:hover{transform: translateY(-50%) scale(1.03); background: rgba(255,255,255,.06)}
+
+    .pill{
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      font-size:13px;
+      cursor:pointer;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease, color .12s ease;
+      white-space:nowrap;
+      flex:0 0 auto;
+      user-select:none;
+      color: rgba(233,236,245,.92);
+    }
+    .pill:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.06);
+      color: rgba(233,236,245,1);
+    }
+    .pill:focus-visible{
+      outline:none;
+      border-color: rgba(124,92,255,.55);
+      box-shadow: 0 0 0 2px rgba(124,92,255,.22);
+    }
+    .pill.active{
+      border-color: rgba(36,211,238,.55);
+      background: linear-gradient(135deg, rgba(124,92,255,.18), rgba(36,211,238,.14));
+      color: rgba(36,211,238,.95);
+    }
+
+    .subcontrols{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      justify-content:space-between;
+      margin: 10px 0 14px;
+      flex-wrap:wrap;
+    }
+    .count{
+      color: var(--muted);
+      font-size: 12px;
+      display:flex;
+      gap:8px;
+      align-items:center;
+    }
+    .dot{
+      width:6px;height:6px;border-radius:999px;
+      background: rgba(36,211,238,.55);
+      box-shadow: 0 0 0 6px rgba(36,211,238,.10);
+    }
+    .select{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 13px;
+      outline: none;
+      cursor:pointer;
+      background-color: #0b0d12;
+    }
+    .select option{
+      background-color: #0b0d12;
+      color: #e9ecf5;
+    }
+    .select:focus{
+      outline: none;
+      border-color: rgba(124,92,255,.6);
+      box-shadow: 0 0 0 2px rgba(124,92,255,.25);
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:14px;
+      padding-bottom: 24px;
+      transition: opacity .22s ease, transform .22s ease, filter .22s ease;
+      will-change: opacity, transform, filter;
+    }
+    .grid.is-switching{
+      opacity: 0;
+      transform: translateY(8px);
+      filter: blur(1px);
+    }
+
+    @keyframes cardIn{
+      from{ opacity:0; transform: translateY(10px) scale(.99); }
+      to{ opacity:1; transform: translateY(0) scale(1); }
+    }
+
+    .card{
+      grid-column: span 4;
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      overflow:hidden;
+      box-shadow: var(--shadow);
+      display:flex;
+      flex-direction:column;
+      min-height: 320px;
+      transition: transform .14s ease, border-color .14s ease, filter .14s ease;
+      animation: cardIn .22s ease both;
+    }
+    .card:hover{
+      transform: translateY(-2px);
+      border-color: rgba(124,92,255,.25);
+      filter: brightness(1.03);
+    }
+    @media (max-width: 980px){ .card{grid-column: span 6;} }
+    @media (max-width: 640px){
+      .card{grid-column: span 12;}
+      .hero h2{font-size: 22px;}
+    }
+
+    .thumb{
+      height: 180px;
+      background: rgba(255,255,255,.05);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
+      overflow: hidden;
+    }
+    .thumb img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:center;
+      display:block;
+      transform: scale(1.02);
+    }
+
+    .badge{
+      position:absolute; left:12px; top:12px;
+      padding:6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(11,13,18,.55);
+      backdrop-filter: blur(8px);
+      color: rgba(233,236,245,.92);
+    }
+    .content{
+      padding: 12px 14px 14px;
+      display:flex; flex-direction:column; gap:10px;
+      flex:1;
+    }
+    .name{
+      margin:0;
+      font-size: 14px;
+      line-height: 1.25;
+      color: var(--text);
+      min-height: 36px;
+    }
+    .meta{
+      display:flex; gap:8px; flex-wrap:wrap; align-items:center;
+      color: var(--muted);
+      font-size: 12px;
+      word-break: break-word;
+    }
+    .price{
+      font-size: 16px;
+      font-weight: 800;
+      margin-top:auto;
+      letter-spacing:.2px;
+    }
+    .btn{
+      display:flex; justify-content:center; align-items:center;
+      padding: 11px 12px;
+      border-radius: 12px;
+      border:1px solid rgba(124,92,255,.45);
+      background: linear-gradient(135deg, rgba(124,92,255,.25), rgba(36,211,238,.10));
+      color: var(--text);
+      font-weight: 800;
+      font-size: 13px;
+      transition: transform .12s ease, filter .12s ease;
+    }
+    .btn:hover{transform: translateY(-1px); filter: brightness(1.08)}
+    .btn.secondary{
+      border-color: rgba(255,255,255,.16);
+      background: rgba(255,255,255,.04);
+      font-weight: 700;
+    }
+
+    .btn.youtube{
+      border-color: rgba(255,0,0,.45);
+      background: linear-gradient(135deg, #ff1a1a, #cc0000);
+      box-shadow: 0 6px 18px rgba(255,0,0,.35);
+    }
+    .btn.youtube:hover{
+      filter: brightness(1.1);
+      transform: translateY(-2px);
+    }
+    .btn.youtube:active{
+      transform: translateY(0);
+    }
+
+    .muted{color:var(--muted)}
+
+    .section{
+      display:none;
+      padding: 6px 0 20px;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity .18s ease, transform .18s ease;
+    }
+    .section.active{
+      display:block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .section.leaving{
+      opacity: 0;
+      transform: translateY(8px);
+    }
+
+    .hero.is-switching{
+      opacity: 0;
+      transform: translateY(6px);
+      filter: blur(1px);
+      transition: opacity .18s ease, transform .18s ease, filter .18s ease;
+    }
+
+    .panel{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow);
+    }
+    .panel p{margin:0 0 10px; color: var(--muted); line-height: 1.5}
+
+    footer{
+      border-top:1px solid var(--border);
+      padding:16px 0 26px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .small{font-size:12px}
+    .err{ color: #ffb4b4; font-size: 12px; margin-top: 4px; }
+
+    .loading{
+      width: 20px; height: 20px;
+      border: 2px solid rgba(255,255,255,.18);
+      border-top-color: rgba(124,92,255,.9);
+      border-radius: 999px;
+      animation: spin .8s linear infinite;
+    }
+    @keyframes spin{to{transform: rotate(360deg)}}
+
+    .toTop{
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      z-index: 99;
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      backdrop-filter: blur(10px);
+      color: var(--text);
+      cursor: pointer;
+      display: none;
+      align-items:center;
+      justify-content:center;
+      box-shadow: var(--shadow);
+      transition: transform .12s ease, filter .12s ease;
+    }
+    .toTop:hover{transform: translateY(-2px); filter: brightness(1.08)}
+
+    @keyframes pulseLift {
+      0%   { transform: translateY(0) scale(1); }
+      50%  { transform: translateY(-2px) scale(1.03); }
+      100% { transform: translateY(0) scale(1); }
+    }
+
+    .cta-anim{
+      position: relative;
+      will-change: transform, filter, box-shadow;
+      animation: pulseLift 2.4s ease-in-out infinite;
+      transform-origin: center;
+    }
+
+    .cta-anim:hover{
+      animation-play-state: paused;
+      transform: translateY(-3px) scale(1.04);
+      filter: brightness(1.06);
+    }
+
+    .cta-anim:active{
+      transform: translateY(0) scale(.99);
+    }
+
+    .cta-anim::after{
+      content:"";
+      position:absolute;
+      inset:-3px;
+      border-radius: 16px;
+      background: radial-gradient(200px 70px at 30% 10%, rgba(255,255,255,.25), transparent 60%);
+      opacity:.45;
+      pointer-events:none;
+      transition: opacity .2s ease;
+    }
+    .cta-anim:hover::after{opacity:.7;}
+
+    .cta-yt{
+      box-shadow: 0 10px 25px rgba(255,0,0,.25);
+    }
+    .cta-yt:hover{
+      box-shadow: 0 18px 42px rgba(255,0,0,.35);
+    }
+
+    .cta-wa{
+      box-shadow: 0 10px 25px rgba(37,211,102,.35);
+    }
+    .cta-wa:hover{
+      box-shadow: 0 18px 42px rgba(37,211,102,.55);
+    }
+
+    .cta-pix{
+      border-color: rgba(124,92,255,.55);
+      background: linear-gradient(135deg, rgba(124,92,255,.32), rgba(36,211,238,.12));
+      box-shadow: 0 10px 25px rgba(124,92,255,.25);
+    }
+    .cta-pix:hover{
+      box-shadow: 0 18px 42px rgba(124,92,255,.38);
+    }
+
+    .toast{
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%) translateY(18px);
+      z-index: 1000;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(11,13,18,.72);
+      backdrop-filter: blur(10px);
+      color: rgba(233,236,245,.95);
+      box-shadow: var(--shadow);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .18s ease, transform .18s ease;
+      font-size: 13px;
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+    .toast.show{
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+    .toast .dot{
+      width:8px;height:8px;border-radius:999px;
+      background: rgba(36,211,238,.75);
+      box-shadow: 0 0 0 6px rgba(36,211,238,.12);
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      *{transition:none !important; animation:none !important}
+      html{scroll-behavior:auto}
+      .bg{animation:none !important}
+      .grid{transition:none !important}
+      .grid.is-switching{opacity:1; transform:none; filter:none}
+      .card{animation:none !important}
+      .hero.is-switching{opacity:1; transform:none; filter:none}
+      .cta-anim{animation:none !important}
+      .toast{transition:none !important}
+    }
+
+    @media (max-width: 640px){
+      .wrap{ padding: 16px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg"></div>
+
+  <header id="siteHeader">
+    <div class="wrap" style="display:flex; align-items:center; justify-content:space-between; gap:14px;">
+      <div class="brand">
+        <div class="logo">
+          <img src="https://i.imgur.com/OqRCKIx.jpeg" alt="Otimizando o Altar" />
+        </div>
+        <div class="title">
+          <h1>Otimizando o Altar</h1>
+          <p>Produtos recomendados</p>
+        </div>
+      </div>
+      <nav aria-label="Navegação">
+        <button class="tab active" data-tab="produtos" type="button">Produtos</button>
+        <button class="tab" data-tab="grupo" type="button">Grupo do Canal</button>
+        <button class="tab" data-tab="sobre" type="button">Sobre</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero" id="hero">
+      <h2 id="heroTitle">RECOMENDAÇÕES DE PRODUTOS</h2>
+      <p id="heroSubtitle">Aqui eu organizo os itens que eu indico nos vídeos. Ao clicar, você vai direto para o anúncio.</p>
+      <p id="heroHint" class="small muted" style="margin-top:8px;">Dica: pressione <strong>/</strong> para focar a busca, e <strong>Esc</strong> para limpar.</p>
+    </section>
+
+    <section id="section-produtos" class="section active">
+      <div class="notice">
+        <strong>Fique por dentro das novidades:</strong><br/>
+        <span class="muted">
+          Aqui estão os equipamentos que eu realmente uso e recomendo no canal.
+          Se inscreva e acompanhe esta vitrine — sempre que eu indicar algo novo nos vídeos, vai aparecer aqui.
+        </span>
+        <div style="margin-top:10px;">
+          <a
+            class="cta-anim cta-yt"
+            href="https://www.youtube.com/@otimizando-o-altar"
+            target="_blank"
+            rel="noopener"
+            style="
+              display:inline-block;
+              padding:10px 14px;
+              border-radius:12px;
+              border:1px solid rgba(255,255,255,.15);
+              background: linear-gradient(135deg, rgba(255,0,0,.35), rgba(255,0,0,.15));
+              font-weight:900;
+              font-size:13px;
+            "
+          >
+            ▶ Inscreva-se no canal
+          </a>
+        </div>
+      </div>
+
+      <div class="controls">
+        <div class="search" role="search" aria-label="Buscar produtos">
+          <span class="muted">🔎</span>
+          <input id="searchInput" placeholder="Buscar por nome..." />
+          <button id="clearSearch" class="clearBtn" aria-label="Limpar busca" title="Limpar" type="button">✕</button>
+        </div>
+
+        <button class="pill active" data-filter="all" type="button">Todos</button>
+        <button class="pill" data-filter="audio" type="button">Áudio</button>
+        <button class="pill" data-filter="video" type="button">Vídeo</button>
+        <button class="pill" data-filter="iluminacao" type="button">Iluminação</button>
+        <button class="pill" data-filter="outros" type="button">Outros</button>
+      </div>
+
+      <div class="subcontrols">
+        <div class="count"><span class="dot"></span><span id="countText">Carregando…</span></div>
+
+        <label class="muted small" style="display:flex; gap:8px; align-items:center;">
+          Ordenar:
+          <select id="sortSelect" class="select" aria-label="Ordenar produtos">
+            <option value="relevance">Relevância</option>
+            <option value="channelOrder">Ordem do canal</option>
+            <option value="az">A–Z</option>
+          </select>
+        </label>
+      </div>
+
+      <div id="grid" class="grid" aria-live="polite"></div>
+      <div id="apiHint" class="small muted" style="margin-top:10px;"></div>
+    </section>
+
+    <section id="section-grupo" class="section">
+      <div class="panel" style="text-align:center;">
+        <h3>Grupo do Canal</h3>
+        <p class="muted" style="max-width:520px;margin:0 auto 16px;">
+          Entre no grupo para receber avisos de vídeos novos, equipamentos recomendados e atualizações..
+        </p>
+
+        <a
+          class="cta-anim cta-wa"
+          href="https://chat.whatsapp.com/GwyKqx6qWqkI62HXxeDhZg"
+          target="_blank"
+          rel="noopener"
+          style="
+            display:inline-block;
+            padding:16px 28px;
+            border-radius:16px;
+            font-size:16px;
+            font-weight:900;
+            background:linear-gradient(135deg,#25D366,#128C7E);
+            color:white;
+          "
+        >
+          📲 Entrar no grupo do WhatsApp
+        </a>
+
+        <p class="small muted" style="margin-top:14px;">
+          Clique no botão acima para participar do grupo oficial do canal Otimizando o Altar.
+        </p>
+      </div>
+    </section>
+
+    <section id="section-sobre" class="section">
+      <div class="panel">
+        <h3>Sobre</h3>
+
+        <p>
+          Meu nome é <strong>Gabriel</strong>, tenho 22 anos e sou o criador do canal <strong>Otimizando o Altar</strong>.
+          O foco do canal é ajudar pequenas e médias igrejas a melhorarem seus setups de áudio, vídeo e iluminação
+          com produtos acessíveis e bom custo-benefício.
+        </p>
+
+        <p>
+          Compartilho dicas práticas, experiências reais e recomendações sinceras para facilitar o dia a dia das equipes
+          de mídia e louvor. Acredito que servir exige zelo, preparo e responsabilidade. Excelência não é luxo — é honra a Deus.
+        </p>
+
+        <p class="small muted" style="margin-top:12px;">
+          “Tudo o que fizerem, façam de todo o coração, como para o Senhor, e não para homens.”<br/>
+          <strong>Colossenses 3:23</strong>
+        </p>
+
+        <p>
+          Se você comprar por esses links, você ajuda o canal sem pagar nada a mais. Obrigado! 🙌
+        </p>
+
+        <p class="small muted">
+          Observação: preços e disponibilidade podem mudar a qualquer momento.
+        </p>
+
+        <p>ㅤ</p>
+
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;">
+          <button id="pixBtn" class="btn cta-anim cta-pix" type="button">
+            💜 Fazer uma doação via Pix
+          </button>
+        </div>
+
+        <p class="small muted" style="margin-top:10px;">
+          Ao clicar, minha chave Pix será copiada para a sua área de transferência.
+        </p>
+      </div>
+    </section>
+
+    <footer>
+      <div>
+        <span class="muted">© </span><span id="year"></span>
+        <span class="muted"> • Otimizando o Altar | Seu canal custo benefício!</span>
+      </div>
+    </footer>
+  </main>
+
+  <button id="toTop" class="toTop" aria-label="Voltar ao topo" title="Voltar ao topo" type="button">↑</button>
+
+  <div id="toast" class="toast" role="status" aria-live="polite">
+    <span class="dot"></span>
+    <span id="toastText">Chave copiada!</span>
+  </div>
+
+  <script>
+    const PROXY_BASE = "https://otimizando-o-altar.onrender.com";
+    const FALLBACK_IMAGE = "https://i.imgur.com/OqRCKIx.jpeg";
+    const PIX_KEY = "gabrielsanto.gs31@gmail.com";
+
+    const PREVIEW_CACHE_KEY = "oa_preview_cache_v1";
+    const PREVIEW_TTL_MS = 1000 * 60 * 60 * 12;
+    const previewMem = new Map();
+
+    function loadPreviewCache(){
+      try{
+        const raw = localStorage.getItem(PREVIEW_CACHE_KEY);
+        return raw ? JSON.parse(raw) : {};
+      }catch{ return {}; }
+    }
+    function savePreviewCache(obj){
+      try{ localStorage.setItem(PREVIEW_CACHE_KEY, JSON.stringify(obj)); }catch{}
+    }
+    function getCachedPreview(url){
+      if (previewMem.has(url)) return previewMem.get(url);
+      const disk = loadPreviewCache();
+      const hit = disk[url];
+      if (!hit) return null;
+      const isFresh = (Date.now() - (hit.t || 0)) < PREVIEW_TTL_MS;
+      if (!isFresh) return null;
+      previewMem.set(url, hit.v);
+      return hit.v;
+    }
+    function setCachedPreview(url, value){
+      previewMem.set(url, value);
+      const disk = loadPreviewCache();
+      disk[url] = { t: Date.now(), v: value };
+      savePreviewCache(disk);
+    }
+
+    const PRODUCTS = [
+      { productUrl: "https://mercadolivre.com/sec/2KiBiVv", videoUrl: "https://youtu.be/Hv5pCWgaH7c?si=MtiAijuzmMXhCk-T", category: "audio", label: "AMPLIFICADOR" },
+      { productUrl: "https://mercadolivre.com/sec/1N2crbk", videoUrl: "https://youtu.be/KCptWBmh1JM?si=AcTtfm2sepo1WMdu", category: "iluminacao", label: "COB 200W" },
+      { productUrl: "https://mercadolivre.com/sec/2MAuwvv", videoUrl: "https://youtu.be/ov9ZZiswLME?si=m5FATw-_I_M0KyUc", category: "audio", label: "AXIOS 16" },
+      { productUrl: "https://mercadolivre.com/sec/27hmXHu", videoUrl: "https://youtu.be/ov9ZZiswLME?si=m5FATw-_I_M0KyUc", category: "audio", label: "AXIOS 24" },
+      { productUrl: "https://mercadolivre.com/sec/1qwj9sb", videoUrl: "https://youtu.be/ov9ZZiswLME?si=m5FATw-_I_M0KyUc", category: "audio", label: "AXIOS 32" },
+      { productUrl: "https://mercadolivre.com/sec/2XtZSXD", videoUrl: "https://www.youtube.com/watch?v=cMIUIbyGmS0", category: "audio", label: "CABO 30M SANTO ANGELO" },
+      { productUrl: "https://mercadolivre.com/sec/1H7Gkwv", videoUrl: "https://www.youtube.com/watch?v=cMIUIbyGmS0", category: "audio", label: "KIT PLUG XLR" },
+      { productUrl: "https://mercadolivre.com/sec/1959cxg", videoUrl: "https://www.youtube.com/watch?v=cMIUIbyGmS0", category: "iluminacao", label: "MESA DMX" },
+      { productUrl: "https://mercadolivre.com/sec/1fTYLza", videoUrl: "https://www.youtube.com/watch?v=cMIUIbyGmS0", category: "iluminacao", label: "KIT 10 PAR LED" },
+      { productUrl: "https://mercadolivre.com/sec/1CvLVRb", videoUrl: "https://www.youtube.com/watch?v=cMIUIbyGmS0", category: "iluminacao", label: "KIT 2 RGBW" },
+      { productUrl: "https://mercadolivre.com/sec/2CAeY2k", videoUrl: "https://www.youtube.com/watch?v=cMIUIbyGmS0", category: "iluminacao", label: "COB PAR38" },
+      { productUrl: "https://mercadolivre.com/sec/1o7LKWc", videoUrl: "https://www.youtube.com/watch?v=cMIUIbyGmS0", category: "iluminacao", label: "HALÓGENA PAR38" },
+      { productUrl: "https://s.shopee.com.br/VzoCkT2vB", videoUrl: "https://www.youtube.com/watch?v=m8SMKYc_pkg", category: "outros", label: "CABO RJ45 BLINDADO" },
+      { productUrl: "https://s.shopee.com.br/7AWi8t6QQs", videoUrl: "https://www.youtube.com/watch?v=m8SMKYc_pkg", category: "outros", label: "CONECTOR RJ45 BLINDADO" },
+      { productUrl: "https://pt.aliexpress.com/item/1005009123185877.html", videoUrl: "https://www.youtube.com/watch?v=m8SMKYc_pkg", category: "audio", label: "MULTICABO RJ45" },
+      { productUrl: "https://pt.aliexpress.com/item/1005003698027172.html", videoUrl: "https://www.youtube.com/watch?v=2h3-ERm8sKc", category: "video", label: "CÂMERA PTZ" }
+    ];
+
+    function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
+
+    function escapeHtml(str){
+      return String(str ?? "").replace(/[&<>"']/g, s => ({
+        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+      }[s]));
+    }
+
+    function formatBRL(value){
+      if(typeof value !== "number") return "";
+      return value.toLocaleString("pt-BR", { style:"currency", currency:"BRL" });
+    }
+
+    function normalizePrice(price){
+      if (price == null) return "";
+      const s = String(price).trim();
+      if (!s) return "";
+      const cleaned = s.replace(",", ".").replace(/[^\d.]/g, "");
+      const n = Number(cleaned);
+      if (Number.isFinite(n) && n > 0) return formatBRL(n);
+      return s;
+    }
+
+    function storeName(url){
+      const u = String(url || "").toLowerCase();
+      if (u.includes("shopee") || u.includes("shope.ee")) return "Shopee";
+      if (u.includes("aliexpress")) return "AliExpress";
+      if (u.includes("mercadolivre") || u.includes("mercadolibre") || u.includes("/sec/")) return "Mercado Livre";
+      return "Loja";
+    }
+
+    function looksLikeGarbageTitle(title){
+      const t = String(title ?? "").trim();
+      if (!t) return true;
+      if (t.length < 4) return true;
+      const onlyDigits = /^[0-9]+$/.test(t.replace(/\s+/g, ""));
+      if (onlyDigits) return true;
+      const digits = (t.match(/\d/g) || []).length;
+      if (digits / t.length > 0.7) return true;
+      const lower = t.toLowerCase();
+      if (lower.includes("captcha") || lower.includes("acesso negado") || lower.includes("verificação")) return true;
+      return false;
+    }
+
+    function safeTitle(previewTitle, fallbackLabel){
+      return looksLikeGarbageTitle(previewTitle) ? (fallbackLabel || "Produto") : String(previewTitle).trim();
+    }
+
+    function isAliExpressUrl(url){
+      const u = String(url || "").toLowerCase();
+      return u.includes("aliexpress.com");
+    }
+
+    function debounce(fn, wait=180){
+      let t;
+      return (...args) => {
+        clearTimeout(t);
+        t = setTimeout(() => fn(...args), wait);
+      };
+    }
+
+    const LS_KEY = "oa_vitrine_state_v1";
+    function loadState(){
+      try{
+        const raw = localStorage.getItem(LS_KEY);
+        return raw ? JSON.parse(raw) : {};
+      }catch{ return {}; }
+    }
+    function saveState(partial){
+      try{
+        const curr = loadState();
+        localStorage.setItem(LS_KEY, JSON.stringify({ ...curr, ...partial }));
+      }catch{}
+    }
+
+    async function fetchPreview(product){
+      const productUrl = product.productUrl;
+
+      const cached = getCachedPreview(productUrl);
+      if (cached) return cached;
+
+      if (isAliExpressUrl(productUrl)){
+        const v = { finalUrl: productUrl, title: product.label || "Produto", image: FALLBACK_IMAGE, price: "", _fallback: true };
+        setCachedPreview(productUrl, v);
+        return v;
+      }
+
+      const base = (PROXY_BASE || "").replace(/\/+$/,"");
+      const endpoint = base
+        ? `${base}/api/preview?url=${encodeURIComponent(productUrl)}`
+        : `/api/preview?url=${encodeURIComponent(productUrl)}`;
+
+      try{
+        const res = await fetch(endpoint, { headers: { "Accept": "application/json" }, cache: "no-store" });
+        if(!res.ok) throw new Error(`Proxy HTTP ${res.status}`);
+        const data = await res.json();
+        data.title = safeTitle(data?.title, product.label);
+        if (!data.image) data.image = FALLBACK_IMAGE;
+        setCachedPreview(productUrl, data);
+        return data;
+      }catch{
+        const v = { finalUrl: productUrl, title: product.label || "Produto", image: FALLBACK_IMAGE, price: "", _fallback: true };
+        setCachedPreview(productUrl, v);
+        return v;
+      }
+    }
+
+    const headerEl = document.getElementById("siteHeader");
+    function syncHeaderHeight(){
+      if (!headerEl) return;
+      const h = Math.ceil(headerEl.getBoundingClientRect().height || 0);
+      if (h > 0) document.documentElement.style.setProperty("--header-h", `${h}px`);
+    }
+    window.addEventListener("load", syncHeaderHeight, { passive: true });
+    window.addEventListener("resize", () => {
+      syncHeaderHeight();
+    }, { passive: true });
+    if (window.visualViewport){
+      window.visualViewport.addEventListener("resize", syncHeaderHeight, { passive: true });
+      window.visualViewport.addEventListener("scroll", syncHeaderHeight, { passive: true });
+    }
+
+    const hero = document.getElementById("hero");
+    const heroTitle = document.getElementById("heroTitle");
+    const heroSubtitle = document.getElementById("heroSubtitle");
+    const heroHint = document.getElementById("heroHint");
+
+    const grid = document.getElementById("grid");
+    const apiHint = document.getElementById("apiHint");
+    const countText = document.getElementById("countText");
+    const sortSelect = document.getElementById("sortSelect");
+    const searchInput = document.getElementById("searchInput");
+    const clearSearch = document.getElementById("clearSearch");
+    const toTop = document.getElementById("toTop");
+
+    const pixBtn = document.getElementById("pixBtn");
+    const toast = document.getElementById("toast");
+    const toastText = document.getElementById("toastText");
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    let currentFilter = "all";
+    let currentSearch = "";
+    let currentSort = "relevance";
+
+    const initial = loadState();
+    if (initial.filter) currentFilter = initial.filter;
+    if (typeof initial.search === "string") currentSearch = initial.search;
+    if (initial.sort) currentSort = initial.sort;
+
+    sortSelect.value = currentSort;
+    searchInput.value = currentSearch;
+    clearSearch.style.display = currentSearch ? "flex" : "none";
+
+    function showToast(msg){
+      toastText.textContent = msg;
+      toast.classList.add("show");
+      clearTimeout(showToast._t);
+      showToast._t = setTimeout(() => toast.classList.remove("show"), 1800);
+    }
+
+    async function copyText(text){
+      try{
+        if (navigator.clipboard && window.isSecureContext){
+          await navigator.clipboard.writeText(text);
+          return true;
+        }
+      }catch{}
+      try{
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        ta.setAttribute("readonly", "");
+        ta.style.position = "fixed";
+        ta.style.top = "-9999px";
+        document.body.appendChild(ta);
+        ta.select();
+        const ok = document.execCommand("copy");
+        document.body.removeChild(ta);
+        return ok;
+      }catch{
+        return false;
+      }
+    }
+
+    if (pixBtn){
+      pixBtn.addEventListener("click", async () => {
+        const ok = await copyText(PIX_KEY);
+        showToast(ok ? "Chave Pix copiada!" : "Não consegui copiar. Selecione e copie manualmente.");
+      });
+    }
+
+    function cardSkeleton(labelText){
+      const div = document.createElement("div");
+      div.className = "card";
+      div.innerHTML = `
+        <div class="thumb">
+          <div class="loading" aria-label="Carregando"></div>
+          ${labelText ? `<div class="badge">${escapeHtml(labelText)}</div>` : ""}
+        </div>
+        <div class="content">
+          <p class="name">Carregando informações...</p>
+          <div class="meta"><span class="muted">Carregando…</span></div>
+          <div class="price muted">—</div>
+          <div class="btn" aria-disabled="true">Abrir</div>
+        </div>
+      `;
+      return div;
+    }
+
+    function matchesFilters(product, title){
+      const name = String(title || product.label || "").toLowerCase();
+      const searchOk = !currentSearch || name.includes(currentSearch);
+      const filterOk = (currentFilter === "all") || (product.category === currentFilter);
+      return searchOk && filterOk;
+    }
+
+    function applySort(items){
+      if (currentSort === "az") return items.sort((a,b) => a.title.localeCompare(b.title, "pt-BR"));
+      if (currentSort === "channelOrder") return items;
+
+      if (currentSort === "relevance" && currentSearch){
+        const q = currentSearch;
+        return items.sort((a,b) => {
+          const at = a.title.toLowerCase();
+          const bt = b.title.toLowerCase();
+          const aStarts = at.startsWith(q) ? 0 : 1;
+          const bStarts = bt.startsWith(q) ? 0 : 1;
+          if (aStarts !== bStarts) return aStarts - bStarts;
+          return at.localeCompare(bt, "pt-BR");
+        });
+      }
+      return items;
+    }
+
+    function wireShareButtons(){
+      grid.querySelectorAll("[data-share]").forEach(btn => {
+        btn.addEventListener("click", async () => {
+          const url = btn.getAttribute("data-share");
+          try{
+            if (navigator.share){
+              await navigator.share({ title: document.title, url });
+            } else if (navigator.clipboard){
+              await navigator.clipboard.writeText(url);
+              const old = btn.textContent;
+              btn.textContent = "Copiado!";
+              setTimeout(() => btn.textContent = old, 900);
+            }
+          }catch{}
+        });
+      });
+    }
+
+    async function renderProducts(){
+      grid.innerHTML = "";
+      apiHint.textContent = "";
+      countText.textContent = "Carregando…";
+
+      PRODUCTS.forEach(p => grid.appendChild(cardSkeleton(p.label)));
+
+      const results = await Promise.allSettled(PRODUCTS.map(p => fetchPreview(p)));
+
+      grid.innerHTML = "";
+      const built = [];
+
+      let fallbackCount = 0;
+
+      PRODUCTS.forEach((p, idx) => {
+        const r = results[idx];
+        const goUrl = p.affiliateUrl || p.productUrl;
+
+        if (r.status !== "fulfilled"){
+          const title = p.label || "Produto";
+          if (!matchesFilters(p, title)) return;
+
+          fallbackCount++;
+
+          built.push({
+            title,
+            html: `
+              <div class="card">
+                <div class="thumb">
+                  <img src="${escapeHtml(FALLBACK_IMAGE)}" alt="${escapeHtml(title)}" loading="lazy"
+                       onerror="this.onerror=null; this.src='${escapeHtml(FALLBACK_IMAGE)}';" />
+                  ${p.label ? `<div class="badge">${escapeHtml(p.label)}</div>` : ""}
+                </div>
+                <div class="content">
+                  <p class="name">${escapeHtml(title)}</p>
+                  <div class="meta">
+                    <span>${escapeHtml(storeName(p.productUrl))}</span>
+                    <span>•</span>
+                    <span class="muted">Custo Benefício</span>
+                  </div>
+                  <div class="err">Erro ao carregar detalhes.</div>
+
+                  ${p.videoUrl ? `<a class="btn youtube" href="${escapeHtml(p.videoUrl)}" target="_blank" rel="noopener">▶ Ver vídeo</a>` : ""}
+
+                  <a class="btn" href="${escapeHtml(goUrl)}" target="_blank" rel="noopener">Ver no site</a>
+                  <button class="btn secondary" type="button" data-share="${escapeHtml(goUrl)}">Compartilhar</button>
+                </div>
+              </div>
+            `
+          });
+          return;
+        }
+
+        const data = r.value;
+        const title = safeTitle(data?.title, p.label);
+        if (!matchesFilters(p, title)) return;
+
+        const img = data?.image || FALLBACK_IMAGE;
+        const price = normalizePrice(data?.price);
+        const loja = storeName(data?.finalUrl || p.productUrl);
+
+        if (data?._fallback) fallbackCount++;
+
+        built.push({
+          title,
+          html: `
+            <div class="card">
+              <div class="thumb">
+                <img src="${escapeHtml(img)}" alt="${escapeHtml(title)}" loading="lazy"
+                     onerror="this.onerror=null; this.src='${escapeHtml(FALLBACK_IMAGE)}';" />
+                ${p.label ? `<div class="badge">${escapeHtml(p.label)}</div>` : ""}
+              </div>
+              <div class="content">
+                <p class="name">${escapeHtml(title)}</p>
+                <div class="meta">
+                  <span>${escapeHtml(loja)}</span>
+                  <span>•</span>
+                  <span class="muted">Melhor valor</span>
+                </div>
+
+                ${price ? `<div class="price">${escapeHtml(price)}</div>` : `<div class="price muted" style="font-weight:600;">&nbsp;</div>`}
+
+                ${p.videoUrl ? `<a class="btn youtube" href="${escapeHtml(p.videoUrl)}" target="_blank" rel="noopener">▶ Ver vídeo</a>` : ""}
+
+                <a class="btn" href="${escapeHtml(goUrl)}" target="_blank" rel="noopener">Ver no site</a>
+                <button class="btn secondary" type="button" data-share="${escapeHtml(goUrl)}">Compartilhar</button>
+              </div>
+            </div>
+          `
+        });
+      });
+
+      const total = PRODUCTS.length;
+      const showing = built.length;
+      countText.textContent = `Mostrando ${showing} de ${total}`;
+
+      const sorted = applySort(built);
+
+      if (!sorted.length){
+        grid.innerHTML = `
+          <div class="panel" style="grid-column: span 12;">
+            <h3>Nenhum produto encontrado</h3>
+            <p class="muted">Tente mudar o filtro, alterar a ordenação ou limpar a busca.</p>
+            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+              <button class="btn secondary" id="resetAllBtn" type="button">Resetar filtros</button>
+              <a class="btn" href="https://www.youtube.com/@otimizando-o-altar" target="_blank" rel="noopener">Ver canal</a>
+            </div>
+          </div>
+        `;
+        const resetBtn = document.getElementById("resetAllBtn");
+        if (resetBtn){
+          resetBtn.addEventListener("click", async () => {
+            currentFilter = "all";
+            currentSearch = "";
+            currentSort = "relevance";
+            saveState({ filter: currentFilter, search: currentSearch, sort: currentSort });
+
+            pills.forEach(x => x.classList.remove("active"));
+            document.querySelector('.pill[data-filter="all"]').classList.add("active");
+            searchInput.value = "";
+            clearSearch.style.display = "none";
+            sortSelect.value = currentSort;
+            await renderWithTransition();
+          });
+        }
+        return;
+      }
+
+      grid.innerHTML = sorted.map(x => x.html).join("");
+      wireShareButtons();
+
+      if (fallbackCount > 0){
+        apiHint.textContent = `Observação: alguns item(ns) estão com dados simplificados (bloqueio da loja/captcha).`;
+      } else {
+        apiHint.textContent = "";
+      }
+    }
+
+    async function renderWithTransition(){
+      grid.classList.add("is-switching");
+      await sleep(140);
+
+      const p = renderProducts();
+      await sleep(0);
+      grid.classList.remove("is-switching");
+
+      await p;
+
+      const cards = grid.querySelectorAll(".card");
+      cards.forEach((c, i) => {
+        c.style.animationDelay = `${Math.min(i, 10) * 35}ms`;
+      });
+    }
+
+    const TABS_COPY = {
+      produtos: {
+        title: "RECOMENDAÇÕES DE PRODUTOS",
+        subtitle: "Aqui eu organizo os itens que eu indico nos vídeos. Ao clicar, você vai direto para o anúncio.",
+        hintHtml: 'Dica: pressione <strong>/</strong> para focar a busca, e <strong>Esc</strong> para limpar.'
+      },
+      grupo: {
+        title: "GRUPO DO CANAL",
+        subtitle: "Tenha contato com nossa comunidade para tirar dúvidas, pedir sugestões e trocar experiências.",
+        hintHtml: ""
+      },
+      sobre: {
+        title: "SOBRE O OTIMIZANDO O ALTAR",
+        subtitle: "Conheça um pouco mais sobre o canal, a visão e o propósito deste projeto.",
+        hintHtml: ""
+      }
+    };
+
+    function setHero(key){
+      const cfg = TABS_COPY[key] || TABS_COPY.produtos;
+
+      hero.classList.add("is-switching");
+      setTimeout(() => {
+        heroTitle.textContent = cfg.title;
+        heroSubtitle.textContent = cfg.subtitle;
+        heroHint.innerHTML = cfg.hintHtml || "";
+        hero.classList.remove("is-switching");
+      }, 140);
+    }
+
+    const tabs = Array.from(document.querySelectorAll(".tab"));
+    const sections = {
+      produtos: document.getElementById("section-produtos"),
+      grupo: document.getElementById("section-grupo"),
+      sobre: document.getElementById("section-sobre")
+    };
+
+    let switchToken = 0;
+
+    function setActiveOnly(key){
+      Object.entries(sections).forEach(([k, el]) => {
+        el.classList.remove("active", "leaving");
+        if (k === key) el.classList.add("active");
+      });
+    }
+
+    async function switchSection(key){
+      const myToken = ++switchToken;
+
+      setHero(key);
+
+      const next = sections[key];
+      if (!next) return;
+
+      const current = Object.values(sections).find(s => s.classList.contains("active"));
+      if (current === next) return;
+
+      if (current){
+        current.classList.add("leaving");
+        await sleep(170);
+        if (myToken !== switchToken) return;
+      }
+
+      setActiveOnly(key);
+
+      if (key === "produtos"){
+        await renderWithTransition();
+        if (myToken !== switchToken) return;
+      } else {
+        apiHint.textContent = "";
+      }
+    }
+
+    tabs.forEach(btn => {
+      btn.addEventListener("click", async () => {
+        tabs.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        tabs.forEach(b => b.disabled = true);
+        try{
+          await switchSection(btn.dataset.tab);
+        } finally {
+          tabs.forEach(b => b.disabled = false);
+        }
+      });
+    });
+
+    const pills = Array.from(document.querySelectorAll(".pill"));
+
+    pills.forEach(x => x.classList.remove("active"));
+    const initialPill = document.querySelector(`.pill[data-filter="${currentFilter}"]`) || document.querySelector(`.pill[data-filter="all"]`);
+    if (initialPill) initialPill.classList.add("active");
+
+    pills.forEach(p => {
+      p.addEventListener("click", async () => {
+        pills.forEach(x => x.classList.remove("active"));
+        p.classList.add("active");
+        currentFilter = p.dataset.filter;
+        saveState({ filter: currentFilter });
+        await renderWithTransition();
+      });
+    });
+
+    const doSearch = debounce(async () => {
+      currentSearch = searchInput.value.trim().toLowerCase();
+      clearSearch.style.display = currentSearch ? "flex" : "none";
+      saveState({ search: currentSearch });
+      await renderWithTransition();
+    }, 180);
+
+    searchInput.addEventListener("input", doSearch);
+
+    clearSearch.addEventListener("click", async () => {
+      searchInput.value = "";
+      currentSearch = "";
+      clearSearch.style.display = "none";
+      saveState({ search: currentSearch });
+      await renderWithTransition();
+      searchInput.focus();
+    });
+
+    sortSelect.addEventListener("change", async () => {
+      currentSort = sortSelect.value;
+      saveState({ sort: currentSort });
+      await renderWithTransition();
+    });
+
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "/" && document.activeElement !== searchInput){
+        e.preventDefault();
+        searchInput.focus();
+      }
+      if (e.key === "Escape"){
+        if (document.activeElement === searchInput || currentSearch){
+          searchInput.value = "";
+          currentSearch = "";
+          clearSearch.style.display = "none";
+          saveState({ search: currentSearch });
+          renderWithTransition();
+        }
+      }
+    });
+
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 600) toTop.style.display = "flex";
+      else toTop.style.display = "none";
+    });
+    toTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+
+    setHero("produtos");
+    setActiveOnly("produtos");
+    syncHeaderHeight();
+    renderWithTransition();
+  </script>
+</body>
+</html>
+
