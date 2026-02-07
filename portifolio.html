@@ -1,0 +1,1279 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Gabriel Schmeisk — Portfólio</title>
+  <meta name="description" content="Portfólio de Gabriel Schmeisk. Projetos, habilidades e contato para oportunidades e parcerias." />
+  <meta name="theme-color" content="#0b1020" />
+  <link rel="icon" type="image/x-icon" href="https://i.imgur.com/EXORH9a.jpeg" />
+
+  <meta property="og:title" content="Gabriel Schmeisk — Portfólio" />
+  <meta property="og:description" content="Projetos, habilidades e contato. Site rápido e otimizado para mobile." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://i.imgur.com/EXORH9a.jpeg" />
+
+  <style>
+    :root{
+      --bg0:#070a12;
+      --bg1:#0b1020;
+      --glass: rgba(255,255,255,.06);
+      --glass2: rgba(255,255,255,.04);
+      --border: rgba(255,255,255,.10);
+      --text:#eef2ff;
+      --muted: rgba(238,242,255,.72);
+      --brand:#6ae4ff;
+      --brand2:#a78bfa;
+      --ok:#34d399;
+      --shadow: 0 20px 50px rgba(0,0,0,.45);
+      --radius: 18px;
+      --max: 1120px;
+    }
+
+    *{ box-sizing:border-box }
+
+    html{
+      scroll-behavior: auto;
+      scroll-padding-top: 88px;
+    }
+
+    html, body{
+      overscroll-behavior: none;
+      background:#070a12;
+    }
+
+    body{
+      margin:0;
+      color:var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+      background:
+        radial-gradient(900px 500px at 10% 0%, rgba(106,228,255,.20), transparent 60%),
+        radial-gradient(900px 600px at 95% 10%, rgba(167,139,250,.18), transparent 62%),
+        linear-gradient(180deg, var(--bg1), var(--bg0));
+      min-height: 100svh;
+      overflow-x:hidden;
+    }
+
+    a{ color:inherit; text-decoration:none }
+    img{ max-width:100%; display:block }
+    .container{ max-width:var(--max); margin:0 auto; padding:0 20px }
+    .sr-only{
+      position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+      overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+    }
+
+    canvas#bg{
+      position:fixed;
+      inset:0;
+      width:100%;
+      height:100%;
+      z-index:-2;
+    }
+    .vignette{
+      position:fixed; inset:0; z-index:-1;
+      background:
+        radial-gradient(1200px 800px at 50% -10%, rgba(255,255,255,.06), transparent 60%),
+        radial-gradient(900px 700px at 20% 110%, rgba(106,228,255,.06), transparent 55%),
+        radial-gradient(900px 700px at 90% 110%, rgba(167,139,250,.06), transparent 55%),
+        linear-gradient(180deg, rgba(0,0,0,.0), rgba(0,0,0,.45));
+      pointer-events:none;
+    }
+
+    header{
+      position:fixed;
+      top:0;
+      left:0;
+      right:0;
+      z-index:50;
+      background: rgba(7,10,18,.55);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:14px; padding:14px 0;
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px; min-width: 180px;
+    }
+    .brand strong{ font-size: 14px; letter-spacing:.2px }
+    .brand span{ display:block; font-size: 12px; color: var(--muted) }
+
+    nav .links{
+      display:flex; align-items:center; gap:10px;
+    }
+
+    .navLinkBtn{
+      font-size: 14px;
+      color: var(--muted);
+      padding: 10px 10px;
+      border-radius: 12px;
+      transition: .15s ease;
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .navLinkBtn:hover{ background: rgba(255,255,255,.06); color: var(--text) }
+
+    .actions{ display:flex; gap:10px; align-items:center }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      font-weight: 700;
+      font-size: 14px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      cursor:pointer;
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+      user-select:none;
+    }
+    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.09); border-color: rgba(255,255,255,.16) }
+    .btn.primary{
+      border-color: transparent;
+      background: linear-gradient(135deg, rgba(106,228,255,.95), rgba(167,139,250,.95));
+      color:#071022;
+    }
+    .btn.primary:hover{ filter: brightness(1.03) }
+    .btn.icon{ width:44px; height:44px; padding:0 }
+    .btn.small{
+      padding: 10px 12px;
+      font-size: 13px;
+      border-radius: 12px;
+    }
+
+    .burger{ display:none }
+    .mobileSheet{
+      display:none;
+      position:fixed; inset:0; z-index:60;
+      background: rgba(0,0,0,.55);
+      backdrop-filter: blur(10px);
+    }
+    .sheetCard{
+      position:absolute;
+      top: 70px; left: 50%;
+      transform: translateX(-50%);
+      width: min(520px, calc(100% - 28px));
+      border:1px solid var(--border);
+      background: rgba(10,14,28,.75);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: 14px;
+    }
+
+    .sheetBtn{
+      width:100%;
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 12px 12px;
+      border-radius: 14px;
+      color: var(--muted);
+      border:1px solid transparent;
+      background: transparent;
+      cursor: pointer;
+      font-size: 14px;
+      font-family: inherit;
+      text-align:left;
+    }
+    .sheetBtn:hover{
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      border-color: rgba(255,255,255,.10);
+    }
+
+    main{ padding: 110px 0 70px }
+    section{ padding: 44px 0 }
+
+    .hero{ padding-top: 26px; }
+    .heroGrid{
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+    .glass{
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, var(--glass), var(--glass2));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .heroCard{
+      padding: 22px;
+      overflow:hidden;
+      position:relative;
+    }
+    .heroCard:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(400px 200px at 15% 15%, rgba(106,228,255,.18), transparent 60%),
+        radial-gradient(420px 220px at 85% 10%, rgba(167,139,250,.16), transparent 62%);
+      pointer-events:none;
+      z-index:0;
+    }
+    .heroInner{ position:relative; z-index:1 }
+    .pill{
+      display:inline-flex; align-items:center; gap:10px;
+      padding: 10px 12px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.05);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .dot{
+      width:8px; height:8px; border-radius:999px;
+      background: var(--ok);
+      box-shadow: 0 0 18px rgba(52,211,153,.55);
+    }
+    h1{
+      margin: 14px 0 10px;
+      font-size: clamp(30px, 4vw, 50px);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+    .lead{
+      margin: 0 0 16px;
+      color:var(--muted);
+      font-size: 16px;
+      max-width: 62ch;
+    }
+    .heroActions{
+      display:flex; flex-wrap:wrap; gap:10px;
+      margin-top: 14px;
+    }
+
+    .profileCard{
+      padding: 18px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      gap: 14px;
+    }
+    .profileTop{
+      display:flex; gap:14px; align-items:center;
+    }
+    .avatar{
+      width:64px; height:64px; border-radius: 22px;
+      object-fit:cover;
+      border:1px solid rgba(255,255,255,.16);
+      box-shadow: 0 18px 40px rgba(0,0,0,.35);
+    }
+    .profileTop strong{ display:block; font-size: 16px }
+    .profileTop span{ display:block; color: var(--muted); font-size: 13px; margin-top: 2px }
+    .kpis{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    .kpi{
+      padding: 12px;
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+    }
+    .kpi b{ display:block; font-size: 16px }
+    .kpi small{ display:block; color: var(--muted); margin-top: 2px; font-size: 12px }
+
+    .sectionHead{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+    .sectionHead h2{
+      margin:0;
+      font-size: 20px;
+      letter-spacing: -0.01em;
+    }
+    .sectionHead p{
+      margin:0;
+      color: var(--muted);
+      font-size: 14px;
+      max-width: 70ch;
+    }
+
+    .cards3{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .card{
+      padding: 16px;
+      border-radius: var(--radius);
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow: 0 12px 34px rgba(0,0,0,.35);
+      min-height: 140px;
+    }
+    .icon{
+      width:44px;height:44px;border-radius: 16px;
+      display:grid; place-items:center;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+    .card h3{ margin:0 0 6px; font-size: 15px }
+    .card p{ margin:0; color: var(--muted); font-size: 14px }
+
+    .skillsGrid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 14px;
+      align-items: stretch;
+    }
+    .skillsBox{ padding: 18px; }
+    .skillsList{
+      display:flex; flex-wrap:wrap; gap:10px;
+      margin-top: 12px;
+    }
+    .skill{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      padding: 10px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      color: rgba(238,242,255,.80);
+    }
+    .note{
+      padding: 16px;
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .toolbar{
+      display:flex; flex-wrap:wrap; gap:10px;
+      align-items:center; justify-content:space-between;
+      margin: 12px 0 14px;
+    }
+    .chips{
+      display:flex; flex-wrap:wrap; gap:8px;
+    }
+    .chip{
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      color: var(--muted);
+      padding: 10px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      cursor:pointer;
+      transition: .15s ease;
+      user-select:none;
+    }
+    .chip:hover{ background: rgba(255,255,255,.08); color: var(--text) }
+    .chip.active{
+      border-color: transparent;
+      background: linear-gradient(135deg, rgba(106,228,255,.95), rgba(167,139,250,.95));
+      color: #071022;
+      font-weight: 800;
+    }
+    .search{
+      flex: 1;
+      min-width: 240px;
+      max-width: 420px;
+      display:flex; align-items:center; gap:10px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      padding: 10px 12px;
+      border-radius: 14px;
+    }
+    .search input{
+      width:100%;
+      border:0;
+      outline:none;
+      background: transparent;
+      color: var(--text);
+      font-size: 14px;
+    }
+    .search input::placeholder{ color: rgba(238,242,255,.55) }
+
+    .portfolioGrid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .project{ overflow:hidden; position:relative; }
+    .thumb{
+      aspect-ratio: 16/10;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      background:
+        radial-gradient(500px 220px at 20% 10%, rgba(106,228,255,.18), transparent 60%),
+        radial-gradient(520px 240px at 85% 15%, rgba(167,139,250,.16), transparent 62%),
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      display:flex;
+      align-items:flex-end;
+      padding: 14px;
+    }
+    .thumb .tagline{
+      font-size: 12px;
+      color: rgba(238,242,255,.72);
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.20);
+      padding: 8px 10px;
+      border-radius: 999px;
+      backdrop-filter: blur(10px);
+    }
+    .projectBody{
+      padding: 14px 14px 16px;
+      display:flex;
+      flex-direction:column;
+      gap: 10px;
+    }
+    .meta{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 10px;
+    }
+    .meta h3{
+      margin:0;
+      font-size: 15px;
+      letter-spacing: -.01em;
+    }
+    .meta small{
+      color: var(--muted);
+      font-size: 12px;
+      white-space:nowrap;
+    }
+    .desc{
+      margin:0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .tags{ display:flex; flex-wrap:wrap; gap:8px; }
+    .tag{
+      font-size: 12px;
+      color: rgba(238,242,255,.72);
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      padding: 7px 10px;
+      border-radius: 999px;
+    }
+    .projectActions{ display:flex; gap:10px; flex-wrap:wrap; margin-top: 4px; }
+
+    .split{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      align-items: stretch;
+    }
+    .aboutBox{ padding: 18px }
+    .aboutBox p{ margin: 10px 0 0; color: var(--muted) }
+
+    form{
+      display:grid;
+      gap: 10px;
+      padding: 18px;
+    }
+    label{ font-size: 13px; color: rgba(238,242,255,.70) }
+    input, textarea{
+      width:100%;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      color: var(--text);
+      border-radius: 14px;
+      padding: 12px 12px;
+      outline:none;
+      font-size: 14px;
+    }
+    textarea{ min-height: 120px; resize: vertical }
+    input:focus, textarea:focus{ border-color: rgba(106,228,255,.55) }
+
+    footer{
+      padding: 26px 0 40px;
+      color: rgba(238,242,255,.55);
+      border-top: 1px solid rgba(238,242,255,.08);
+      background: rgba(0,0,0,.10);
+      backdrop-filter: blur(10px);
+    }
+    .foot{
+      display:flex; align-items:center; justify-content:space-between;
+      gap: 14px; flex-wrap:wrap;
+    }
+    .foot a{ color: rgba(238,242,255,.70) }
+    .foot a:hover{ color: var(--text) }
+
+    .fab{
+      position:fixed;
+      right: 16px;
+      bottom: 16px;
+      z-index: 70;
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(10,14,28,.72);
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow);
+    }
+    .fab .bubble{
+      width:42px; height:42px;
+      border-radius: 999px;
+      display:grid; place-items:center;
+      background: rgba(52,211,153,.18);
+      border:1px solid rgba(52,211,153,.30);
+      font-size: 18px;
+    }
+    .fab span{
+      font-size: 13px;
+      color: rgba(238,242,255,.72);
+    }
+
+    .reveal{
+      opacity:0;
+      transform: translateY(14px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.visible{
+      opacity:1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 980px){
+      .heroGrid{ grid-template-columns: 1fr }
+      .kpis{ grid-template-columns: repeat(3, 1fr) }
+      .cards3, .portfolioGrid{ grid-template-columns: repeat(2, 1fr) }
+      .split, .skillsGrid{ grid-template-columns: 1fr }
+      nav .links{ display:none }
+      .burger{ display:inline-flex }
+    }
+    @media (max-width: 560px){
+      .container{ padding: 0 16px }
+      .heroCard{ padding: 18px }
+      .profileCard{ padding: 16px }
+      .kpis{ grid-template-columns: 1fr; }
+      .cards3, .portfolioGrid{ grid-template-columns: 1fr }
+      .search{ min-width: 100% }
+      .fab{ right: 12px; bottom: 12px }
+      .btn{ width: 100% }
+      .heroActions .btn{ width: auto }
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="bg" aria-hidden="true"></canvas>
+  <div class="vignette" aria-hidden="true"></div>
+
+  <header id="siteHeader">
+    <div class="container">
+      <div class="nav">
+        <button class="brand navLinkBtn" type="button" data-target="topo" aria-label="Ir para o topo" style="text-align:left; padding:0;">
+          <div>
+            <strong>Gabriel Schmeisk</strong>
+            <span>Início de carreira • Buscando aprendizado</span>
+          </div>
+        </button>
+
+        <nav aria-label="Navegação">
+          <div class="links">
+            <button class="navLinkBtn" type="button" data-target="servicos">Serviços</button>
+            <button class="navLinkBtn" type="button" data-target="skills">Habilidades</button>
+            <button class="navLinkBtn" type="button" data-target="portfolio">Projetos</button>
+            <button class="navLinkBtn" type="button" data-target="sobre">Sobre</button>
+            <button class="navLinkBtn" type="button" data-target="contato">Contato</button>
+            <button class="navLinkBtn" type="button" data-target="curriculo">Currículo</button>
+          </div>
+        </nav>
+
+        <div class="actions">
+          <button class="btn primary" type="button" data-target="contato">Falar comigo</button>
+          <button class="btn icon burger" id="openMenu" aria-label="Abrir menu" type="button">☰</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobileSheet" id="mobileSheet" aria-hidden="true">
+    <div class="sheetCard glass" role="dialog" aria-modal="true" aria-label="Menu">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; padding:6px 6px 10px;">
+        <b>Menu</b>
+        <button class="btn icon" id="closeMenu" aria-label="Fechar menu" type="button">✕</button>
+      </div>
+
+      <button class="sheetBtn" type="button" data-close data-target="servicos">Serviços <span>›</span></button>
+      <button class="sheetBtn" type="button" data-close data-target="skills">Habilidades <span>›</span></button>
+      <button class="sheetBtn" type="button" data-close data-target="portfolio">Projetos <span>›</span></button>
+      <button class="sheetBtn" type="button" data-close data-target="sobre">Sobre <span>›</span></button>
+      <button class="sheetBtn" type="button" data-close data-target="contato">Contato <span>›</span></button>
+      <button class="sheetBtn" type="button" data-close data-target="curriculo">Currículo <span>›</span></button>
+
+      <div style="display:grid; gap:10px; padding:10px 6px 6px;">
+        <a class="btn" href="https://github.com/GabrielSchmeisk/GabrielSchmeisk" target="_blank" rel="noopener">💻 GitHub</a>
+        <a class="btn" href="https://www.linkedin.com/in/gabriel-schmeisk-107778196/?originalSubdomain=br" target="_blank" rel="noopener">💼 LinkedIn</a>
+        <a class="btn" href="https://www.instagram.com/bielschmeisk/" target="_blank" rel="noopener">📷 Instagram</a>
+      </div>
+    </div>
+  </div>
+
+  <a class="fab" id="whatsappFab" href="https://wa.me/5516994241388?text=Oi%21%20Vim%20pelo%20seu%20portf%C3%B3lio.%20Vamos%20conversar%3F" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+    <div class="bubble" aria-hidden="true">🟢</div>
+    <div>
+      <b style="display:block; font-size:13px;">WhatsApp</b>
+      <span>Orçamento / dúvidas</span>
+    </div>
+  </a>
+
+  <main id="topo">
+    <div class="container">
+      <section class="hero">
+        <div class="heroGrid">
+          <div class="heroCard glass reveal">
+            <div class="heroInner">
+              <div class="pill"><span class="dot" aria-hidden="true"></span> Em início de carreira • Aberto a aprendizado e oportunidades</div>
+              <h1>Portfólio — projetos acadêmicos e pessoais com foco em evolução constante.</h1>
+              <p class="lead">
+                Tenho experiência com <b>Python</b>, <b>C</b> e <b>C#</b>, além de desenvolvimento web (HTML/CSS/JS).
+                Também atuo como <b>técnico de áudio</b> e sou <b>voluntário na Igreja do Evangelho Quadrangular</b>,
+                auxiliando na <b>sonorização</b> e como <b>músico</b>.
+                Atualmente também trabalho na <b>USP</b> como <b>estagiário</b> com <b>áudio e TI</b>.
+              </p>
+
+              <div class="heroActions">
+                <button class="btn primary" type="button" data-target="portfolio">Ver projetos</button>
+                <button class="btn" type="button" data-target="contato">Entrar em contato</button>
+                <a class="btn" href="https://github.com/GabrielSchmeisk/GabrielSchmeisk" target="_blank" rel="noopener">💻 GitHub</a>
+                <a class="btn" href="https://www.linkedin.com/in/gabriel-schmeisk-107778196/?originalSubdomain=br" target="_blank" rel="noopener">💼 LinkedIn</a>
+              </div>
+            </div>
+          </div>
+
+          <aside class="profileCard glass reveal">
+            <div class="profileTop">
+              <img class="avatar" src="https://i.imgur.com/EXORH9a.jpeg" alt="Foto de Gabriel Schmeisk" />
+              <div>
+                <strong>Gabriel Schmeisk</strong>
+                <span>Python • C • C# • Web • Áudio • TI</span>
+                <span style="margin-top:6px; display:inline-flex; gap:8px; flex-wrap:wrap;">
+                  <span class="pill" style="padding:7px 10px; font-size:12px;"><span class="dot" aria-hidden="true"></span> Disponível</span>
+                  <span class="pill" style="padding:7px 10px; font-size:12px;">📚 Aprendizado contínuo</span>
+                  <span class="pill" style="padding:7px 10px; font-size:12px;">🎚️ Técnico de áudio</span>
+                  <span class="pill" style="padding:7px 10px; font-size:12px;">🎓 USP (Estágio)</span>
+                </span>
+              </div>
+            </div>
+
+            <div class="kpis">
+              <div class="kpi">
+                <b>4</b>
+                <small>Projetos em destaque</small>
+              </div>
+              <div class="kpi">
+                <b>Python</b>
+                <small>Principal foco</small>
+              </div>
+              <div class="kpi">
+                <b>Áudio / TI</b>
+                <small>Operação e suporte</small>
+              </div>
+            </div>
+
+            <div class="glass" style="padding:14px; border-radius:16px; border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.04);">
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+                <b style="font-size:13px;">Tecnologias</b>
+                <small style="color:var(--muted);">em evolução</small>
+              </div>
+              <div class="tags" style="margin-top:10px;">
+                <span class="tag">Python</span>
+                <span class="tag">C</span>
+                <span class="tag">C#</span>
+                <span class="tag">HTML/CSS</span>
+                <span class="tag">JavaScript</span>
+                <span class="tag">Git/GitHub</span>
+                <span class="tag">Áudio</span>
+                <span class="tag">TI</span>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="servicos">
+        <div class="sectionHead">
+          <div>
+            <h2>O que eu faço</h2>
+            <p>Projetos acadêmicos e pessoais, focando em aprender na prática e evoluir como desenvolvedor — e também experiência prática em áudio e TI.</p>
+          </div>
+        </div>
+
+        <div class="cards3">
+          <div class="card reveal">
+            <div class="icon" aria-hidden="true">🐍</div>
+            <h3>Python (Projetos & Scripts)</h3>
+            <p>Exercícios, sistemas simples e projetos de faculdade para praticar lógica, organização e funcionalidades.</p>
+          </div>
+
+          <div class="card reveal">
+            <div class="icon" aria-hidden="true">💻</div>
+            <h3>Web (Front-end)</h3>
+            <p>Interfaces responsivas e páginas estáticas para praticar UI, organização e experiência no mobile.</p>
+          </div>
+
+          <div class="card reveal">
+            <div class="icon" aria-hidden="true">🎚️</div>
+            <h3>Áudio & TI</h3>
+            <p>Voluntário na Igreja do Evangelho Quadrangular e estagiário na USP: apoio em sonorização, operação ao vivo e suporte de TI.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="skills">
+        <div class="sectionHead">
+          <div>
+            <h2>Habilidades</h2>
+            <p>Stack que eu já pratico e estou aprimorando com projetos e estudos.</p>
+          </div>
+        </div>
+
+        <div class="skillsGrid">
+          <div class="glass skillsBox reveal">
+            <b>Principais linguagens</b>
+            <div class="skillsList" aria-label="Linguagens">
+              <span class="skill">Python</span>
+              <span class="skill">C</span>
+              <span class="skill">C#</span>
+              <span class="skill">JavaScript</span>
+            </div>
+
+            <div style="height:10px"></div>
+
+            <b>Web</b>
+            <div class="skillsList" aria-label="Web">
+              <span class="skill">HTML</span>
+              <span class="skill">CSS</span>
+              <span class="skill">Responsividade</span>
+              <span class="skill">UI básica</span>
+            </div>
+
+            <div style="height:10px"></div>
+
+            <b>Ferramentas</b>
+            <div class="skillsList" aria-label="Ferramentas">
+              <span class="skill">Git/GitHub</span>
+              <span class="skill">VS Code</span>
+              <span class="skill">Terminal</span>
+              <span class="skill">Windows</span>
+            </div>
+
+            <div style="height:10px"></div>
+
+            <b>Áudio & TI</b>
+            <div class="skillsList" aria-label="Áudio & TI">
+              <span class="skill">Sonorização</span>
+              <span class="skill">Operação ao vivo</span>
+              <span class="skill">Suporte de TI</span>
+              <span class="skill">Voluntariado</span>
+              <span class="skill">USP (Estágio)</span>
+            </div>
+          </div>
+
+          <div class="glass skillsBox reveal">
+            <b>Nota</b>
+            <div class="note" style="margin-top:12px;">
+              Estou no <b>início da carreira</b> e meu foco é aprender com projetos práticos,
+              melhorar estrutura de código, boas práticas e desenvolvimento profissional.
+              Também tenho vivência prática como <b>técnico de áudio</b> e <b>músico</b> em contexto de igreja,
+              e atualmente atuo na <b>USP</b> como <b>estagiário</b> com <b>áudio e TI</b>.
+              Se você tiver uma oportunidade, desafio ou feedback, vai ser muito bem-vindo 🙌
+            </div>
+
+            <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
+              <button class="btn primary" type="button" data-target="contato">Falar comigo</button>
+              <button class="btn" type="button" data-target="portfolio">Ver projetos</button>
+              <button class="btn" type="button" data-target="curriculo">Ver currículo</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="portfolio">
+        <div class="sectionHead">
+          <div>
+            <h2>Projetos (Python e Web)</h2>
+            <p>Projetos acadêmicos e pessoais — foco em prática, aprendizado e evolução.</p>
+          </div>
+        </div>
+
+        <div class="toolbar">
+          <div class="chips" id="chips" aria-label="Filtros de projetos">
+            <button class="chip active" data-filter="all" type="button">Todos</button>
+            <button class="chip" data-filter="python" type="button">Python</button>
+            <button class="chip" data-filter="web" type="button">Web</button>
+          </div>
+
+          <div class="search" role="search">
+            <span aria-hidden="true">🔎</span>
+            <label class="sr-only" for="searchInput">Pesquisar projetos</label>
+            <input id="searchInput" type="search" placeholder="Pesquisar por nome/descrição…" autocomplete="off" />
+          </div>
+        </div>
+
+        <div class="portfolioGrid" id="portfolioGrid">
+          <article class="card project reveal" data-category="python"
+            data-title="Sistema Escolar (Trabalho Faculdade)"
+            data-text="python sistema escolar trabalho faculdade cadastro alunos notas">
+            <div class="thumb"><span class="tagline">Python • Faculdade</span></div>
+            <div class="projectBody">
+              <div class="meta">
+                <div><h3>Sistema Escolar</h3><small>Python</small></div>
+                <small>Acadêmico</small>
+              </div>
+              <p class="desc">Projeto de faculdade: sistema escolar simples para praticar lógica, estrutura e funcionalidades.</p>
+              <div class="tags">
+                <span class="tag">Python</span><span class="tag">Console</span><span class="tag">Lógica</span>
+              </div>
+              <div class="projectActions">
+                <a class="btn small primary" href="https://github.com/GabrielSchmeisk/Sistema-Escolar-Simples-em-Python" target="_blank" rel="noopener">Ver no GitHub</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="card project reveal" data-category="python"
+            data-title="Sistema simples (Trabalho da faculdade)"
+            data-text="python pim trabalho faculdade sistema simples">
+            <div class="thumb"><span class="tagline">Python • Faculdade</span></div>
+            <div class="projectBody">
+              <div class="meta">
+                <div><h3>Sistema simples (PIM)</h3><small>Python</small></div>
+                <small>Acadêmico</small>
+              </div>
+              <p class="desc">Trabalho de faculdade (PIM): sistema simples para consolidar fundamentos e organização de código.</p>
+              <div class="tags">
+                <span class="tag">Python</span><span class="tag">Fundamentos</span><span class="tag">Prática</span>
+              </div>
+              <div class="projectActions">
+                <a class="btn small primary" href="https://github.com/GabrielSchmeisk/PythonPIM" target="_blank" rel="noopener">Ver no GitHub</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="card project reveal" data-category="python"
+            data-title="Calculadora diversificada"
+            data-text="python calculadora operacoes diversas">
+            <div class="thumb"><span class="tagline">Python • Exercício</span></div>
+            <div class="projectBody">
+              <div class="meta">
+                <div><h3>Calculadora diversificada</h3><small>Python</small></div>
+                <small>Prática</small>
+              </div>
+              <p class="desc">Calculadora com operações variadas para praticar lógica, condições e organização de funções.</p>
+              <div class="tags">
+                <span class="tag">Python</span><span class="tag">Funções</span><span class="tag">Lógica</span>
+              </div>
+              <div class="projectActions">
+                <a class="btn small primary" href="https://github.com/GabrielSchmeisk/calculadora" target="_blank" rel="noopener">Ver no GitHub</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="card project reveal" data-category="web"
+            data-title="Frontend site de produtos (afiliados)"
+            data-text="frontend web site produtos afiliados canal html css javascript">
+            <div class="thumb"><span class="tagline">Web • Front-end</span></div>
+            <div class="projectBody">
+              <div class="meta">
+                <div><h3>Frontend site de produtos</h3><small>Web</small></div>
+                <small>Front-end</small>
+              </div>
+              <p class="desc">Frontend de site para divulgar produtos afiliados apresentados no canal, focando em layout e navegação.</p>
+              <div class="tags">
+                <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JS</span>
+              </div>
+              <div class="projectActions">
+                <a class="btn small primary" href="https://github.com/GabrielSchmeisk/frontend-site" target="_blank" rel="noopener">Ver no GitHub</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="sobre">
+        <div class="sectionHead">
+          <div>
+            <h2>Sobre</h2>
+            <p>Transparência: estou começando — e isso significa muita vontade de aprender e evoluir rápido.</p>
+          </div>
+        </div>
+
+        <div class="split">
+          <div class="glass aboutBox reveal">
+            <b>Quem sou</b>
+            <p>
+              Sou o Gabriel e estou no <b>início da carreira</b>. Gosto de aprender na prática, com projetos que me desafiem.
+              Tenho focado principalmente em <b>Python</b>, mas também estudo <b>C</b> e <b>C#</b>, além de Web.
+              Fora da área de desenvolvimento, também atuo como <b>técnico de áudio</b> e <b>músico</b>.
+              Atualmente, trabalho na <b>USP</b> como <b>estagiário</b> com <b>áudio e TI</b>.
+            </p>
+            <div class="tags" style="margin-top:12px;">
+              <span class="tag">Curioso</span>
+              <span class="tag">Consistente</span>
+              <span class="tag">Aprendizado contínuo</span>
+              <span class="tag">Projetos práticos</span>
+              <span class="tag">Sonorização</span>
+              <span class="tag">TI</span>
+            </div>
+          </div>
+
+          <div class="glass reveal" style="padding:18px;">
+            <b>O que eu busco</b>
+            <p style="margin:10px 0 0; color:var(--muted);">
+              Oportunidades para crescer: estágio, freelas simples, desafios e projetos onde eu possa receber feedback e evoluir.
+              Também sou <b>voluntário da Igreja do Evangelho Quadrangular</b>, ajudando na <b>sonorização</b> e no suporte ao time de música.
+              Se você tem um projeto e precisa de alguém comprometido para aprender e executar, vamos conversar.
+            </p>
+            <div class="heroActions" style="margin-top:14px;">
+              <button class="btn primary" type="button" data-target="contato">Me chamar</button>
+              <button class="btn" type="button" data-target="portfolio">Ver projetos</button>
+              <button class="btn" type="button" data-target="curriculo">Ver currículo</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contato">
+        <div class="sectionHead">
+          <div>
+            <h2>Contato</h2>
+            <p>Quer conversar sobre um projeto, oportunidade, áudio/sonorização ou feedback? Me mande uma mensagem.</p>
+          </div>
+        </div>
+
+        <div class="split">
+          <form class="glass reveal" id="contactForm">
+            <div>
+              <label for="name">Nome</label>
+              <input id="name" name="name" placeholder="Seu nome" required />
+            </div>
+            <div>
+              <label for="email">E-mail</label>
+              <input id="email" name="email" type="email" placeholder="seu@email.com" required />
+            </div>
+            <div>
+              <label for="msg">Mensagem</label>
+              <textarea id="msg" name="msg" placeholder="Ex.: Vi seu portfólio e quero falar sobre..." required></textarea>
+            </div>
+            <button class="btn primary" type="submit">Enviar mensagem</button>
+            <small style="color:rgba(238,242,255,.55);">
+              *Este formulário abre seu e-mail (mailto) por padrão. Se quiser, eu adapto para envio via API.
+            </small>
+          </form>
+
+          <div class="glass aboutBox reveal">
+            <b>Atalhos</b>
+            <p style="margin-top:10px;">
+              <span style="color:var(--muted)">E-mail:</span> <a href="mailto:gabrielsanto.gs31@gmail.com">gabrielsanto.gs31@gmail.com</a><br/>
+              <span style="color:var(--muted)">WhatsApp:</span> <span id="waText">+55 (16) 99424-1388</span><br/>
+              <span style="color:var(--muted)">Links:</span>
+              <a href="https://github.com/GabrielSchmeisk/GabrielSchmeisk" target="_blank" rel="noopener">GitHub</a> •
+              <a href="https://www.linkedin.com/in/gabriel-schmeisk-107778196/?originalSubdomain=br" target="_blank" rel="noopener">LinkedIn</a> •
+              <a href="https://www.instagram.com/bielschmeisk/" target="_blank" rel="noopener">Instagram</a>
+            </p>
+
+            <div class="card" style="min-height:auto; margin-top:14px;">
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+                <b style="font-size:14px;">Disponibilidade</b>
+                <span class="pill" style="padding:7px 10px; font-size:12px;"><span class="dot" aria-hidden="true"></span> Aberto a oportunidades</span>
+              </div>
+              <p style="margin-top:8px; color:var(--muted);">
+                Estou buscando aprendizado e experiência. Se você tiver um desafio, feedback, oportunidade ou demanda de áudio/sonorização, pode me chamar!
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="curriculo">
+        <div class="sectionHead">
+          <div>
+            <h2>Currículo</h2>
+            <p>Veja meu currículo diretamente aqui no site, ou baixe o PDF se preferir.</p>
+          </div>
+        </div>
+
+        <div class="glass reveal" style="padding:18px;">
+          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px;">
+            <a class="btn primary" href="./curriculo.pdf" target="_blank" rel="noopener">Abrir em nova guia</a>
+            <a class="btn" href="./curriculo.pdf" download>Baixar PDF</a>
+          </div>
+
+          <div style="border:1px solid rgba(255,255,255,.10); border-radius:16px; overflow:hidden; background: rgba(0,0,0,.18);">
+            <object
+              data="./curriculo.pdf"
+              type="application/pdf"
+              width="100%"
+              height="780"
+              aria-label="Currículo em PDF"
+            >
+              <div style="padding:14px; color: rgba(238,242,255,.72);">
+                Seu navegador não conseguiu exibir o PDF aqui.
+                <a href="./curriculo.pdf" target="_blank" rel="noopener" style="text-decoration:underline;">
+                  Clique para abrir o currículo
+                </a>.
+              </div>
+            </object>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="foot">
+        <div>© <span id="year"></span> Gabriel Schmeisk. Todos os direitos reservados.</div>
+        <div style="display:flex; gap:14px; flex-wrap:wrap;">
+          <a href="https://github.com/GabrielSchmeisk/GabrielSchmeisk" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://www.linkedin.com/in/gabriel-schmeisk-107778196/?originalSubdomain=br" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://www.instagram.com/bielschmeisk/" target="_blank" rel="noopener">Instagram</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const WHATSAPP_NUMBER = "5516994241388";
+    const WHATSAPP_MESSAGE = "Oi! Vim pelo seu portfólio. Vamos conversar?";
+    const CONTACT_EMAIL = "gabrielsanto.gs31@gmail.com";
+
+    const waLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
+    document.getElementById("whatsappFab").href = waLink;
+
+    const formatBR = (num) => {
+      if (!num || num.length < 13) return "+55 (00) 00000-0000";
+      const cc = num.slice(0,2);
+      const ddd = num.slice(2,4);
+      const part1 = num.slice(4,9);
+      const part2 = num.slice(9);
+      return `+${cc} (${ddd}) ${part1}-${part2}`;
+    };
+    document.getElementById("waText").textContent = formatBR(WHATSAPP_NUMBER);
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const sheet = document.getElementById("mobileSheet");
+    const openMenu = document.getElementById("openMenu");
+    const closeMenu = document.getElementById("closeMenu");
+
+    function setSheet(open){
+      sheet.style.display = open ? "block" : "none";
+      sheet.setAttribute("aria-hidden", open ? "false" : "true");
+      document.body.style.overflow = open ? "hidden" : "";
+    }
+
+    openMenu.addEventListener("click", () => setSheet(true));
+    closeMenu.addEventListener("click", () => setSheet(false));
+    sheet.addEventListener("click", (e) => { if (e.target === sheet) setSheet(false); });
+
+    function getHeaderOffset(){
+      const header = document.getElementById("siteHeader");
+      return (header && header.offsetHeight) ? header.offsetHeight + 12 : 88;
+    }
+
+    function easeOutQuad(t){
+      return 1 - (1 - t) * (1 - t);
+    }
+
+    let activeAnim = null;
+
+    function animateScrollTo(targetY){
+      if (activeAnim) cancelAnimationFrame(activeAnim);
+
+      const startY = window.pageYOffset || 0;
+      const diff = targetY - startY;
+      if (Math.abs(diff) < 2) return;
+
+      const distance = Math.abs(diff);
+      const duration = Math.max(900, Math.min(2400, distance * 1.15));
+
+      const start = performance.now();
+
+      function frame(now){
+        const t = Math.min(1, (now - start) / duration);
+        const eased = easeOutQuad(t);
+        window.scrollTo(0, startY + diff * eased);
+
+        if (t < 1){
+          activeAnim = requestAnimationFrame(frame);
+        } else {
+          activeAnim = null;
+        }
+      }
+
+      activeAnim = requestAnimationFrame(frame);
+    }
+
+    function scrollToTarget(id){
+      const el = document.getElementById(id);
+      if (!el) return;
+
+      const offset = getHeaderOffset();
+      const y = Math.max(0, window.pageYOffset + el.getBoundingClientRect().top - offset);
+      animateScrollTo(y);
+    }
+
+    document.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-target]");
+      if (!btn) return;
+
+      const id = btn.getAttribute("data-target");
+      if (!id) return;
+
+      if (btn.hasAttribute("data-close")){
+        setSheet(false);
+        setTimeout(() => scrollToTarget(id), 120);
+      } else {
+        scrollToTarget(id);
+      }
+    });
+
+    const revealEls = document.querySelectorAll(".reveal");
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((en) => { if (en.isIntersecting) en.target.classList.add("visible"); });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => io.observe(el));
+
+    const chips = document.getElementById("chips");
+    const searchInput = document.getElementById("searchInput");
+    const projects = Array.from(document.querySelectorAll(".project"));
+
+    let activeFilter = "all";
+    let query = "";
+
+    function applyFilters(){
+      const q = query.trim().toLowerCase();
+      projects.forEach(p => {
+        const cat = p.dataset.category;
+        const hay = (p.dataset.title + " " + p.dataset.text).toLowerCase();
+        const matchesFilter = (activeFilter === "all") || (cat === activeFilter);
+        const matchesQuery = !q || hay.includes(q);
+        p.style.display = (matchesFilter && matchesQuery) ? "" : "none";
+      });
+    }
+
+    chips.addEventListener("click", (e) => {
+      const btn = e.target.closest(".chip");
+      if (!btn) return;
+      chips.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
+      btn.classList.add("active");
+      activeFilter = btn.dataset.filter;
+      applyFilters();
+    });
+
+    searchInput.addEventListener("input", (e) => {
+      query = e.target.value;
+      applyFilters();
+    });
+
+    document.getElementById("contactForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const msg = document.getElementById("msg").value.trim();
+
+      const subject = `Contato via Portfólio — ${name}`;
+      const body =
+`Nome: ${name}
+E-mail: ${email}
+
+Mensagem:
+${msg}
+
+(Enviado pelo site)`;
+
+      const mailto = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.location.href = mailto;
+    });
+
+    const canvas = document.getElementById("bg");
+    const ctx = canvas.getContext("2d", { alpha: true });
+    let w, h, dpr;
+    let stars = [];
+    let pointer = { x: null, y: null };
+    let last = 0;
+
+    function resize(){
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = Math.floor(window.innerWidth);
+      h = Math.floor(window.innerHeight);
+      canvas.width = Math.floor(w * dpr);
+      canvas.height = Math.floor(h * dpr);
+      canvas.style.width = w + "px";
+      canvas.style.height = h + "px";
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      const density = (w < 600) ? 90 : 140;
+      stars = new Array(density).fill(0).map(() => ({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        r: Math.random() * 1.8 + 0.2,
+        vx: (Math.random() - 0.5) * 0.12,
+        vy: (Math.random() - 0.5) * 0.12
+      }));
+    }
+    window.addEventListener("resize", resize, { passive:true });
+    resize();
+
+    function step(ts){
+      const dt = Math.min(32, ts - last);
+      last = ts;
+
+      ctx.clearRect(0,0,w,h);
+
+      for (const s of stars){
+        s.x += s.vx * dt;
+        s.y += s.vy * dt;
+
+        if (s.x < -10) s.x = w + 10;
+        if (s.x > w + 10) s.x = -10;
+        if (s.y < -10) s.y = h + 10;
+        if (s.y > h + 10) s.y = -10;
+
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(255,255,255,.9)";
+        ctx.fill();
+      }
+
+      if (pointer.x != null && pointer.y != null){
+        ctx.lineWidth = 1;
+        for (const s of stars){
+          const dx = pointer.x - s.x;
+          const dy = pointer.y - s.y;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          if (dist < 120){
+            const a = (1 - dist/120) * 0.18;
+            ctx.strokeStyle = `rgba(255,255,255,${a})`;
+            ctx.beginPath();
+            ctx.moveTo(s.x, s.y);
+            ctx.lineTo(pointer.x, pointer.y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+
+    window.addEventListener("pointermove", (e) => {
+      pointer.x = e.clientX;
+      pointer.y = e.clientY;
+    }, { passive:true });
+
+    window.addEventListener("pointerleave", () => {
+      pointer.x = null;
+      pointer.y = null;
+    });
+  </script>
+</body>
+</html>
