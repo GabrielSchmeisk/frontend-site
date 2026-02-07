@@ -10,7 +10,7 @@
 
   <style>
     :root{
-      --bg:#0b0d12;
+      --bg:#0b1020;
       --muted:#8b93a7;
       --text:#e9ecf5;
       --brand:#7c5cff;
@@ -19,17 +19,28 @@
       --shadow: 0 10px 30px rgba(0,0,0,.35);
       --radius: 18px;
       --max: 1100px;
-      --header-h: 104px;
+
+      /* ✅ header menor */
+      --header-h: 78px;
     }
 
     *{box-sizing:border-box}
     html{scroll-behavior:smooth; background: var(--bg);}
+
     body{
       margin:0;
       min-height:100vh;
       overflow-x:hidden;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-      background: var(--bg);
+
+      background:
+        radial-gradient(900px 500px at 10% 0%, rgba(106,228,255,.20), transparent 60%),
+        radial-gradient(900px 600px at 95% 10%, rgba(167,139,250,.18), transparent 62%),
+        linear-gradient(180deg, #0b1020, #070a12);
+      background-attachment: fixed, fixed, fixed;
+      background-repeat: no-repeat;
+      background-position: center top, right top, center top;
+
       color:var(--text);
       padding-top: var(--header-h);
     }
@@ -48,25 +59,7 @@
 
     .wrap{max-width:var(--max); margin:0 auto; padding:22px}
 
-    .bg{
-      position:fixed;
-      inset:-25%;
-      z-index:0;
-      pointer-events:none;
-      background:
-        radial-gradient(900px 520px at 20% 15%, rgba(124,92,255,.22), transparent 60%),
-        radial-gradient(820px 520px at 85% 20%, rgba(36,211,238,.20), transparent 58%),
-        radial-gradient(900px 520px at 60% 85%, rgba(36,211,238,.12), transparent 60%);
-      transform: translate3d(0,0,0) scale(1);
-      opacity: .9;
-      animation: bgBreath 12s ease-in-out infinite;
-    }
-
-    @keyframes bgBreath{
-      0%   { transform: translate3d(0,0,0) scale(1); opacity:.80; }
-      50%  { transform: translate3d(-1.5%, 1.2%, 0) scale(1.08); opacity:1; }
-      100% { transform: translate3d(0,0,0) scale(1); opacity:.80; }
-    }
+    .bg{ display:none; }
 
     header, main, footer{
       position: relative;
@@ -84,31 +77,34 @@
       align-items:center;
       justify-content:space-between;
 
+      /* ✅ menor */
       min-height: var(--header-h);
-      padding: 10px 0;
+      padding: 6px 0;
 
-      background: linear-gradient(to bottom, rgba(11,13,18,.92), rgba(11,13,18,.72));
+      background: linear-gradient(to bottom, rgba(11,13,18,.78), rgba(11,13,18,.56));
       backdrop-filter: blur(10px);
       border-bottom:1px solid var(--border);
     }
 
-    .brand{display:flex; align-items:center; gap:12px; padding:14px 0;}
+    /* ✅ menor */
+    .brand{display:flex; align-items:center; gap:10px; padding:8px 0;}
     .logo{
-      width:40px;height:40px;border-radius:12px;overflow:hidden;
+      width:34px;height:34px;border-radius:10px;overflow:hidden;
       box-shadow: 0 10px 25px rgba(124,92,255,.25);
       flex:0 0 auto;
     }
     .logo img{width:100%;height:100%;object-fit:cover;display:block}
-    .title h1{margin:0;font-size:16px;letter-spacing:.2px}
-    .title p{margin:2px 0 0;font-size:12px;color:var(--muted)}
+    .title h1{margin:0;font-size:15px;letter-spacing:.2px}
+    .title p{margin:2px 0 0;font-size:11px;color:var(--muted)}
 
     nav{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
     .tab{
-      padding:10px 12px;
+      /* ✅ menor */
+      padding:8px 10px;
       border:1px solid var(--border);
       background: rgba(255,255,255,.04);
       border-radius: 999px;
-      font-size: 13px;
+      font-size: 12px;
       color: rgba(233,236,245,.92);
       cursor:pointer;
       transition: transform .12s ease, background .12s ease, border-color .12s ease, color .12s ease;
@@ -544,7 +540,6 @@
     @media (prefers-reduced-motion: reduce){
       *{transition:none !important; animation:none !important}
       html{scroll-behavior:auto}
-      .bg{animation:none !important}
       .grid{transition:none !important}
       .grid.is-switching{opacity:1; transform:none; filter:none}
       .card{animation:none !important}
@@ -555,6 +550,9 @@
 
     @media (max-width: 640px){
       .wrap{ padding: 16px; }
+      /* ✅ ajuda no mobile ficar mais compacto */
+      :root{ --header-h: 72px; }
+      .tab{ padding:7px 9px; font-size:12px; }
     }
   </style>
 </head>
@@ -1351,4 +1349,3 @@
   </script>
 </body>
 </html>
-
