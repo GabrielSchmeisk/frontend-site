@@ -39,7 +39,7 @@ Sempre que eu indicar um item novo no canal, ele pode ser adicionado aqui.
 ## 📺 Canal no YouTube
 
 Otimizando o Altar  
-👉 https://otimizandooaltar/youtube
+👉 https://otimizandooaltar.com/youtube
 
 ---
 
