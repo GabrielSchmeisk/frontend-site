@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Jussara das modas 💘</title>
 
   <style>
@@ -20,22 +20,31 @@
 
     *{ box-sizing:border-box; }
 
-    body{
-      margin:0;
-      min-height:100vh;
-      font-family: 'Segoe UI', system-ui, -apple-system, Arial, sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(circle at 20% 20%, rgba(255,255,255,.14), transparent 40%),
-        radial-gradient(circle at 80% 30%, rgba(255,255,255,.10), transparent 40%),
-        linear-gradient(160deg, var(--bg1), var(--bg2), var(--bg3));
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:18px;
-      overflow-x:hidden;
-      position:relative;
-    }
+	html, body{
+	  height: 100%;
+	}
+	
+	body{
+	  margin:0;
+	  min-height:100vh;
+	  width:100%;
+	  font-family: 'Segoe UI', system-ui, -apple-system, Arial, sans-serif;
+	  color:var(--text);
+	
+	  background:
+	    radial-gradient(circle at 20% 20%, rgba(255,255,255,.14), transparent 40%),
+	    radial-gradient(circle at 80% 30%, rgba(255,255,255,.10), transparent 40%),
+	    linear-gradient(160deg, var(--bg1), var(--bg2), var(--bg3));
+	
+	  background-attachment: fixed; /* 🔥 importante */
+	  display:flex;
+	  align-items:center;
+	  justify-content:center;
+	  padding:18px;
+	  overflow-x:hidden;
+	  overscroll-behavior: none; /* 🔥 remove bounce branco */
+	  position:relative;
+	}
 
     /* ===== FUNDO ROMÂNTICO EXTRA (brilhinhos) ===== */
     .sparkles{
