@@ -19,7 +19,6 @@
       --shadow: 0 10px 30px rgba(0,0,0,.35);
       --radius: 18px;
       --max: 1100px;
-
       --header-h: 78px;
     }
 
@@ -51,25 +50,15 @@
       font: inherit;
       -webkit-tap-highlight-color: transparent;
     }
-    button:disabled{
-      opacity:.65;
-      cursor:not-allowed;
-    }
+    button:disabled{ opacity:.65; cursor:not-allowed; }
 
     .wrap{max-width:var(--max); margin:0 auto; padding:22px}
 
-    .bg{ display:none; }
-
-    header, main, footer{
-      position: relative;
-      z-index: 1;
-    }
+    header, main, footer{ position: relative; z-index: 1; }
 
     header{
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
+      top: 0; left: 0; right: 0;
       z-index: 999;
 
       display:flex;
@@ -187,16 +176,8 @@
       user-select:none;
       color: rgba(233,236,245,.92);
     }
-    .pill:hover{
-      transform: translateY(-1px);
-      background: rgba(255,255,255,.06);
-      color: rgba(233,236,245,1);
-    }
-    .pill:focus-visible{
-      outline:none;
-      border-color: rgba(124,92,255,.55);
-      box-shadow: 0 0 0 2px rgba(124,92,255,.22);
-    }
+    .pill:hover{ transform: translateY(-1px); background: rgba(255,255,255,.06); color: rgba(233,236,245,1); }
+    .pill:focus-visible{ outline:none; border-color: rgba(124,92,255,.55); box-shadow: 0 0 0 2px rgba(124,92,255,.22); }
     .pill.active{
       border-color: rgba(36,211,238,.55);
       background: linear-gradient(135deg, rgba(124,92,255,.18), rgba(36,211,238,.14));
@@ -234,15 +215,8 @@
       cursor:pointer;
       background-color: #0b0d12;
     }
-    .select option{
-      background-color: #0b0d12;
-      color: #e9ecf5;
-    }
-    .select:focus{
-      outline: none;
-      border-color: rgba(124,92,255,.6);
-      box-shadow: 0 0 0 2px rgba(124,92,255,.25);
-    }
+    .select option{ background-color: #0b0d12; color: #e9ecf5; }
+    .select:focus{ outline:none; border-color: rgba(124,92,255,.6); box-shadow: 0 0 0 2px rgba(124,92,255,.25); }
 
     .grid{
       display:grid;
@@ -252,16 +226,9 @@
       transition: opacity .22s ease, transform .22s ease, filter .22s ease;
       will-change: opacity, transform, filter;
     }
-    .grid.is-switching{
-      opacity: 0;
-      transform: translateY(8px);
-      filter: blur(1px);
-    }
+    .grid.is-switching{ opacity: 0; transform: translateY(8px); filter: blur(1px); }
 
-    @keyframes cardIn{
-      from{ opacity:0; transform: translateY(10px) scale(.99); }
-      to{ opacity:1; transform: translateY(0) scale(1); }
-    }
+    @keyframes cardIn{ from{opacity:0; transform: translateY(10px) scale(.99);} to{opacity:1; transform: translateY(0) scale(1);} }
 
     .card{
       grid-column: span 4;
@@ -276,11 +243,7 @@
       transition: transform .14s ease, border-color .14s ease, filter .14s ease;
       animation: cardIn .22s ease both;
     }
-    .card:hover{
-      transform: translateY(-2px);
-      border-color: rgba(124,92,255,.25);
-      filter: brightness(1.03);
-    }
+    .card:hover{ transform: translateY(-2px); border-color: rgba(124,92,255,.25); filter: brightness(1.03); }
     @media (max-width: 980px){ .card{grid-column: span 6;} }
     @media (max-width: 640px){
       .card{grid-column: span 12;}
@@ -315,6 +278,7 @@
       backdrop-filter: blur(8px);
       color: rgba(233,236,245,.92);
     }
+
     .content{
       padding: 12px 14px 14px;
       display:flex; flex-direction:column; gap:10px;
@@ -339,6 +303,7 @@
       margin-top:auto;
       letter-spacing:.2px;
     }
+
     .btn{
       display:flex; justify-content:center; align-items:center;
       padding: 11px 12px;
@@ -349,6 +314,7 @@
       font-weight: 800;
       font-size: 13px;
       transition: transform .12s ease, filter .12s ease;
+      cursor:pointer;
     }
     .btn:hover{transform: translateY(-1px); filter: brightness(1.08)}
     .btn.secondary{
@@ -356,19 +322,13 @@
       background: rgba(255,255,255,.04);
       font-weight: 700;
     }
-
     .btn.youtube{
       border-color: rgba(255,0,0,.45);
       background: linear-gradient(135deg, #ff1a1a, #cc0000);
       box-shadow: 0 6px 18px rgba(255,0,0,.35);
     }
-    .btn.youtube:hover{
-      filter: brightness(1.1);
-      transform: translateY(-2px);
-    }
-    .btn.youtube:active{
-      transform: translateY(0);
-    }
+    .btn.youtube:hover{ filter: brightness(1.1); transform: translateY(-2px); }
+    .btn.youtube:active{ transform: translateY(0); }
 
     .muted{color:var(--muted)}
 
@@ -412,16 +372,6 @@
       font-size: 12px;
     }
     .small{font-size:12px}
-    .err{ color: #ffb4b4; font-size: 12px; margin-top: 4px; }
-
-    .loading{
-      width: 20px; height: 20px;
-      border: 2px solid rgba(255,255,255,.18);
-      border-top-color: rgba(124,92,255,.9);
-      border-radius: 999px;
-      animation: spin .8s linear infinite;
-    }
-    @keyframes spin{to{transform: rotate(360deg)}}
 
     .toTop{
       position: fixed;
@@ -456,51 +406,21 @@
       animation: pulseLift 2.4s ease-in-out infinite;
       transform-origin: center;
     }
+    .cta-anim:hover{ animation-play-state: paused; transform: translateY(-3px) scale(1.04); filter: brightness(1.06); }
+    .cta-anim:active{ transform: translateY(0) scale(.99); }
 
-    .cta-anim:hover{
-      animation-play-state: paused;
-      transform: translateY(-3px) scale(1.04);
-      filter: brightness(1.06);
-    }
+    .cta-yt{ box-shadow: 0 10px 25px rgba(255,0,0,.25); }
+    .cta-yt:hover{ box-shadow: 0 18px 42px rgba(255,0,0,.35); }
 
-    .cta-anim:active{
-      transform: translateY(0) scale(.99);
-    }
-
-    .cta-anim::after{
-      content:"";
-      position:absolute;
-      inset:-3px;
-      border-radius: 16px;
-      background: radial-gradient(200px 70px at 30% 10%, rgba(255,255,255,.25), transparent 60%);
-      opacity:.45;
-      pointer-events:none;
-      transition: opacity .2s ease;
-    }
-    .cta-anim:hover::after{opacity:.7;}
-
-    .cta-yt{
-      box-shadow: 0 10px 25px rgba(255,0,0,.25);
-    }
-    .cta-yt:hover{
-      box-shadow: 0 18px 42px rgba(255,0,0,.35);
-    }
-
-    .cta-wa{
-      box-shadow: 0 10px 25px rgba(37,211,102,.35);
-    }
-    .cta-wa:hover{
-      box-shadow: 0 18px 42px rgba(37,211,102,.55);
-    }
+    .cta-wa{ box-shadow: 0 10px 25px rgba(37,211,102,.35); }
+    .cta-wa:hover{ box-shadow: 0 18px 42px rgba(37,211,102,.55); }
 
     .cta-pix{
       border-color: rgba(124,92,255,.55);
       background: linear-gradient(135deg, rgba(124,92,255,.32), rgba(36,211,238,.12));
       box-shadow: 0 10px 25px rgba(124,92,255,.25);
     }
-    .cta-pix:hover{
-      box-shadow: 0 18px 42px rgba(124,92,255,.38);
-    }
+    .cta-pix:hover{ box-shadow: 0 18px 42px rgba(124,92,255,.38); }
 
     .toast{
       position: fixed;
@@ -523,10 +443,7 @@
       gap:10px;
       align-items:center;
     }
-    .toast.show{
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
+    .toast.show{ opacity: 1; transform: translateX(-50%) translateY(0); }
     .toast .dot{
       width:8px;height:8px;border-radius:999px;
       background: rgba(36,211,238,.75);
@@ -553,8 +470,6 @@
 </head>
 
 <body>
-  <div class="bg"></div>
-
   <header id="siteHeader">
     <div class="wrap" style="display:flex; align-items:center; justify-content:space-between; gap:14px;">
       <div class="brand">
@@ -566,6 +481,7 @@
           <p>Produtos recomendados</p>
         </div>
       </div>
+
       <nav aria-label="Navegação">
         <button class="tab active" data-tab="produtos" type="button">Produtos</button>
         <button class="tab" data-tab="grupo" type="button">Grupo do Canal</button>
@@ -588,6 +504,7 @@
           Aqui estão os equipamentos que eu realmente uso e recomendo no canal.
           Se inscreva e acompanhe esta vitrine — sempre que eu indicar algo novo nos vídeos, vai aparecer aqui.
         </span>
+
         <div style="margin-top:10px;">
           <a
             class="cta-anim cta-yt"
@@ -629,7 +546,6 @@
         <label class="muted small" style="display:flex; gap:8px; align-items:center;">
           Ordenar:
           <select id="sortSelect" class="select" aria-label="Ordenar produtos">
-            <option value="relevance">Relevância</option>
             <option value="channelOrder">Ordem do canal</option>
             <option value="az">A–Z</option>
           </select>
@@ -729,68 +645,185 @@
   </div>
 
   <script>
-  
-    const PROXY_PRIMARY  = "https://otimizando-o-altar.onrender.com";  // Render (principal)
-    const PROXY_FALLBACK = "https://backend-site-iol5.vercel.app/";          // Vercel (reserva)
-
+    // =========================================================
+    // ✅ BACKEND REMOVIDO 100%: tudo vem do array PRODUCTS
+    // =========================================================
     const FALLBACK_IMAGE = "https://i.imgur.com/OqRCKIx.jpeg";
     const PIX_KEY = "gabrielsanto.gs31@gmail.com";
 
-    const PREVIEW_CACHE_KEY = "oa_preview_cache_v1";
-    const PREVIEW_TTL_MS = 1000 * 60 * 60 * 12;
-    const previewMem = new Map();
-
-    const backendHealth = {
-      lastOk: null,          // "primary" | "fallback" | null
-      lastError: null,       // string
-      failoverCount: 0
-    };
-
-    function loadPreviewCache(){
-      try{
-        const raw = localStorage.getItem(PREVIEW_CACHE_KEY);
-        return raw ? JSON.parse(raw) : {};
-      }catch{ return {}; }
-    }
-    function savePreviewCache(obj){
-      try{ localStorage.setItem(PREVIEW_CACHE_KEY, JSON.stringify(obj)); }catch{}
-    }
-    function getCachedPreview(url){
-      if (previewMem.has(url)) return previewMem.get(url);
-      const disk = loadPreviewCache();
-      const hit = disk[url];
-      if (!hit) return null;
-      const isFresh = (Date.now() - (hit.t || 0)) < PREVIEW_TTL_MS;
-      if (!isFresh) return null;
-      previewMem.set(url, hit.v);
-      return hit.v;
-    }
-    function setCachedPreview(url, value){
-      previewMem.set(url, value);
-      const disk = loadPreviewCache();
-      disk[url] = { t: Date.now(), v: value };
-      savePreviewCache(disk);
-    }
-
+    // ✅ EDITE AQUI (manual)
+    // Campos:
+    // - productUrl (obrigatório)
+    // - category (audio|video|iluminacao|outros)
+    // - title (obrigatório)
+    // - image (opcional)
+    // - price (opcional - texto livre)
+    // - videoUrl (opcional)
+    // - affiliateUrl (opcional - se quiser abrir um link diferente)
+    // - label (opcional - badge na imagem)
     const PRODUCTS = [
-      { productUrl: "https://mercadolivre.com/sec/2Ssek6L", videoUrl: "https://youtu.be/Et5CyAuHwIw?si=EJf7JDt26AUesjzZ", category: "audio", label: "MESA AZM AUDIO 16FX" },
-      { productUrl: "https://mercadolivre.com/sec/1YgcKQ8", videoUrl: "https://youtu.be/Et5CyAuHwIw?si=EJf7JDt26AUesjzZ", category: "audio", label: "MESA AZM AUDIO 12FX" },
-      { productUrl: "https://mercadolivre.com/sec/2KiBiVv", videoUrl: "https://youtu.be/Hv5pCWgaH7c?si=MtiAijuzmMXhCk-T", category: "audio", label: "AMPLIFICADOR DE FONE" },
-      { productUrl: "https://mercadolivre.com/sec/1N2crbk", videoUrl: "https://youtu.be/KCptWBmh1JM?si=AcTtfm2sepo1WMdu", category: "iluminacao", label: "COB 200W" },
-      { productUrl: "https://mercadolivre.com/sec/2MAuwvv", videoUrl: "https://youtu.be/ov9ZZiswLME?si=m5FATw-_I_M0KyUc", category: "audio", label: "AXIOS 16" },
-      { productUrl: "https://mercadolivre.com/sec/27hmXHu", videoUrl: "https://youtu.be/ov9ZZiswLME?si=m5FATw-_I_M0KyUc", category: "audio", label: "AXIOS 24" },
-      { productUrl: "https://mercadolivre.com/sec/1qwj9sb", videoUrl: "https://youtu.be/ov9ZZiswLME?si=m5FATw-_I_M0KyUc", category: "audio", label: "AXIOS 32" },
-      { productUrl: "https://mercadolivre.com/sec/2XtZSXD", videoUrl: "https://www.youtube.com/watch?v=cMIUIbyGmS0", category: "audio", label: "CABO 30M SANTO ANGELO" },
-      { productUrl: "https://mercadolivre.com/sec/1H7Gkwv", videoUrl: "https://www.youtube.com/watch?v=cMIUIbyGmS0", category: "audio", label: "KIT PLUG XLR" },
-      { productUrl: "https://mercadolivre.com/sec/1959cxg", videoUrl: "https://www.youtube.com/watch?v=cMIUIbyGmS0", category: "iluminacao", label: "MESA DMX" },
-      { productUrl: "https://mercadolivre.com/sec/1fTYLza", videoUrl: "https://www.youtube.com/watch?v=cMIUIbyGmS0", category: "iluminacao", label: "KIT 10 PAR LED" },
-      { productUrl: "https://mercadolivre.com/sec/1CvLVRb", videoUrl: "https://www.youtube.com/watch?v=cMIUIbyGmS0", category: "iluminacao", label: "KIT 2 RGBW" },
-      { productUrl: "https://mercadolivre.com/sec/2CAeY2k", videoUrl: "https://www.youtube.com/watch?v=cMIUIbyGmS0", category: "iluminacao", label: "COB PAR38" },
-      { productUrl: "https://mercadolivre.com/sec/1o7LKWc", videoUrl: "https://www.youtube.com/watch?v=cMIUIbyGmS0", category: "iluminacao", label: "HALÓGENA PAR38" },
-      { productUrl: "https://s.shopee.com.br/VzoCkT2vB", videoUrl: "https://www.youtube.com/watch?v=m8SMKYc_pkg", category: "outros", label: "CABO RJ45 BLINDADO" },
-      { productUrl: "https://s.shopee.com.br/7AWi8t6QQs", videoUrl: "https://www.youtube.com/watch?v=m8SMKYc_pkg", category: "outros", label: "CONECTOR RJ45 BLINDADO" },
-      { productUrl: "https://pt.aliexpress.com/item/1005009123185877.html", videoUrl: "https://www.youtube.com/watch?v=m8SMKYc_pkg", category: "audio", label: "MULTICABO RJ45" },
-      { productUrl: "https://pt.aliexpress.com/item/1005003698027172.html", videoUrl: "https://www.youtube.com/watch?v=2h3-ERm8sKc", category: "video", label: "CÂMERA PTZ" }
+      {
+        productUrl: "https://mercadolivre.com/sec/2Ssek6L",
+        videoUrl: "https://youtu.be/Et5CyAuHwIw?si=EJf7JDt26AUesjzZ",
+        category: "audio",
+        title: "Mesa de Som 16 Canais Bluetooth Az Audio AZM16 FX",
+        image: "https://http2.mlstatic.com/D_NQ_NP_905205-MLA99542522136_122025-O.webp",
+        price: "",
+        label: "Mesa Analógica"
+      },
+      {
+        productUrl: "https://mercadolivre.com/sec/1YgcKQ8",
+        videoUrl: "https://youtu.be/Et5CyAuHwIw?si=EJf7JDt26AUesjzZ",
+        category: "audio",
+        title: "Mesa de Som 12 Canais Bluetooth Az Audio AZM12 FX",
+        image: "https://http2.mlstatic.com/D_NQ_NP_905205-MLA99542522136_122025-O.webp",
+        price: "",
+        label: "Mesa Analógica"
+      },
+      {
+        productUrl: "https://mercadolivre.com/sec/2KiBiVv",
+        videoUrl: "https://youtu.be/Hv5pCWgaH7c?si=MtiAijuzmMXhCk-T",
+        category: "audio",
+        title: "Amplificador De Fone Vedo Ha800-p 8 Canais",
+        image: "https://http2.mlstatic.com/D_NQ_NP_797252-MLA99489907106_112025-O.webp",
+        price: "",
+        label: "Amplificador de Fone"
+      },
+      {
+        productUrl: "https://mercadolivre.com/sec/1N2crbk",
+        videoUrl: "https://youtu.be/KCptWBmh1JM?si=AcTtfm2sepo1WMdu",
+        category: "iluminacao",
+        title: "Canhão Par Luatek Led Cob 200w Branco Quente e Frio",
+        image: "https://http2.mlstatic.com/D_NQ_NP_972054-MLA99930114281_112025-O.webp",
+        price: "",
+        label: "Cob 200w"
+      },
+      {
+        productUrl: "https://mercadolivre.com/sec/2MAuwvv",
+        videoUrl: "https://youtu.be/ov9ZZiswLME?si=m5FATw-_I_M0KyUc",
+        category: "audio",
+        title: "Duonn Axios 16 Som Digital De Mesa",
+        image: "https://http2.mlstatic.com/D_NQ_NP_694133-MLA80402722341_112024-O.webp",
+        price: "",
+        label: "Mesa Digital"
+      },
+      {
+        productUrl: "https://mercadolivre.com/sec/27hmXHu",
+        videoUrl: "https://youtu.be/ov9ZZiswLME?si=m5FATw-_I_M0KyUc",
+        category: "audio",
+        title: "Duonn Axios 24 Som Digital De Mesa",
+        image: "https://http2.mlstatic.com/D_NQ_NP_694133-MLA80402722341_112024-O.webp",
+        price: "",
+        label: "Mesa Digital"
+      },
+      {
+        productUrl: "https://mercadolivre.com/sec/1qwj9sb",
+        videoUrl: "https://youtu.be/ov9ZZiswLME?si=m5FATw-_I_M0KyUc",
+        category: "audio",
+        title: "Duonn Axios 32 Som Digital De Mesa",
+        image: "https://http2.mlstatic.com/D_NQ_NP_694133-MLA80402722341_112024-O.webp",
+        price: "",
+        label: "Mesa Digital"
+      },
+      {
+        productUrl: "https://mercadolivre.com/sec/2XtZSXD",
+        videoUrl: "https://www.youtube.com/watch?v=cMIUIbyGmS0",
+        category: "audio",
+        title: "Rolo De Cabo Microfone Santo Angelo X30 30 Metros",
+        image: "https://http2.mlstatic.com/D_NQ_NP_699539-MLB93665853808_102025-O.webp",
+        price: "",
+        label: "Cabos 30 metros"
+      },
+      {
+        productUrl: "https://mercadolivre.com/sec/1H7Gkwv",
+        videoUrl: "https://www.youtube.com/watch?v=cMIUIbyGmS0",
+        category: "audio",
+        title: "Kit 20 Plug Conector Xlr Cannon Macho Femea Corpo Metalico",
+        image: "https://http2.mlstatic.com/D_NQ_NP_700821-MLA99464232242_112025-O.webp",
+        price: "",
+        label: "Conectores XLR"
+      },
+      {
+        productUrl: "https://mercadolivre.com/sec/1959cxg",
+        videoUrl: "https://www.youtube.com/watch?v=cMIUIbyGmS0",
+        category: "iluminacao",
+        title: "Mesa Dmx 512 Controladora 192 Canais Cabo Dmx",
+        image: "https://http2.mlstatic.com/D_NQ_NP_719931-MLA100054727271_122025-O.webp",
+        price: "",
+        label: "Mesa DMX"
+      },
+      {
+        productUrl: "https://mercadolivre.com/sec/1fTYLza",
+        videoUrl: "https://www.youtube.com/watch?v=cMIUIbyGmS0",
+        category: "iluminacao",
+        title: "Kit 10 Canhão Refletor 36 Leds Par 64 Rgb Dmx Slim Strobo",
+        image: "https://http2.mlstatic.com/D_NQ_NP_861054-MLB89361663017_082025-O.webp",
+        price: "",
+        label: "ParLed"
+      },
+      {
+        productUrl: "https://mercadolivre.com/sec/1CvLVRb",
+        videoUrl: "https://www.youtube.com/watch?v=cMIUIbyGmS0",
+        category: "iluminacao",
+        title: "Kit 2 Refletor Par64 Led 36x3w Rgbw Dmx Cbi Iluminaçã",
+        image: "https://http2.mlstatic.com/D_NQ_NP_829747-MLA99944869199_112025-O.webp",
+        price: "",
+        label: "ParLed"
+      },
+      {
+        productUrl: "https://mercadolivre.com/sec/2CAeY2k",
+        videoUrl: "https://www.youtube.com/watch?v=cMIUIbyGmS0",
+        category: "iluminacao",
+        title: "Canhão Refletor Spot Par 38 Com Bandeira Barndoor Integrado 127/220v",
+        image: "https://http2.mlstatic.com/D_NQ_NP_653938-MLB97426635101_112025-O.webp",
+        price: "",
+        label: "Cob Analógico"
+      },
+      {
+        productUrl: "https://mercadolivre.com/sec/1o7LKWc",
+        videoUrl: "https://www.youtube.com/watch?v=cMIUIbyGmS0",
+        category: "iluminacao",
+        title: "Lâmpada Halogena Par 38 120w E27 Branco Quente",
+        image: "https://http2.mlstatic.com/D_NQ_NP_772800-MLB89011406162_082025-O-lmpada-halogena-par-38-120w-e27-branco-quente-envio-rapido.webp",
+        price: "",
+        label: "Lâmpada Cob"
+      },
+      {
+        productUrl: "https://s.shopee.com.br/VzoCkT2vB",
+        videoUrl: "https://www.youtube.com/watch?v=m8SMKYc_pkg",
+        category: "outros",
+        title: "Cabo de Rede Montado Dupla Capa Blindado Externo RJ45 Cat5E",
+        image: "https://down-br.img.susercontent.com/file/br-11134207-7r98o-m9ivutps9y4ic7_tn",
+        price: "",
+        label: "Cabo de Rede"
+      },
+      {
+        productUrl: "https://s.shopee.com.br/7AWi8t6QQs",
+        videoUrl: "https://www.youtube.com/watch?v=m8SMKYc_pkg",
+        category: "outros",
+        title: "Conector RJ45 CAT5e blindado banhado a ouro para Redes",
+        image: "https://down-br.img.susercontent.com/file/br-11134207-7qukw-lh3hytvasv0rf6",
+        price: "",
+        label: "Conector RJ45"
+      },
+      {
+        productUrl: "https://pt.aliexpress.com/item/1005009123185877.html",
+        videoUrl: "https://www.youtube.com/watch?v=m8SMKYc_pkg",
+        category: "audio",
+        title: "Multicabo RJ45",
+        image: "https://ae-pic-a1.aliexpress-media.com/kf/S5bc253badb654c33889febdeb89c8f5fK.jpg?has_lang=1&ver=2_220x220q75.jpg_.avif",
+        price: "",
+        label: "Multicabo"
+      },
+      {
+        productUrl: "https://pt.aliexpress.com/item/1005003698027172.html",
+        videoUrl: "https://www.youtube.com/watch?v=2h3-ERm8sKc",
+        category: "video",
+        title: "Câmera PTZ SMTAV 1080P",
+        image: "https://ae-pic-a1.aliexpress-media.com/kf/S0387e44c399241e1973e047abba6181e4.jpg_220x220q75.jpg_.avif",
+        price: "",
+        label: "Câmera PTZ"
+      }
     ];
 
     function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
@@ -801,49 +834,12 @@
       }[s]));
     }
 
-    function formatBRL(value){
-      if(typeof value !== "number") return "";
-      return value.toLocaleString("pt-BR", { style:"currency", currency:"BRL" });
-    }
-
-    function normalizePrice(price){
-      if (price == null) return "";
-      const s = String(price).trim();
-      if (!s) return "";
-      const cleaned = s.replace(",", ".").replace(/[^\d.]/g, "");
-      const n = Number(cleaned);
-      if (Number.isFinite(n) && n > 0) return formatBRL(n);
-      return s;
-    }
-
     function storeName(url){
       const u = String(url || "").toLowerCase();
       if (u.includes("shopee") || u.includes("shope.ee")) return "Shopee";
       if (u.includes("aliexpress")) return "AliExpress";
       if (u.includes("mercadolivre") || u.includes("mercadolibre") || u.includes("/sec/")) return "Mercado Livre";
       return "Loja";
-    }
-
-    function looksLikeGarbageTitle(title){
-      const t = String(title ?? "").trim();
-      if (!t) return true;
-      if (t.length < 4) return true;
-      const onlyDigits = /^[0-9]+$/.test(t.replace(/\s+/g, ""));
-      if (onlyDigits) return true;
-      const digits = (t.match(/\d/g) || []).length;
-      if (digits / t.length > 0.7) return true;
-      const lower = t.toLowerCase();
-      if (lower.includes("captcha") || lower.includes("acesso negado") || lower.includes("verificação")) return true;
-      return false;
-    }
-
-    function safeTitle(previewTitle, fallbackLabel){
-      return looksLikeGarbageTitle(previewTitle) ? (fallbackLabel || "Produto") : String(previewTitle).trim();
-    }
-
-    function isAliExpressUrl(url){
-      const u = String(url || "").toLowerCase();
-      return u.includes("aliexpress.com");
     }
 
     function debounce(fn, wait=180){
@@ -868,103 +864,6 @@
       }catch{}
     }
 
-    // =============================
-    // ✅ FETCH COM TIMEOUT + FAILOVER
-    // =============================
-    function stripSlashEnd(s){ return String(s || "").replace(/\/+$/,""); }
-    function joinUrl(base, path){
-      const b = stripSlashEnd(base);
-      const p = String(path || "");
-      if (!b) return p;
-      if (!p) return b;
-      if (p.startsWith("/")) return b + p;
-      return b + "/" + p;
-    }
-
-    async function fetchWithTimeout(url, options = {}, timeoutMs = 8500){
-      const controller = new AbortController();
-      const id = setTimeout(() => controller.abort(), timeoutMs);
-      try{
-        return await fetch(url, { ...options, signal: controller.signal });
-      } finally {
-        clearTimeout(id);
-      }
-    }
-
-    async function apiFetch(path, options = {}, timeoutMs = 8500){
-      const primaryUrl = joinUrl(PROXY_PRIMARY, path);
-      const fallbackUrl = joinUrl(PROXY_FALLBACK, path);
-
-      // 1) tenta primário
-      try{
-        const r1 = await fetchWithTimeout(primaryUrl, options, timeoutMs);
-
-        // se deu ok, beleza
-        if (r1.ok){
-          backendHealth.lastOk = "primary";
-          backendHealth.lastError = null;
-          return r1;
-        }
-
-        // 4xx normalmente é erro do pedido, não do servidor -> não adianta fallback
-        if (r1.status >= 400 && r1.status < 500){
-          backendHealth.lastOk = "primary";
-          backendHealth.lastError = `Primário retornou ${r1.status}`;
-          return r1;
-        }
-
-        // 5xx -> tenta fallback
-        throw new Error(`Primário 5xx (${r1.status})`);
-      } catch (e){
-        // 2) fallback
-        try{
-          const r2 = await fetchWithTimeout(fallbackUrl, options, timeoutMs);
-          if (r2.ok){
-            backendHealth.lastOk = "fallback";
-            backendHealth.lastError = null;
-            backendHealth.failoverCount++;
-          } else {
-            backendHealth.lastOk = "fallback";
-            backendHealth.lastError = `Fallback retornou ${r2.status}`;
-          }
-          return r2;
-        } catch (e2){
-          backendHealth.lastOk = null;
-          backendHealth.lastError = "Falha no primário e no fallback";
-          throw e2;
-        }
-      }
-    }
-
-    async function fetchPreview(product){
-      const productUrl = product.productUrl;
-
-      const cached = getCachedPreview(productUrl);
-      if (cached) return cached;
-
-      if (isAliExpressUrl(productUrl)){
-        const v = { finalUrl: productUrl, title: product.label || "Produto", image: FALLBACK_IMAGE, price: "", _fallback: true };
-        setCachedPreview(productUrl, v);
-        return v;
-      }
-
-      const path = `/api/preview?url=${encodeURIComponent(productUrl)}`;
-
-      try{
-        const res = await apiFetch(path, { headers: { "Accept": "application/json" }, cache: "no-store" }, 9000);
-        if(!res.ok) throw new Error(`Proxy HTTP ${res.status}`);
-        const data = await res.json();
-        data.title = safeTitle(data?.title, product.label);
-        if (!data.image) data.image = FALLBACK_IMAGE;
-        setCachedPreview(productUrl, data);
-        return data;
-      }catch{
-        const v = { finalUrl: productUrl, title: product.label || "Produto", image: FALLBACK_IMAGE, price: "", _fallback: true };
-        setCachedPreview(productUrl, v);
-        return v;
-      }
-    }
-
     const headerEl = document.getElementById("siteHeader");
     function syncHeaderHeight(){
       if (!headerEl) return;
@@ -972,9 +871,7 @@
       if (h > 0) document.documentElement.style.setProperty("--header-h", `${h}px`);
     }
     window.addEventListener("load", syncHeaderHeight, { passive: true });
-    window.addEventListener("resize", () => {
-      syncHeaderHeight();
-    }, { passive: true });
+    window.addEventListener("resize", syncHeaderHeight, { passive: true });
     if (window.visualViewport){
       window.visualViewport.addEventListener("resize", syncHeaderHeight, { passive: true });
       window.visualViewport.addEventListener("scroll", syncHeaderHeight, { passive: true });
@@ -1001,7 +898,7 @@
 
     let currentFilter = "all";
     let currentSearch = "";
-    let currentSort = "relevance";
+    let currentSort = "channelOrder";
 
     const initial = loadState();
     if (initial.filter) currentFilter = initial.filter;
@@ -1049,47 +946,18 @@
       });
     }
 
-    function cardSkeleton(labelText){
-      const div = document.createElement("div");
-      div.className = "card";
-      div.innerHTML = `
-        <div class="thumb">
-          <div class="loading" aria-label="Carregando"></div>
-          ${labelText ? `<div class="badge">${escapeHtml(labelText)}</div>` : ""}
-        </div>
-        <div class="content">
-          <p class="name">Carregando informações...</p>
-          <div class="meta"><span class="muted">Carregando…</span></div>
-          <div class="price muted">—</div>
-          <div class="btn" aria-disabled="true">Abrir</div>
-        </div>
-      `;
-      return div;
-    }
-
-    function matchesFilters(product, title){
-      const name = String(title || product.label || "").toLowerCase();
+    function matchesFilters(p){
+      const name = String(p.title || "").toLowerCase();
       const searchOk = !currentSearch || name.includes(currentSearch);
-      const filterOk = (currentFilter === "all") || (product.category === currentFilter);
+      const filterOk = (currentFilter === "all") || (p.category === currentFilter);
       return searchOk && filterOk;
     }
 
     function applySort(items){
-      if (currentSort === "az") return items.sort((a,b) => a.title.localeCompare(b.title, "pt-BR"));
-      if (currentSort === "channelOrder") return items;
-
-      if (currentSort === "relevance" && currentSearch){
-        const q = currentSearch;
-        return items.sort((a,b) => {
-          const at = a.title.toLowerCase();
-          const bt = b.title.toLowerCase();
-          const aStarts = at.startsWith(q) ? 0 : 1;
-          const bStarts = bt.startsWith(q) ? 0 : 1;
-          if (aStarts !== bStarts) return aStarts - bStarts;
-          return at.localeCompare(bt, "pt-BR");
-        });
+      if (currentSort === "az"){
+        return items.slice().sort((a,b) => String(a.title).localeCompare(String(b.title), "pt-BR"));
       }
-      return items;
+      return items; // channelOrder = ordem do array
     }
 
     function wireShareButtons(){
@@ -1110,103 +978,52 @@
       });
     }
 
-    async function renderProducts(){
-      grid.innerHTML = "";
-      apiHint.textContent = "";
-      countText.textContent = "Carregando…";
+    function buildCard(p){
+      const goUrl = p.affiliateUrl || p.productUrl;
+      const img = p.image || FALLBACK_IMAGE;
+      const loja = storeName(goUrl);
+      const badge = p.label ? `<div class="badge">${escapeHtml(p.label)}</div>` : "";
 
-      PRODUCTS.forEach(p => grid.appendChild(cardSkeleton(p.label)));
+      const priceHtml = p.price
+        ? `<div class="price">${escapeHtml(p.price)}</div>`
+        : `<div class="price muted" style="font-weight:600;">&nbsp;</div>`;
 
-      const results = await Promise.allSettled(PRODUCTS.map(p => fetchPreview(p)));
+      const videoBtn = p.videoUrl
+        ? `<a class="btn youtube" href="${escapeHtml(p.videoUrl)}" target="_blank" rel="noopener">▶ Ver vídeo</a>`
+        : "";
 
-      grid.innerHTML = "";
-      const built = [];
-
-      let fallbackCount = 0;
-
-      PRODUCTS.forEach((p, idx) => {
-        const r = results[idx];
-        const goUrl = p.affiliateUrl || p.productUrl;
-
-        if (r.status !== "fulfilled"){
-          const title = p.label || "Produto";
-          if (!matchesFilters(p, title)) return;
-
-          fallbackCount++;
-
-          built.push({
-            title,
-            html: `
-              <div class="card">
-                <div class="thumb">
-                  <img src="${escapeHtml(FALLBACK_IMAGE)}" alt="${escapeHtml(title)}" loading="lazy"
-                       onerror="this.onerror=null; this.src='${escapeHtml(FALLBACK_IMAGE)}';" />
-                  ${p.label ? `<div class="badge">${escapeHtml(p.label)}</div>` : ""}
-                </div>
-                <div class="content">
-                  <p class="name">${escapeHtml(title)}</p>
-                  <div class="meta">
-                    <span>${escapeHtml(storeName(p.productUrl))}</span>
-                    <span>•</span>
-                    <span class="muted">Custo Benefício</span>
-                  </div>
-                  <div class="err">Erro ao carregar detalhes.</div>
-
-                  ${p.videoUrl ? `<a class="btn youtube" href="${escapeHtml(p.videoUrl)}" target="_blank" rel="noopener">▶ Ver vídeo</a>` : ""}
-
-                  <a class="btn" href="${escapeHtml(goUrl)}" target="_blank" rel="noopener">Ver no site</a>
-                  <button class="btn secondary" type="button" data-share="${escapeHtml(goUrl)}">Compartilhar</button>
-                </div>
-              </div>
-            `
-          });
-          return;
-        }
-
-        const data = r.value;
-        const title = safeTitle(data?.title, p.label);
-        if (!matchesFilters(p, title)) return;
-
-        const img = data?.image || FALLBACK_IMAGE;
-        const price = normalizePrice(data?.price);
-        const loja = storeName(data?.finalUrl || p.productUrl);
-
-        if (data?._fallback) fallbackCount++;
-
-        built.push({
-          title,
-          html: `
-            <div class="card">
-              <div class="thumb">
-                <img src="${escapeHtml(img)}" alt="${escapeHtml(title)}" loading="lazy"
-                     onerror="this.onerror=null; this.src='${escapeHtml(FALLBACK_IMAGE)}';" />
-                ${p.label ? `<div class="badge">${escapeHtml(p.label)}</div>` : ""}
-              </div>
-              <div class="content">
-                <p class="name">${escapeHtml(title)}</p>
-                <div class="meta">
-                  <span>${escapeHtml(loja)}</span>
-                  <span>•</span>
-                  <span class="muted">Melhor valor</span>
-                </div>
-
-                ${price ? `<div class="price">${escapeHtml(price)}</div>` : `<div class="price muted" style="font-weight:600;">&nbsp;</div>`}
-
-                ${p.videoUrl ? `<a class="btn youtube" href="${escapeHtml(p.videoUrl)}" target="_blank" rel="noopener">▶ Ver vídeo</a>` : ""}
-
-                <a class="btn" href="${escapeHtml(goUrl)}" target="_blank" rel="noopener">Ver no site</a>
-                <button class="btn secondary" type="button" data-share="${escapeHtml(goUrl)}">Compartilhar</button>
-              </div>
+      return `
+        <div class="card">
+          <div class="thumb">
+            <img src="${escapeHtml(img)}" alt="${escapeHtml(p.title)}" loading="lazy"
+                 onerror="this.onerror=null; this.src='${escapeHtml(FALLBACK_IMAGE)}';" />
+            ${badge}
+          </div>
+          <div class="content">
+            <p class="name">${escapeHtml(p.title)}</p>
+            <div class="meta">
+              <span>${escapeHtml(loja)}</span>
+              <span>•</span>
+              <span class="muted">${escapeHtml(p.category || "")}</span>
             </div>
-          `
-        });
-      });
 
-      const total = PRODUCTS.length;
-      const showing = built.length;
-      countText.textContent = `Mostrando ${showing} de ${total}`;
+            ${priceHtml}
 
-      const sorted = applySort(built);
+            ${videoBtn}
+
+            <a class="btn" href="${escapeHtml(goUrl)}" target="_blank" rel="noopener">Ver no site</a>
+            <button class="btn secondary" type="button" data-share="${escapeHtml(goUrl)}">Compartilhar</button>
+          </div>
+        </div>
+      `;
+    }
+
+    async function renderProducts(){
+      apiHint.textContent = "";
+      const filtered = PRODUCTS.filter(matchesFilters);
+      const sorted = applySort(filtered);
+
+      countText.textContent = `Mostrando ${sorted.length} de ${PRODUCTS.length}`;
 
       if (!sorted.length){
         grid.innerHTML = `
@@ -1224,7 +1041,7 @@
           resetBtn.addEventListener("click", async () => {
             currentFilter = "all";
             currentSearch = "";
-            currentSort = "relevance";
+            currentSort = "channelOrder";
             saveState({ filter: currentFilter, search: currentSearch, sort: currentSort });
 
             pills.forEach(x => x.classList.remove("active"));
@@ -1238,31 +1055,16 @@
         return;
       }
 
-      grid.innerHTML = sorted.map(x => x.html).join("");
+      grid.innerHTML = sorted.map(buildCard).join("");
       wireShareButtons();
-
-      // Hint inteligente (mostra se teve failover)
-      const ok = backendHealth.lastOk;
-      if (fallbackCount > 0){
-        apiHint.textContent = `Observação: alguns item(ns) estão com dados simplificados (bloqueio da loja/captcha).`;
-      } else if (ok === "fallback"){
-        apiHint.textContent = `Aviso: o servidor principal falhou e o site usou o servidor reserva (Vercel).`;
-      } else if (backendHealth.lastError){
-        apiHint.textContent = `Aviso: ${backendHealth.lastError}.`;
-      } else {
-        apiHint.textContent = "";
-      }
     }
 
     async function renderWithTransition(){
       grid.classList.add("is-switching");
-      await sleep(140);
-
-      const p = renderProducts();
+      await sleep(120);
+      await renderProducts();
       await sleep(0);
       grid.classList.remove("is-switching");
-
-      await p;
 
       const cards = grid.querySelectorAll(".card");
       cards.forEach((c, i) => {
@@ -1290,7 +1092,6 @@
 
     function setHero(key){
       const cfg = TABS_COPY[key] || TABS_COPY.produtos;
-
       hero.classList.add("is-switching");
       setTimeout(() => {
         heroTitle.textContent = cfg.title;
@@ -1318,7 +1119,6 @@
 
     async function switchSection(key){
       const myToken = ++switchToken;
-
       setHero(key);
 
       const next = sections[key];
@@ -1337,7 +1137,6 @@
 
       if (key === "produtos"){
         await renderWithTransition();
-        if (myToken !== switchToken) return;
       } else {
         apiHint.textContent = "";
       }
@@ -1358,7 +1157,6 @@
     });
 
     const pills = Array.from(document.querySelectorAll(".pill"));
-
     pills.forEach(x => x.classList.remove("active"));
     const initialPill = document.querySelector(`.pill[data-filter="${currentFilter}"]`) || document.querySelector(`.pill[data-filter="all"]`);
     if (initialPill) initialPill.classList.add("active");
