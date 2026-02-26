@@ -542,6 +542,9 @@
       color: rgba(255,255,255,.82);
       line-height:1.35;
     }
+	.formBackdrop{
+	  overflow-y: auto;
+	}
 
 	  @media (max-width: 600px){
 	
@@ -1000,6 +1003,8 @@
     function openForm(){
       formBackdrop.style.display = "flex";
       formBackdrop.setAttribute("aria-hidden","false");
+	  document.body.style.overflow = "hidden";
+	  document.body.style.height = "100vh";
       // reseta estado
       resultBox.style.display = "none";
       waBox.style.display = "none";
@@ -1009,12 +1014,14 @@
       chancePct.textContent = "0%";
       chanceHint.textContent = "Clique em “Analisar” pra calcular (com muita unção e zero ciência).";
 
-      try{ document.getElementById("nome").focus(); }catch(e){}
     }
-    function closeForm(){
-      formBackdrop.style.display = "none";
-      formBackdrop.setAttribute("aria-hidden","true");
-    }
+	function closeForm(){
+	  formBackdrop.style.display = "none";
+	  formBackdrop.setAttribute("aria-hidden","true");
+	
+	  document.body.style.overflow = "";
+	  document.body.style.height = "";
+	}
 
     btnCancelForm.addEventListener("click", closeForm);
     btnCloseForm.addEventListener("click", closeForm);
