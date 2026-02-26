@@ -230,43 +230,63 @@
 
     @keyframes cardIn{ from{opacity:0; transform: translateY(10px) scale(.99);} to{opacity:1; transform: translateY(0) scale(1);} }
 
-    .card{
-      grid-column: span 4;
-      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
-      border:1px solid var(--border);
-      border-radius: var(--radius);
-      overflow:hidden;
-      box-shadow: var(--shadow);
-      display:flex;
-      flex-direction:column;
-      min-height: 320px;
-      transition: transform .14s ease, border-color .14s ease, filter .14s ease;
-      animation: cardIn .22s ease both;
-    }
-    .card:hover{ transform: translateY(-2px); border-color: rgba(124,92,255,.25); filter: brightness(1.03); }
-    @media (max-width: 980px){ .card{grid-column: span 6;} }
-    @media (max-width: 640px){
-      .card{grid-column: span 12;}
-      .hero h2{font-size: 22px;}
-    }
+	.card {
+	  grid-column: span 4;
+	  background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
+	  border: 1px solid var(--border);
+	  border-radius: var(--radius);
+	  overflow: hidden;
+	  box-shadow: var(--shadow);
+	  display: flex;
+	  flex-direction: column;
+	  min-height: 320px;
+	  
+	  /* A mágica acontece aqui: transição suave para todas as propriedades */
+	  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+	  animation: cardIn .22s ease both;
+	}
+	.card:hover {
+	  /* O card sobe 12px e aumenta 2% de tamanho */
+	  transform: translateY(-12px) scale(1.02);
+	  
+	  /* Destaca a borda com a cor principal do seu tema */
+	  border-color: var(--brand); 
+	  
+	  /* Aumenta o brilho e a sombra para dar profundidade */
+	  filter: brightness(1.1);
+	  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+	}
+	.card:hover .thumb img {
+	  transform: scale(1.1);
+	  /* Tempo de ida (quando coloca o mouse): 0.4s */
+	  transition: transform 0.4s ease-in-out; 
+	}
 
-    .thumb{
-      height: 180px;
-      background: rgba(255,255,255,.05);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      position:relative;
-      overflow: hidden;
-    }
-    .thumb img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      object-position:center;
-      display:block;
-      transform: scale(1.02);
-    }
+
+	.thumb {
+	  height: 180px;
+	  background: rgba(255, 255, 255, .05);
+	  /* Alterado para flex para alinhar o conteúdo corretamente */
+	  display: flex; 
+	  align-items: center;
+	  justify-content: center;
+	  position: relative;
+	  /* Essencial para a imagem não "vazar" do card ao crescer */
+	  overflow: hidden; 
+	}
+
+	.thumb img {
+	  width: 100%;
+	  height: 100%;
+	  object-fit: cover;
+	  object-position: center;
+	  display: block;
+	  /* Estado inicial levemente maior como você definiu */
+	  transform: scale(1.02); 
+	  
+	  /* A MÁGICA: A transição aqui garante que a imagem VOLTE suavemente */
+	  transition: transform 0.6s ease-in-out; 
+	}
 
     .badge{
       position:absolute; left:12px; top:12px;
@@ -466,6 +486,20 @@
       :root{ --header-h: 72px; }
       .tab{ padding:7px 9px; font-size:12px; }
     }
+	
+	.card {
+	  /* ... outras propriedades ... */
+	  transition: transform .3s cubic-bezier(0.34, 1.56, 0.64, 1), border-color .3s ease, box-shadow .3s ease;
+	}
+	
+	.card:hover { 
+	  transform: translateY(-10px) scale(1.02); /* Sobe 10px e cresce 2% */
+	  border-color: var(--brand); 
+	  filter: brightness(1.1);
+	  box-shadow: 0 20px 40px rgba(0,0,0,0.4); /* Sombra mais profunda ao levantar */
+	}
+
+
   </style>
 </head>
 
@@ -1221,6 +1255,24 @@
     setActiveOnly("produtos");
     syncHeaderHeight();
     renderWithTransition();
+	
+	aplicarTilt();
+	
   </script>
+  
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+	<script>
+	  // Esta função deve ser chamada dentro do seu renderProducts() 
+	  // ou logo após os cards serem criados no DOM
+	  function aplicarTilt() {
+		VanillaTilt.init(document.querySelectorAll(".card"), {
+		  max: 15,    // Inclinação máxima em graus
+		  speed: 400, // Velocidade da transição
+		  glare: true, // Adiciona um efeito de brilho/reflexo
+		  "max-glare": 0.2,
+		});
+	  }
+	</script>
+ 
 </body>
 </html>
