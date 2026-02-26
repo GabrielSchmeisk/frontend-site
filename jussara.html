@@ -1066,12 +1066,14 @@
         chancePct.textContent = pct + "%";
         if (pct >= target) {
           clearInterval(timer);
-          const extras = [
-            "Resultado: promissor. Falta só a confirmação pastoral 😂",
-            "Resultado: tem unção… agora só falta o jantar 🍽️",
-            "Resultado: aprovado na pré-triagem, mas o pastor é nível hard 😅",
-            "Resultado: varão em potencial detectado. Não vacila 🙌"
-          ];
+			const extras = [
+			  "Resultado: tem potencial… mas precisa orar mais 😂",
+			  "Resultado: quase lá. Falta jejum e atitude 😅",
+			  "Resultado: promissor… mas o pastor ainda tá analisando 👀",
+			  "Resultado: deu sinal de vida espiritual, mas não se empolga 🙌",
+			  "Resultado: tá melhor que ontem… talvez 😌",
+			  "Resultado: em desenvolvimento. Continue buscando 🍽️🙏"
+			];
           chanceHint.textContent = extras[Math.floor(Math.random()*extras.length)];
           // fofura extra
           riseHearts();
