@@ -2,91 +2,104 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Jussara das modas 💘</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Página Pessoal ⭐</title>
 
   <style>
     :root{
-      --bg1:#4b0015;
-      --bg2:#8b0f2f;
-      --bg3:#ff4d6d;
-      --card:rgba(255,255,255,.14);
-      --border:rgba(255,255,255,.25);
+      --bg1:#5c0000;
+      --bg2:#cc0000;
+      --bg3:#ff2b2b;
+
+      --card:rgba(255,255,255,.12);
+      --border:rgba(255,255,255,.22);
       --text:#fff;
-      --muted:rgba(255,255,255,.85);
+      --muted:rgba(255,255,255,.86);
+
       --shadow: 0 20px 60px rgba(0,0,0,.45);
-      --glow: 0 0 25px rgba(255,255,255,.18);
+      --glow: 0 0 25px rgba(255,255,255,.14);
+
+      --accent:#ffd54a;
+      --accent2:#19a04a;
     }
 
     *{ box-sizing:border-box; }
+    html, body{
+      height:auto;
+      min-height:100%;
+    }
 
-	html, body{
-	  height: 100%;
-	}
-	
-	body{
-	  margin:0;
-	  min-height:100vh;
-	  width:100%;
-	  font-family: 'Segoe UI', system-ui, -apple-system, Arial, sans-serif;
-	  color:var(--text);
-	
-	  background:
-	    radial-gradient(circle at 20% 20%, rgba(255,255,255,.14), transparent 40%),
-	    radial-gradient(circle at 80% 30%, rgba(255,255,255,.10), transparent 40%),
-	    linear-gradient(160deg, var(--bg1), var(--bg2), var(--bg3));
-	
-	  background-attachment: fixed; /* 🔥 importante */
-	  display:flex;
-	  align-items:center;
-	  justify-content:center;
-	  padding:18px;
-	  overflow-x:hidden;
-	  overscroll-behavior: none; /* 🔥 remove bounce branco */
-	  position:relative;
-	}
+    body{
+      margin:0;
+      min-height:100vh;
+      width:100%;
+      font-family: 'Segoe UI', system-ui, -apple-system, Arial, sans-serif;
+      color:var(--text);
 
-    /* ===== FUNDO ROMÂNTICO EXTRA (brilhinhos) ===== */
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,.12), transparent 42%),
+        radial-gradient(circle at 80% 30%, rgba(255,255,255,.10), transparent 42%),
+        radial-gradient(circle at 50% 95%, rgba(255,213,74,.18), transparent 45%),
+        linear-gradient(160deg, var(--bg1), var(--bg2), var(--bg3));
+
+      /* 🔧 FIX MOBILE: evitar bug de scroll/jank */
+      background-attachment: scroll;
+
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      padding:18px;
+      overflow-x:hidden;
+      overscroll-behavior:auto;
+      position:relative;
+
+      /* evita “pulos” em alguns browsers mobile */
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
+
+    /* ===== FUNDO: “brilhinhos” ===== */
     .sparkles{
       position:fixed;
       inset:0;
       pointer-events:none;
       z-index:0;
       overflow:hidden;
-      opacity:.9;
+      opacity:.95;
     }
     .sparkle{
       position:absolute;
       top:-30px;
       width:6px;
       height:6px;
-      border-radius:50%;
-      background: rgba(255,255,255,.85);
-      box-shadow: 0 0 18px rgba(255,255,255,.55);
+      border-radius:2px;
+      background: rgba(255,213,74,.95);
+      box-shadow: 0 0 18px rgba(255,213,74,.55);
       animation: sparkleFall linear infinite;
-      opacity:.6;
+      opacity:.55;
       will-change: transform, opacity;
+      transform: rotate(45deg);
     }
     @keyframes sparkleFall{
-      0%   { transform: translate3d(0,-15vh,0); opacity:.2; }
+      0%   { transform: translate3d(0,-15vh,0) rotate(45deg); opacity:.15; }
       10%  { opacity:.75; }
-      100% { transform: translate3d(20px,115vh,0); opacity:.1; }
+      100% { transform: translate3d(24px,115vh,0) rotate(45deg); opacity:.08; }
     }
 
-    /* ===== CORAÇÕES CAINDO ===== */
-    .hearts{
+    /* ===== “estrelas” caindo ===== */
+    .stars{
       position:fixed;
       inset:0;
       pointer-events:none;
       z-index:1;
       overflow:hidden;
     }
-    .heart{
+    .star{
       position:absolute;
       top:-40px;
-      color: rgba(255,255,255,.95);
-      text-shadow: 0 10px 24px rgba(0,0,0,.22);
-      opacity:.85;
+      color: rgba(255,213,74,.95);
+      text-shadow: 0 10px 24px rgba(0,0,0,.25);
+      opacity:.9;
       will-change: transform;
       animation: fall linear infinite;
       transform: translate3d(0,0,0);
@@ -94,43 +107,52 @@
     }
     @keyframes fall{
       0%   { transform: translate3d(0,-15vh,0) rotate(0deg); }
-      100% { transform: translate3d(50px,115vh,0) rotate(340deg); }
+      100% { transform: translate3d(52px,115vh,0) rotate(340deg); }
     }
 
-    /* respeita usuário que prefere menos animação */
     @media (prefers-reduced-motion: reduce){
-      .hearts, .sparkles { display:none; }
+      .stars, .sparkles { display:none; }
     }
 
     /* ===== CONTEÚDO ===== */
     .wrap{
-      width:min(980px, 100%);
+      width:min(1020px, 100%);
       position:relative;
       z-index:2;
+      padding-bottom: calc(60px + env(safe-area-inset-bottom)); /* safe area */
     }
 
     .header{
       text-align:center;
       margin-bottom:14px;
     }
+
     .badge{
       display:inline-flex;
       align-items:center;
       gap:10px;
       padding:12px 18px;
       border-radius:999px;
-      background:rgba(255,255,255,.16);
+      background:rgba(255,255,255,.14);
       border:1px solid var(--border);
-      font-weight:900;
+      font-weight:1000;
       backdrop-filter: blur(10px);
       box-shadow: var(--shadow);
       font-size:14px;
       letter-spacing:.4px;
       transition: transform .2s ease;
     }
-    .badge small{
-      font-weight:700;
-      opacity:.9;
+    .badge .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      background: rgba(0,0,0,.16);
+      border:1px solid rgba(255,255,255,.18);
+      font-size:12px;
+      font-weight:900;
+      opacity:.95;
     }
 
     .card{
@@ -144,9 +166,9 @@
 
     .cardInner{
       display:grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1.2fr;
     }
-    @media (max-width: 860px){
+    @media (max-width: 900px){
       .cardInner{ grid-template-columns: 1fr; }
     }
 
@@ -155,7 +177,7 @@
       text-align:center;
       border-right:1px solid var(--border);
     }
-    @media (max-width: 860px){
+    @media (max-width: 900px){
       .left{ border-right:0; border-bottom:1px solid var(--border); }
     }
 
@@ -168,12 +190,16 @@
       border:4px solid rgba(255,255,255,.55);
       box-shadow:0 15px 40px rgba(0,0,0,.35);
       position:relative;
+      background: rgba(0,0,0,.16);
+      display:flex;
+      align-items:center;
+      justify-content:center;
     }
     .photo:after{
       content:"";
       position:absolute;
       inset:0;
-      background: radial-gradient(closest-side at 30% 25%, rgba(255,255,255,.22), transparent 55%);
+      background: radial-gradient(closest-side at 30% 25%, rgba(255,255,255,.18), transparent 55%);
       pointer-events:none;
     }
     .photo img{
@@ -181,6 +207,22 @@
       height:100%;
       object-fit:cover;
       display:block;
+    }
+    .photoFallback{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:18px;
+      color: rgba(255,255,255,.9);
+      font-weight:1000;
+      line-height:1.25;
+      background:
+        radial-gradient(circle at 35% 30%, rgba(255,213,74,.22), transparent 55%),
+        radial-gradient(circle at 70% 65%, rgba(25,160,74,.15), transparent 60%),
+        rgba(0,0,0,.12);
     }
 
     .quote{
@@ -190,9 +232,10 @@
       line-height:1.25;
     }
     .sub{
-      margin:6px 0 0;
+      margin:8px 0 0;
       color:var(--muted);
       font-size:13px;
+      line-height:1.35;
     }
 
     .right{
@@ -212,26 +255,41 @@
       margin:0;
       font-size:14px;
       color:var(--muted);
+      line-height:1.55;
     }
 
-    .funbox{
+    .manifesto{
       margin-top:6px;
       padding:14px;
       border-radius:18px;
       background:rgba(0,0,0,.14);
       border:1px solid rgba(255,255,255,.22);
-      line-height:1.5;
+      line-height:1.55;
       font-size:15px;
     }
+    .manifesto strong{ color: rgba(255,255,255,.98); }
 
-    .funline{
-      display:block;
-      padding:8px 10px;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,.14);
-      background:rgba(255,255,255,.08);
-      margin:10px 0 0;
+    .tagRow{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:10px;
+      justify-content:center;
     }
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.18);
+      background:rgba(255,255,255,.08);
+      font-size:13px;
+      font-weight:900;
+      color: rgba(255,255,255,.92);
+      user-select:none;
+    }
+    .tag b{ color: var(--accent); }
 
     .btnRow{
       display:flex;
@@ -248,9 +306,9 @@
       cursor:pointer;
       font-size:16px;
       font-weight:1000;
-      letter-spacing:.5px;
-      color:#8b0f2f;
-      background:white;
+      letter-spacing:.4px;
+      color:#5c0000;
+      background: white;
       transition: transform .18s ease, background .18s ease, box-shadow .18s ease;
       box-shadow:0 12px 28px rgba(0,0,0,.35);
       display:inline-flex;
@@ -260,7 +318,7 @@
       user-select:none;
       -webkit-tap-highlight-color: transparent;
     }
-    .btn:hover{ transform: scale(1.03); background:#ffe6ec; }
+    .btn:hover{ transform: scale(1.03); background:#ffecec; }
     .btn:active{ transform: scale(0.99); }
 
     .btn.secondary{
@@ -275,12 +333,38 @@
       margin-top:10px;
       padding:12px 14px;
       border-radius:16px;
-      border:1px dashed rgba(255,255,255,.5);
-      background:rgba(255,255,255,.12);
+      border:1px dashed rgba(255,255,255,.45);
+      background:rgba(255,255,255,.10);
       font-size:13px;
       color:rgba(255,255,255,.92);
-      line-height:1.35;
+      line-height:1.45;
     }
+
+    .tinyRow{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+    .miniCard{
+      flex:1 1 240px;
+      padding:12px 14px;
+      border-radius:18px;
+      background:rgba(0,0,0,.14);
+      border:1px solid rgba(255,255,255,.22);
+      font-size:13px;
+      color: rgba(255,255,255,.90);
+      line-height:1.45;
+    }
+    .miniTitle{
+      font-weight:1000;
+      margin-bottom:6px;
+      color: rgba(255,255,255,.96);
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .miniMuted{ color: rgba(255,255,255,.82); }
 
     footer{
       text-align:center;
@@ -288,9 +372,11 @@
       font-size:12px;
       opacity:.92;
       color:rgba(255,255,255,.78);
+      line-height:1.45;
+      padding-bottom: env(safe-area-inset-bottom);
     }
 
-    /* ===== Partículas do clique (explosão) ===== */
+    /* ===== Partículas do clique ===== */
     .pop{
       position:fixed;
       left:0;
@@ -302,7 +388,7 @@
       filter: drop-shadow(0 12px 20px rgba(0,0,0,.28));
     }
 
-    /* ===== Corações subindo ===== */
+    /* ===== “Estrelas” subindo ===== */
     .rise{
       position:fixed;
       bottom:-10px;
@@ -312,13 +398,14 @@
       will-change: transform, opacity;
       z-index:9998;
       filter: drop-shadow(0 10px 18px rgba(0,0,0,.25));
+      color: rgba(255,213,74,.95);
     }
     @keyframes rise{
       0%   { transform: translate3d(0,0,0); opacity:1; }
       100% { transform: translate3d(0,-110vh,0); opacity:0; }
     }
 
-    /* ===== Modal de dica romântica ===== */
+    /* ===== Modal padrão ===== */
     .modalBackdrop{
       position:fixed;
       inset:0;
@@ -328,15 +415,19 @@
       justify-content:center;
       padding:18px;
       z-index:99999;
+      /* 🔧 FIX MOBILE: scroll e safe-area */
+      padding-bottom: calc(18px + env(safe-area-inset-bottom));
     }
     .modal{
-      width:min(520px, 100%);
+      width:min(560px, 100%);
       border-radius:22px;
       background: rgba(255,255,255,.14);
       border:1px solid rgba(255,255,255,.28);
       backdrop-filter: blur(14px);
       box-shadow: var(--shadow);
       padding:18px 16px;
+      max-height: 90vh;
+      overflow:auto;
     }
     .modal h2{
       margin:0 0 8px;
@@ -346,64 +437,17 @@
     .modal p{
       margin:0 0 12px;
       color: rgba(255,255,255,.92);
-      line-height:1.45;
+      line-height:1.55;
       font-size:14px;
     }
     .modal .closeRow{
       display:flex;
       gap:10px;
       justify-content:flex-end;
-    }
-
-    /* ===== Botão de som ===== */
-    .soundBtn{
-      position:fixed;
-      right:14px;
-      bottom:14px;
-      z-index:9999;
-      border:none;
-      cursor:pointer;
-      padding:12px 14px;
-      border-radius:999px;
-      background: rgba(255,255,255,.16);
-      border:1px solid rgba(255,255,255,.28);
-      color: rgba(255,255,255,.95);
-      backdrop-filter: blur(10px);
-      box-shadow: var(--shadow);
-      font-weight:900;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .soundBtn:active{ transform: scale(.98); }
-
-    /* =====================================================
-       NOVO: Versículo do dia + contador de varões
-       ===================================================== */
-    .tinyRow{
-      display:flex;
-      gap:10px;
       flex-wrap:wrap;
-      margin-top:10px;
     }
-    .miniCard{
-      flex:1 1 220px;
-      padding:12px 14px;
-      border-radius:18px;
-      background:rgba(0,0,0,.14);
-      border:1px solid rgba(255,255,255,.22);
-      font-size:13px;
-      color: rgba(255,255,255,.90);
-      line-height:1.35;
-    }
-    .miniTitle{
-      font-weight:1000;
-      margin-bottom:6px;
-      color: rgba(255,255,255,.96);
-    }
-    .miniMuted{ color: rgba(255,255,255,.82); }
 
-    /* =====================================================
-       NOVO: MODAL DO FORMULÁRIO (sem mexer no resto)
-       ===================================================== */
+    /* ===== Modal formulário ===== */
     .formBackdrop{
       position:fixed;
       inset:0;
@@ -413,15 +457,20 @@
       justify-content:center;
       padding:18px;
       z-index:100000;
+      overflow:auto; /* 🔧 FIX MOBILE */
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: calc(18px + env(safe-area-inset-bottom));
     }
     .formModal{
-      width:min(560px, 100%);
+      width:min(620px, 100%);
       border-radius:22px;
       background: rgba(255,255,255,.14);
       border:1px solid rgba(255,255,255,.28);
       backdrop-filter: blur(14px);
       box-shadow: var(--shadow);
       padding:18px 16px;
+      max-height: 90vh;
+      overflow:auto;
     }
     .formModal h2{
       margin:0 0 8px;
@@ -431,9 +480,10 @@
     .formModal p{
       margin:0 0 12px;
       color: rgba(255,255,255,.92);
-      line-height:1.45;
+      line-height:1.55;
       font-size:14px;
     }
+
     .formGrid{
       display:grid;
       grid-template-columns: 1fr 1fr;
@@ -459,7 +509,7 @@
       outline:none;
       font-size:14px;
     }
-    .field textarea{ min-height:80px; resize:vertical; }
+    .field textarea{ min-height:84px; resize:vertical; }
 
     .formActions{
       display:flex;
@@ -468,25 +518,22 @@
       flex-wrap:wrap;
       margin-top:12px;
     }
-    .formNote{
-      margin-top:10px;
-      font-size:12px;
-      color: rgba(255,255,255,.84);
-      opacity:.95;
-    }
+
     .resultBox{
       margin-top:10px;
       padding:12px 14px;
       border-radius:16px;
-      border:1px dashed rgba(255,255,255,.5);
-      background:rgba(255,255,255,.12);
+      border:1px dashed rgba(255,255,255,.45);
+      background:rgba(255,255,255,.10);
       font-size:13px;
       color:rgba(255,255,255,.92);
-      line-height:1.35;
+      line-height:1.45;
+      display:none;
     }
+
     .waBox{
       margin-top:12px;
-      display:flex;
+      display:none;
       gap:10px;
       flex-wrap:wrap;
       align-items:center;
@@ -509,83 +556,42 @@
     }
     .waLink:active{ transform: scale(.99); }
 
-    /* =====================================================
-       NOVO: Barra "Chance de ser varão" (fake)
-       ===================================================== */
-    .chanceWrap{
-      margin-top:10px;
-      padding:12px 14px;
-      border-radius:16px;
-      border:1px solid rgba(255,255,255,.22);
-      background:rgba(0,0,0,.14);
-    }
-    .chanceTop{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      font-size:13px;
-      font-weight:1000;
-      color: rgba(255,255,255,.92);
-    }
-    .bar{
-      margin-top:10px;
-      width:100%;
-      height:12px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.18);
-      background:rgba(255,255,255,.08);
-      overflow:hidden;
-    }
-    .barFill{
-      height:100%;
-      width:0%;
-      border-radius:999px;
-      background: linear-gradient(90deg, rgba(255,230,236,.95), rgba(255,255,255,.95));
-      box-shadow: 0 0 18px rgba(255,255,255,.35);
-      transition: width .35s ease;
-    }
-    .chanceSmall{
-      margin-top:8px;
-      font-size:12px;
-      color: rgba(255,255,255,.82);
-      line-height:1.35;
-    }
-	.formBackdrop{
-	  overflow-y: auto;
-	}
 
-	  @media (max-width: 600px){
-	
-	  body{
-	    align-items: flex-start;   /* não centraliza verticalmente */
-	  }
-	
-	  .wrap{
-	    margin-top: 20px;
-	    margin-bottom: 40px;
-	  }
-	
-	  .formModal{
-	    max-height: 90vh;
-	    overflow-y: auto;
-	  }
-	
-	}
+    /* 🔧 MOBILE: reforço geral */
+    @media (max-width: 600px){
+      body{
+        align-items:flex-start;
+        padding-bottom:60px;
+      }
+      .wrap{
+        margin-top: 18px;
+        margin-bottom: 60px;
+      }
+      .card{
+        border-radius:20px;
+      }
+      .left, .right{
+        padding:18px;
+      }
+      .photo{
+        width:85vw;
+      }
+    }
   </style>
 </head>
 
 <body>
 
-  <!-- brilho romântico -->
   <div class="sparkles" id="sparkles" aria-hidden="true"></div>
-
-  <!-- corações caindo -->
-  <div class="hearts" id="hearts" aria-hidden="true"></div>
+  <div class="stars" id="stars" aria-hidden="true"></div>
 
   <main class="wrap">
     <div class="header">
-      <div class="badge">💖 JUSSARA DAS MODAS 💖</div>
+      <div class="badge">
+        ⭐ PÁGINA PESSOAL
+        <span class="pill">🇧🇷 Petista</span>
+        <span class="pill">☭ Comunista</span>
+      </div>
     </div>
 
     <section class="card">
@@ -594,153 +600,131 @@
         <!-- ESQUERDA -->
         <div class="left">
           <div class="photo">
-            <img src="https://i.imgur.com/TOSmuUw.jpeg" alt="Foto da Jussara" loading="lazy">
+            <img src="https://i.imgur.com/yhWomRS.jpeg" alt="Foto" loading="lazy"
+                 onerror="this.style.display='none'; document.getElementById('photoFallback').style.display='flex';">
+            <div class="photoFallback" id="photoFallback" style="display:none;">
+              Coloque aqui sua foto<br><span style="opacity:.85; font-size:13px; font-weight:900;">(ou mantenha sem)</span>
+            </div>
           </div>
 
           <p class="quote">
-            “Em busca de um homem <span style="text-transform:uppercase;">CRISTÃO</span> com H maiúsculo que me chame pra jantar”
+            “Amo o LULA e odeio o BOLSONARO #BolsonaroNaPrisão.”
           </p>
-          <p class="sub">Obs.: se você chegou até aqui, Deus já tá te dando sinais… 😂</p>
+          <p class="sub">
+            Esta é uma página <strong>pessoal</strong> de apoio ao atual e único presidente do Brasil.
+          </p>
+
+          <div class="tagRow" aria-label="Destaques">
+			<div class="tag">⭐ <b>Opinião Forte</b> • sem fonte</div>
+			<div class="tag">🧠 achismo avançado</div>
+			<div class="tag">📱 formado no feed</div>
+			<div class="tag">🔥 debate em CAPS</div>
+			<div class="tag">🎓 universidade do zap</div>
+          </div>
         </div>
 
         <!-- DIREITA -->
         <div class="right">
-          <h1>Jussara, 23 anos 🌹</h1>
-          <p class="meta">Cantora • Varoa cujo o valor excede o de muitas jóias</p>
+          <h1>Jussara ✊⭐</h1>
 
-          <div class="funbox">
-            🧹 <strong>Serva Ativa:</strong> canta no louvor e ainda limpa a igreja sem perder a unção.<br>
-            📖 <strong>Conhecedora da Palavra:</strong> se errar o versículo, ela corrige com amor (mas corrige).<br>
-            🙏 <strong>Jejum em Dia:</strong> aguenta propósito… mas não dispensa sobremesa.<br>
-            ⏰ <strong>Pontual:</strong> chega antes do culto começar (milagre raro hoje em dia).<br>
-            🎤 <strong>Ministra com Autoridade:</strong> nota alta e padrão alto também.<br>
-            🕊️ <strong>Discernimento Espiritual:</strong> percebe varão enrolado antes do “a paz do Senhor”.<br>
-            👑 <strong>Princesa do Reino:</strong> mas sem síndrome de Cinderela, sabe trabalhar.<br>
-            💌 <strong>Romântica Gospel:</strong> aceita flores, mas prefere caráter.<br>
-            🚗 <strong>Detalhe Importante:</strong> se for buscar pra jantar, nada de buzinar no portão 😌<br>
-            🔥 <strong>Não é Fogo Estranho:</strong> mas o coração esquenta quando o varão é firme na fé.<br>
-            📵 <strong>Transparência:</strong> se demorar pra responder, está ocupada servindo… ou dormindo.<br>
-            🍰 <strong>Talento Extra:</strong> canta, ora e ainda sabe fazer um bolo que converte até desviado.<br>
-            💎 <strong>Virtuosa:</strong> mais difícil de conquistar que vaga em concurso.<br>
-            🛐 <strong>Requisito:</strong> que o varão saiba a diferença entre
-            <span class="funline"><strong>“Dizimar”</strong> e <strong>“Diz-me amar”</strong> 😌</span>
+          <p class="meta">
+			Meu nome é Jussara, tenho 23 anos e faço parte do Partido dos Trabalhadores há cerca de 7 anos. Sempre fui apaixonada por 
+			Luiz Inácio Lula da Silva, admiro muito a Janja e a Dilma, e confesso que também tenho uma quedinha pelo Haddad.
+            <br><br>
+            <!-- PERSONALIZE AQUI (texto livre) -->
+            <span style="opacity:.92;">
+              Aqui eu organizo minhas ideias, minha agenda de participação e formas de contato.
+            </span>
+          </p>
+
+          <div class="manifesto">
+            <strong>O que você encontra aqui:</strong><br>
+			✅ Minhas opiniões formadas com base em vídeo de 3 minutos e um post no Instagram. 📱<br>
+			✅ Agenda de debates que começam com “eu acho que…” e terminam em CAPS LOCK. 🔊<br>
+			✅ Links que eu compartilho sem ler até o final. 🔗<br>
+			✅ WhatsApp aberto pra discutir economia mesmo sem saber o que é PIB. 💬<br><br>
+			<span style="opacity:.9;">(Confiança 100%. Embasamento… discutível.)</span>
           </div>
 
-          <!-- NOVO: Versículo do dia + contador fake -->
           <div class="tinyRow">
-            <div class="miniCard" id="verseCard">
-              <div class="miniTitle">📖 Versículo do Dia</div>
-              <div class="miniMuted" id="verseText">Carregando...</div>
+            <div class="miniCard" id="msgCard">
+              <div class="miniTitle">📌 Mensagem do dia</div>
+              <div class="miniMuted" id="msgText">Carregando…</div>
             </div>
             <div class="miniCard">
-              <div class="miniTitle">📌 Varões em análise hoje</div>
-              <div class="miniMuted"><strong id="varoesCount">7</strong> candidatos passando pela triagem 😅</div>
+              <div class="miniTitle">🗓️ Próximo compromisso</div>
+              <div class="miniMuted">
+                <strong id="nextAction">Encontro comunitário</strong><br>
+                <span style="opacity:.9;">Data e local (edite aqui no código)</span>
+              </div>
             </div>
           </div>
 
           <div class="btnRow">
-            <button class="btn" id="btnVarão" type="button">
-              💌 QUERO SER O VARÃO
-            </button>
-            <button class="btn secondary" id="btnDica" type="button">
-              🌹 DICA DO BIEL
-            </button>
+            <button class="btn" id="btnParticipar" type="button">🤝 QUERO RECEBER AVISOS</button>
+            <button class="btn secondary" id="btnInfo" type="button">ℹ️ COMO PARTICIPAR</button>
           </div>
 
           <div class="warn">
-            <strong>Aviso:</strong> a candidata não aceita parcelamento de gentileza.
-            <span style="opacity:.92;">Seja um cavalheiro. 🕴️✨</span>
+            <strong>Nota:</strong> esta página é pessoal. Evite informações verdadeiras.
           </div>
         </div>
 
       </div>
     </section>
 
-    <footer>Feito com amor pelo Gabriel Schmeisk 💕</footer>
+    <footer>
+      LULA <3.<br>
+    </footer>
   </main>
 
-  <!-- Modal (DICA DO PASTOR) -->
+  <!-- Modal: COMO PARTICIPAR -->
   <div class="modalBackdrop" id="modalBackdrop" aria-hidden="true">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-      <h2 id="modalTitle">🌹 Manual do Varão (edição relâmpago)</h2>
+      <h2 id="modalTitle">ℹ️ Como participar (na prática)</h2>
       <p id="modalText"></p>
-		<div class="closeRow">
-		  <button class="btn secondary" id="btnNovaDica" type="button">🔄 Nova dica</button>
-		  <button class="btn secondary" id="btnClose" type="button">Fechar</button>
-		</div>
+      <div class="closeRow">
+        <button class="btn secondary" id="btnNovaInfo" type="button">🔄 Outra dica</button>
+        <button class="btn secondary" id="btnClose" type="button">Fechar</button>
+      </div>
     </div>
   </div>
 
-  <!-- NOVO: Modal do formulário do varão -->
+  <!-- Modal: formulário -->
   <div class="formBackdrop" id="formBackdrop" aria-hidden="true">
     <div class="formModal" role="dialog" aria-modal="true" aria-labelledby="formTitle">
-      <h2 id="formTitle">📋 Formulário do Varão (pré-triagem)</h2>
-      <p>Será que você consegue conquistar esse coração de pedra?</strong> 😌</p>
+      <h2 id="formTitle">📋 Cadastro rápido</h2>
+      <p>Preencha para receber avisos de agenda e encontros. (Você pode mudar as perguntas.)</p>
 
-      <!-- NOVO: chance de ser varão -->
-      <div class="chanceWrap" id="chanceWrap">
-        <div class="chanceTop">
-          <span>🧪 Chance de ser varão (análise automática)</span>
-          <span id="chancePct">0%</span>
-        </div>
-        <div class="bar"><div class="barFill" id="barFill"></div></div>
-        <div class="chanceSmall" id="chanceHint">Clique em “Analisar” pra calcular (com muita unção e zero ciência).</div>
-      </div>
-
-      <form id="varaoForm">
-        <div class="formGrid" style="margin-top:12px;">
+      <form id="participarForm">
+        <div class="formGrid">
           <div class="field">
             <label for="nome">Seu nome</label>
-            <input id="nome" name="nome" type="text" placeholder="Ex: Gabriel" required>
+            <input id="nome" name="nome" type="text" placeholder="Ex: Maria" required>
           </div>
           <div class="field">
-            <label for="idade">Idade</label>
-            <input id="idade" name="idade" type="text" inputmode="numeric" placeholder="Ex: 22">
+            <label for="bairro">Bairro / Cidade</label>
+            <input id="bairro" name="bairro" type="text" placeholder="Ex: Centro">
           </div>
         </div>
 
         <div class="field" style="margin-top:10px;">
-          <label for="culto">Frequenta quantas vezes o culto?</label>
-          <select id="culto" name="culto" required>
-            <option value="">Selecione...</option>
-            <option>1x por mês</option>
-            <option>2x por mês</option>
-            <option>Todo domingo</option>
-            <option>Domingo e semana</option>
-            <option>Eu moro na igreja</option>
+          <label for="ajuda">Qual sua especialidade?</label>
+          <select id="ajuda" name="ajuda" required>
+		<option value="">Escolha sua especialidade...</option>
+		<option>Comentar sem ler a matéria</option>
+		<option>Participar de debate e falar mais alto</option>
+		<option>Encaminhar print duvidoso no grupo</option>
+		<option>Fazer live improvisada sem roteiro</option>
+		<option>Gravar áudio de 3 minutos explicando tudo</option>
+		<option>Responder “pesquisa aí” quando me pedirem fonte</option>
+		<option>Outra teoria que surgiu agora</option>
           </select>
         </div>
 
         <div class="field">
-          <label for="jejum">Jejua quantas vezes na semana?</label>
-          <select id="jejum" name="jejum" required>
-            <option value="">Selecione...</option>
-            <option>0x (Sou desviado)</option>
-            <option>1x</option>
-            <option>2x</option>
-            <option>3x+</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label for="bomprato">Me levaria no Bom Prato?</label>
-          <select id="bomprato" name="bomprato" required>
-            <option value="">Selecione...</option>
-            <option>Sim (humilde e fiel)</option>
-            <option>Sim, e ainda pego sobremesa</option>
-            <option>Não (uma mulher como você merece muito mais)</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label for="cantada">Mande uma cantada gospel</label>
-          <textarea id="cantada" name="cantada" placeholder="Ex: Deus me revelou você no devocional..."></textarea>
-        </div>
-
-        <!-- NOVO: botão gerar cantada gospel -->
-        <div class="formActions" style="justify-content:space-between;">
-          <button class="btn secondary" id="btnGerarCantada" type="button">✨ Gerar cantada gospel</button>
-          <button class="btn secondary" id="btnAnalisar" type="button">🧪 Analisar chance</button>
+          <label for="msg">Mensagem (opcional)</label>
+          <textarea id="msg" name="msg" placeholder="Ex: Quero saber a agenda do meu bairro."></textarea>
         </div>
 
         <div class="formActions">
@@ -748,14 +732,13 @@
           <button class="btn secondary" id="btnCancelForm" type="button">Cancelar</button>
         </div>
 
-
-        <div class="resultBox" id="resultBox" style="display:none;">
-          <strong>Resultado:</strong> agora passe pelo filtro do pastor.
+        <div class="resultBox" id="resultBox">
+          <strong>Pronto!</strong> Agora toque no botão do WhatsApp para enviar sua mensagem.
         </div>
 
-        <div class="waBox" id="waBox" style="display:none;">
+        <div class="waBox" id="waBox">
           <a class="waLink" id="waLink" href="#" target="_blank" rel="noopener noreferrer">
-            💬 Abrir WhatsApp do Pastor
+            💬 Enviar no WhatsApp
           </a>
           <button class="btn secondary" id="btnCloseForm" type="button">Fechar</button>
         </div>
@@ -763,119 +746,88 @@
     </div>
   </div>
 
-  <!-- Botão de som -->
-  <button class="soundBtn" id="soundBtn" type="button">🔈 Som: ON</button>
 
-  <!-- Música romântica (nota: mobile exige clique para tocar) -->
-	<audio id="music" autoplay loop>
-	  <source src="musica.mp3" type="audio/mpeg">
-	</audio>
+  <!-- Música -->
+  <audio id="music" autoplay loop>
+    <source src="musica.mp3" type="audio/mpeg">
+  </audio>
 
   <script>
     // ===============================
-    // 1) CORAÇÕES CAINDO (otimizado)
+    // Helpers
     // ===============================
-    const hearts = document.getElementById("hearts");
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const isMobile = window.matchMedia("(max-width: 600px)").matches;
-    const countHearts = isMobile ? 20 : 42;
 
-    for (let i = 0; i < countHearts; i++) {
-      const h = document.createElement("div");
-      h.className = "heart";
-      h.textContent = "❤";
+    // ===============================
+    // 1) “estrelas” caindo
+    // ===============================
+    const stars = document.getElementById("stars");
+    const countStars = prefersReduced ? 0 : (isMobile ? 16 : 36);
 
-      const left = Math.random() * 100; // vw
-      const size = (isMobile ? 12 : 14) + Math.random() * (isMobile ? 14 : 20);
-      const duration = (isMobile ? 6 : 5) + Math.random() * (isMobile ? 7 : 8);
+    for (let i = 0; i < countStars; i++) {
+      const s = document.createElement("div");
+      s.className = "star";
+      s.textContent = "★";
+
+      const left = Math.random() * 100;
+      const size = (isMobile ? 12 : 14) + Math.random() * (isMobile ? 12 : 20);
+      const duration = (isMobile ? 6 : 5) + Math.random() * (isMobile ? 6 : 7);
       const delay = Math.random() * 10;
       const opacity = 0.35 + Math.random() * 0.55;
 
-      h.style.left = left + "vw";
-      h.style.fontSize = size + "px";
-      h.style.animationDuration = duration + "s";
-      h.style.animationDelay = "-" + delay + "s";
-      h.style.opacity = opacity.toFixed(2);
-
-      hearts.appendChild(h);
-    }
-
-    // ======================================
-    // 2) BRILHINHOS (mais romântico ainda ✨)
-    // ======================================
-    const sparkles = document.getElementById("sparkles");
-    const countSparkles = isMobile ? 14 : 26;
-
-    for (let i = 0; i < countSparkles; i++) {
-      const s = document.createElement("div");
-      s.className = "sparkle";
-
-      const left = Math.random() * 100;
-      const size = 3 + Math.random() * 5;
-      const duration = (isMobile ? 7 : 6) + Math.random() * (isMobile ? 7 : 8);
-      const delay = Math.random() * 10;
-      const opacity = 0.15 + Math.random() * 0.55;
-
       s.style.left = left + "vw";
-      s.style.width = size + "px";
-      s.style.height = size + "px";
+      s.style.fontSize = size + "px";
       s.style.animationDuration = duration + "s";
       s.style.animationDelay = "-" + delay + "s";
       s.style.opacity = opacity.toFixed(2);
 
-      sparkles.appendChild(s);
+      stars.appendChild(s);
     }
 
-    // =================================
-    // 3) MÚSICA + BOTÃO DE SOM (mobile)
-    // =================================
-    const music = document.getElementById("music");
-    const soundBtn = document.getElementById("soundBtn");
-    let soundOn = true;
+    // ===============================
+    // 2) brilhinhos
+    // ===============================
+    const sparkles = document.getElementById("sparkles");
+    const countSparkles = prefersReduced ? 0 : (isMobile ? 12 : 22);
 
-    (async () => {
-      try { await music.play(); }
-      catch (e) { /* mobile bloqueia - tudo bem */ }
-    })();
+    for (let i = 0; i < countSparkles; i++) {
+      const sp = document.createElement("div");
+      sp.className = "sparkle";
 
-    let firstGestureDone = false;
-    function enableAudioOnFirstGesture(){
-      if (firstGestureDone) return;
-      firstGestureDone = true;
-      if (soundOn) music.play().catch(()=>{});
-      window.removeEventListener("pointerdown", enableAudioOnFirstGesture);
-      window.removeEventListener("touchstart", enableAudioOnFirstGesture);
-      window.removeEventListener("click", enableAudioOnFirstGesture);
+      const left = Math.random() * 100;
+      const size = 3 + Math.random() * 5;
+      const duration = (isMobile ? 7 : 6) + Math.random() * (isMobile ? 6 : 7);
+      const delay = Math.random() * 10;
+      const opacity = 0.14 + Math.random() * 0.55;
+
+      sp.style.left = left + "vw";
+      sp.style.width = size + "px";
+      sp.style.height = size + "px";
+      sp.style.animationDuration = duration + "s";
+      sp.style.animationDelay = "-" + delay + "s";
+      sp.style.opacity = opacity.toFixed(2);
+
+      sparkles.appendChild(sp);
     }
-    window.addEventListener("pointerdown", enableAudioOnFirstGesture, { passive:true });
-    window.addEventListener("touchstart", enableAudioOnFirstGesture, { passive:true });
-    window.addEventListener("click", enableAudioOnFirstGesture);
 
-    soundBtn.addEventListener("click", () => {
-      soundOn = !soundOn;
-      if (soundOn) {
-        soundBtn.textContent = "🔈 Som: ON";
-        music.play().catch(()=>{});
-      } else {
-        soundBtn.textContent = "🔇 Som: OFF";
-        music.pause();
-      }
-    });
 
-    // ==========================================
-    // 4) EXPLOSÃO + CORAÇÕES SUBINDO AO CLICAR 💥
-    // ==========================================
-    const btnVarao = document.getElementById("btnVarão");
-
+    // ===============================
+    // 4) Partículas no clique + “estrelas” subindo
+    // ===============================
     function popAt(x, y){
-      const emojis = ["💖","💘","💗","💕","💞","🌹","✨"];
-      for (let i = 0; i < (isMobile ? 20 : 32); i++) {
+      if (prefersReduced) return;
+      const emojis = ["★","⭐","✨","✊","🇧🇷","📣"];
+      const n = isMobile ? 16 : 28;
+
+      for (let i = 0; i < n; i++) {
         const el = document.createElement("div");
         el.className = "pop";
         el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
 
-        const size = (isMobile ? 18 : 20) + Math.random() * (isMobile ? 20 : 26);
-        const dx = (Math.random() - 0.5) * (isMobile ? 240 : 420);
-        const dy = (Math.random() - 0.5) * (isMobile ? 240 : 420);
+        const size = (isMobile ? 18 : 20) + Math.random() * (isMobile ? 16 : 24);
+        const dx = (Math.random() - 0.5) * (isMobile ? 220 : 420);
+        const dy = (Math.random() - 0.5) * (isMobile ? 220 : 420);
         const rotate = (Math.random() - 0.5) * 540;
 
         el.style.left = x + "px";
@@ -896,9 +848,10 @@
       }
     }
 
-    function riseHearts(){
-      const emojis = ["💘","💖","💕","💗","💞"];
-      const n = isMobile ? 14 : 22;
+    function riseStars(){
+      if (prefersReduced) return;
+      const emojis = ["⭐","★","✨"];
+      const n = isMobile ? 12 : 18;
 
       for (let i = 0; i < n; i++) {
         const up = document.createElement("div");
@@ -906,7 +859,7 @@
         up.textContent = emojis[Math.floor(Math.random() * emojis.length)];
 
         const left = Math.random() * 100;
-        const size = (isMobile ? 16 : 18) + Math.random() * (isMobile ? 16 : 20);
+        const size = (isMobile ? 16 : 18) + Math.random() * (isMobile ? 14 : 18);
         const drift = (Math.random() - 0.5) * 120;
 
         up.style.left = left + "vw";
@@ -918,263 +871,156 @@
       }
     }
 
-    // =====================================================
-    // NOVO: CONFETE ROMÂNTICO 1x por visita (localStorage)
-    // =====================================================
+    // confete 1x por visita
     (function onceConfetti(){
-      const key = "jussara_confetti_once_v1";
+      const key = "support_confetti_once_v2";
       if (localStorage.getItem(key) === "1") return;
       localStorage.setItem(key, "1");
-
-      // pequena explosão no centro
       setTimeout(() => {
-        const cx = window.innerWidth / 2;
-        const cy = window.innerHeight / 2;
-        popAt(cx, cy);
-        riseHearts();
-      }, 500);
+        popAt(window.innerWidth/2, window.innerHeight/2);
+        riseStars();
+      }, 450);
     })();
 
-    // =====================================================
-    // NOVO: Versículo do dia do namoro
-    // =====================================================
-    const verses = [
-      { t: "O amor é paciente, o amor é bondoso… (1 Coríntios 13:4)", r: "1Co 13:4" },
-      { t: "Melhor é serem dois do que um… (Eclesiastes 4:9)", r: "Ec 4:9" },
-      { t: "Ponha-me como selo sobre o teu coração… (Cânticos 8:6)", r: "Ct 8:6" },
-      { t: "Quem encontra uma esposa acha o bem… (Provérbios 18:22)", r: "Pv 18:22" },
-      { t: "Acima de tudo, porém, revistam-se do amor… (Colossenses 3:14)", r: "Cl 3:14" }
+    // ===============================
+    // 5) Mensagem do dia (neutra)
+    // ===============================
+    const messages = [
+	  "Eu vi num vídeo de 2 minutos e já entendi tudo. ⭐",
+	  "Se eu não concordo, é porque está errado. 🤝❌",
+	  "Li o título, já formei opinião. 📌",
+	  "Economia é só imprimir mais dinheiro, simples assim. 🇧🇷",
+	  "Fonte: confia em mim. ✅",
+	  "Se tá na internet, é verdade. ✨",
+	  "Tenho opinião formada sobre assunto que descobri ontem. 🧠",
+	  "Debate começa calmo e termina em CAPS LOCK. 🔥",
+	  "Não estudei, mas tenho certeza absoluta. 🎓❌",
+	  "Resolvi a política do país em 3 stories. 📱"
     ];
-    const chosen = verses[Math.floor(Math.random()*verses.length)];
-    document.getElementById("verseText").textContent = chosen.t;
+    document.getElementById("msgText").textContent =
+      messages[Math.floor(Math.random()*messages.length)];
 
-    // =====================================================
-    // NOVO: contador fake "varões em análise"
-    // =====================================================
-    const varoesEl = document.getElementById("varoesCount");
-    let varoes = parseInt(varoesEl.textContent || "7", 10);
-    setInterval(() => {
-      // sobe devagar e com limite pra não ficar infinito
-      if (varoes < 33 && Math.random() < 0.45) {
-        varoes += 1;
-        varoesEl.textContent = String(varoes);
-      }
-    }, 2500);
+    // ===============================
+    // 6) Modal “Como participar”
+    // ===============================
+    const dicas = [
+	  "Compartilhe primeiro, confira depois (ou nunca). 📲",
+	  "Se deu preguiça de ler, comenta mesmo assim. 📰❌",
+	  "Discordou? Digita mais alto. CAPS resolve. 🔥",
+	  "Não entendeu o assunto? Fala com convicção que passa. 😌",
+	  "Reunião comunitária? Melhor discutir nos comentários. 💬",
+	  "Projeto social é legal, mas já viu o último meme? 😂",
+	  "Se alguém trouxe dados, diga que são manipulados. 📊🤨",
+	  "Perguntar e escutar dá trabalho, melhor responder na hora. ⚡",
+	  "Fonte confiável é aquela que concorda comigo. 🔍",
+	  "Debate saudável? Prefiro ganhar a discussão. 🏆"
+    ];
 
-    // =====================================================
-    // NOVO: FORMULÁRIO NO BOTÃO "QUERO SER O VARÃO"
-    // =====================================================
+    const modalBackdrop = document.getElementById("modalBackdrop");
+    const modalText = document.getElementById("modalText");
+    const btnClose = document.getElementById("btnClose");
+    const btnNovaInfo = document.getElementById("btnNovaInfo");
+    const btnInfo = document.getElementById("btnInfo");
+
+    let ultimaDicaIndex = -1;
+    function gerarDica(){
+      let idx;
+      do { idx = Math.floor(Math.random() * dicas.length); }
+      while (idx === ultimaDicaIndex && dicas.length > 1);
+      ultimaDicaIndex = idx;
+      modalText.textContent = dicas[idx];
+    }
+    function openModal(){
+      gerarDica();
+      modalBackdrop.style.display = "flex";
+      modalBackdrop.setAttribute("aria-hidden","false");
+      document.body.style.overflow = "hidden";
+    }
+    function closeModal(){
+      modalBackdrop.style.display = "none";
+      modalBackdrop.setAttribute("aria-hidden","true");
+      document.body.style.overflow = "";
+    }
+
+    btnInfo.addEventListener("click", openModal);
+    btnNovaInfo.addEventListener("click", gerarDica);
+    btnClose.addEventListener("click", closeModal);
+    modalBackdrop.addEventListener("click", (e)=>{ if(e.target===modalBackdrop) closeModal(); });
+
+    // ===============================
+    // 7) Form + WhatsApp
+    // ===============================
+    const btnParticipar = document.getElementById("btnParticipar");
     const formBackdrop = document.getElementById("formBackdrop");
-    const varaoForm = document.getElementById("varaoForm");
+    const participarForm = document.getElementById("participarForm");
     const btnCancelForm = document.getElementById("btnCancelForm");
     const btnCloseForm = document.getElementById("btnCloseForm");
     const resultBox = document.getElementById("resultBox");
     const waBox = document.getElementById("waBox");
     const waLink = document.getElementById("waLink");
 
-    // chance bar
-    const btnAnalisar = document.getElementById("btnAnalisar");
-    const barFill = document.getElementById("barFill");
-    const chancePct = document.getElementById("chancePct");
-    const chanceHint = document.getElementById("chanceHint");
-
-    // cantadas
-    const btnGerarCantada = document.getElementById("btnGerarCantada");
-    const cantadaField = document.getElementById("cantada");
-    const cantadas = [
-      "Oi Jussara… eu não sou Salomão, mas quero construir algo com sabedoria com você 😌",
-      "Se o amor é paciente… eu posso esperar, mas prefiro te chamar pra jantar hoje 😅🍽️",
-      "Você é resposta de oração… só falta o pastor confirmar 😂🙏",
-      "Não é fogo estranho não… é só eu vendo você e ficando feliz demais 💘",
-      "Me chama de propósito, porque eu quero te levar a sério 😎",
-	"Se Provérbios 31 tivesse continuação, teria seu nome no próximo versículo 😌",
-	"Não sou Davi, mas quando te vejo já começo a compor salmos no coração 🎶",
-	"Eu não tenho dom de revelação… mas sinto que você é bênção 😅",
-	"Você não é maná, mas caiu do céu na hora certa 🙏✨",
-	"Se amor é fruto do Espírito, acho que já tá amadurecendo aqui 🍇😂",
-	"Não sou profeta, mas vejo um jantar no nosso futuro 🍽️",
-	"Se eu fosse Noé, colocava você na arca antes da chuva começar 😌🌧️",
-	"Você não é muralha de Jericó, mas já derrubou minhas estruturas 😂",
-	"Não é visão do Apocalipse, mas vi nós dois de mãos dadas no culto 😇",
-	"Se Deus faz todas as coisas cooperarem para o bem… acho que você cooperou demais pro meu coração 💘",
-	"Não sou teólogo, mas sinto uma forte exegese entre nós 😎",
-	"Se fé move montanhas, imagina o que esse sorriso faz comigo 🏔️😂",
-	"Não sou Gideão, mas preciso de um sinal pra saber se você aceita jantar 😅",
-	"Você não é milagre dos pães, mas multiplica minha alegria 🍞✨",
-	"Não é fogo do altar… mas meu coração já tá queimando 😌🔥",
-	"Se amor cobre multidão de pecados, espero que cubra minha timidez 😂",
-	"Não sou discípulo perfeito, mas posso aprender a te amar direitinho 🙏",
-	"Se existir propósito nisso, prometo não fugir igual Jonas 😅",
-	"Você não é coluna do templo, mas sustenta meus pensamentos o dia inteiro 😌",
-	"Não quero só oração respondida… quero oração compartilhada com você 💕"
-    ];
-
     function openForm(){
       formBackdrop.style.display = "flex";
       formBackdrop.setAttribute("aria-hidden","false");
-	  document.body.style.overflow = "hidden";
-	  document.body.style.height = "100vh";
-      // reseta estado
+      document.body.style.overflow = "hidden";
       resultBox.style.display = "none";
       waBox.style.display = "none";
-
-      // reseta chance
-      barFill.style.width = "0%";
-      chancePct.textContent = "0%";
-      chanceHint.textContent = "Clique em “Analisar” pra calcular (com muita unção e zero ciência).";
-
     }
-	function closeForm(){
-	  formBackdrop.style.display = "none";
-	  formBackdrop.setAttribute("aria-hidden","true");
-	
-	  document.body.style.overflow = "";
-	  document.body.style.height = "";
-	}
+    function closeForm(){
+      formBackdrop.style.display = "none";
+      formBackdrop.setAttribute("aria-hidden","true");
+      document.body.style.overflow = "";
+    }
 
     btnCancelForm.addEventListener("click", closeForm);
     btnCloseForm.addEventListener("click", closeForm);
     formBackdrop.addEventListener("click", (e)=>{ if(e.target === formBackdrop) closeForm(); });
 
-    // WhatsApp FIXO: sempre essa mensagem
-    const whatsappMsg = "O Biel é muito bonitão e legal. Ass. Jussara Modas";
-    const whatsappURL = "https://wa.me/5516994241388?text=" + encodeURIComponent(whatsappMsg);
-    waLink.href = whatsappURL;
+    // ✅ TROQUE O NÚMERO AQUI (WhatsApp destino)
+    const whatsappNumber = "5516994241388";
+    const baseWa = "https://wa.me/" + whatsappNumber + "?text=";
 
-    btnVarao.addEventListener("click", () => {
-      const rect = btnVarao.getBoundingClientRect();
-      const x = rect.left + rect.width/2;
-      const y = rect.top + rect.height/2;
-
-      if (soundOn) music.play().catch(()=>{});
-      popAt(x, y);
-      riseHearts();
+    btnParticipar.addEventListener("click", () => {
+      const rect = btnParticipar.getBoundingClientRect();
+      popAt(rect.left + rect.width/2, rect.top + rect.height/2);
+      riseStars();
       openForm();
+      if (soundOn) music.play().catch(()=>{});
     });
 
-    // analisar chance (fake)
-    btnAnalisar.addEventListener("click", () => {
-      // "cálculo" fake com animação
-      const steps = isMobile ? 10 : 14;
-      let step = 0;
-      chanceHint.textContent = "Analisando... conferindo fruto do Espírito, pontualidade e coragem 😌";
-      const target = Math.floor(5 + Math.random()*52); 
-      const timer = setInterval(() => {
-        step++;
-        const pct = Math.min(target, Math.floor((step/steps) * target));
-        barFill.style.width = pct + "%";
-        chancePct.textContent = pct + "%";
-        if (pct >= target) {
-          clearInterval(timer);
-			const extras = [
-			  "Resultado: tem potencial… mas precisa orar mais 😂",
-			  "Resultado: quase lá. Falta jejum e atitude 😅",
-			  "Resultado: promissor… mas o pastor ainda tá analisando 👀",
-			  "Resultado: deu sinal de vida espiritual, mas não se empolga 🙌",
-			  "Resultado: tá melhor que ontem… talvez 😌",
-			  "Resultado: em desenvolvimento. Continue buscando 🍽️🙏"
-			];
-          chanceHint.textContent = extras[Math.floor(Math.random()*extras.length)];
-          // fofura extra
-          riseHearts();
-        }
-      }, 90);
-    });
-
-    // gerar cantada
-    btnGerarCantada.addEventListener("click", () => {
-      const c = cantadas[Math.floor(Math.random()*cantadas.length)];
-      cantadaField.value = c;
-      popAt(window.innerWidth*0.5, window.innerHeight*0.35);
-    });
-
-    varaoForm.addEventListener("submit", (e) => {
+    participarForm.addEventListener("submit", (e) => {
       e.preventDefault();
-      // independente das respostas:
+
+      const nome = document.getElementById("nome").value.trim() || "—";
+      const bairro = document.getElementById("bairro").value.trim() || "—";
+      const ajuda = document.getElementById("ajuda").value || "—";
+      const msg = document.getElementById("msg").value.trim();
+
+      const text =
+        `Olá! Quero receber avisos e participar.\n` +
+        `Nome: ${nome}\n` +
+        `Bairro/Cidade: ${bairro}\n` +
+        `Como quero participar: ${ajuda}\n` +
+        (msg ? `Mensagem: ${msg}\n` : "");
+
+      waLink.href = baseWa + encodeURIComponent(text);
+
       resultBox.style.display = "block";
-      resultBox.innerHTML = "<strong>Resultado:</strong> agora passe pelo filtro do pastor.";
       waBox.style.display = "flex";
-      waLink.href = whatsappURL;
-      riseHearts();
+      riseStars();
     });
 
-    // ======================================
-    // 5) DICA ROMÂNTICA (DICA DO PASTOR) 🌹
-    // ======================================
-    const dicas = [
-	"Não chama de 'irmãzinha' se a intenção é jantar. Seja claro e ungido 😌",
-	"Se for mandar áudio, que seja curto e sem barulho de moto ao fundo 🙏",
-	"Não espere ela postar versículo triste pra tomar atitude. Varão age antes do status 😂",
-	"Se convidar pra jantar, já tenha o local decidido. Indecisão não é fruto do Espírito.",
-	"Nada de ‘qualquer coisa pra mim tá bom’. Liderança começa no cardápio 😎",
-	"Se ela canta no louvor, não peça 'canta aquela lá' no meio da conversa 😅",
-	"Não suma três dias e volte com 'paz do Senhor'. O Senhor vê tudo 👀",
-	"Se for elogiar, elogie caráter antes da aparência. Pontos extras no Reino 💎",
-	"Não mande 'oi sumida'. Ela não sumiu, você que não chamou 😌",
-	"Se falar de propósito, saiba explicar qual é. Não é TCC, mas precisa ter conteúdo 😂",
-	"Evite cantadas teológicas muito profundas no primeiro contato. Calma, seminarista.",
-	"Se disser que vai orar por ela, ore mesmo. O céu é testemunha 🙏",
-	"Se prometer buscar pra jantar, não buzine. Desça do carro como um cavalheiro 🕴️",
-	"Homem de Deus responde mensagem, não deixa em 'visualizado espiritual' 😅",
-	"Não compita com o ministério dela. Seja suporte, não concorrência 🎤",
-	"Se falar que é romântico, prove com atitude e não só com emoji 🌹",
-	"Evite usar versículo fora de contexto pra impressionar. Ela sabe Bíblia 😌",
-	"Se disser que é trabalhador, chegue no horário combinado. Testemunho começa aí.",
-	"Não transforme o primeiro jantar em interrogatório pastoral 😂",
-	"Varão que é varão não tem medo de conhecer os amigos da igreja.",
-	"Se for tímido, tudo bem. Só não seja invisível.",
-	"Antes de pedir namoro, peça direção. Mas não demore três anos também 😅",
-	"Não diga 'vou ver e te falo'. Fale e sustente.",
-	"Seja firme, mas gentil. Firmeza sem amor vira palestra.",
-	"Não espere sinal do céu com anjo tocando trombeta. Às vezes o sinal é ela respondendo seu bom dia."
-    ];
-
-	const btnNovaDica = document.getElementById("btnNovaDica");
-
-	btnNovaDica.addEventListener("click", gerarDica);
-    const modalBackdrop = document.getElementById("modalBackdrop");
-    const modalText = document.getElementById("modalText");
-    const btnClose = document.getElementById("btnClose");
-
-let ultimaDicaIndex = -1;
-
-	function gerarDica(){
-	  let novoIndex;
-
-	  do {
-		novoIndex = Math.floor(Math.random() * dicas.length);
-	  } while (novoIndex === ultimaDicaIndex && dicas.length > 1);
-
-	  ultimaDicaIndex = novoIndex;
-	  modalText.textContent = dicas[novoIndex];
-	}
-
-	function openModal(){
-	  gerarDica();
-	  modalBackdrop.style.display = "flex";
-	  modalBackdrop.setAttribute("aria-hidden", "false");
-	}
-    function closeModal(){
-      modalBackdrop.style.display = "none";
-      modalBackdrop.setAttribute("aria-hidden", "true");
+    // ===============================
+    // 8) “Pulso” no badge + ESC fecha
+    // ===============================
+    const badge = document.querySelector(".badge");
+    if (!prefersReduced){
+      setInterval(() => {
+        badge.style.transform = "scale(1.02)";
+        setTimeout(() => badge.style.transform = "scale(1)", 220);
+      }, 1800);
     }
 
-    btnDica.addEventListener("click", openModal);
-    btnClose.addEventListener("click", closeModal);
-    modalBackdrop.addEventListener("click", (e) => {
-      if (e.target === modalBackdrop) closeModal();
-    });
-
-    // ======================================
-    // 6) MINI “PULSO” NO BADGE (fofura extra)
-    // ======================================
-    const badge = document.querySelector(".badge");
-    setInterval(() => {
-      badge.style.transform = "scale(1.02)";
-      setTimeout(() => badge.style.transform = "scale(1)", 220);
-    }, 1800);
-
-    // ESC fecha o form/dica
     window.addEventListener("keydown", (ev) => {
       if (ev.key === "Escape") {
         if (formBackdrop.style.display === "flex") closeForm();
@@ -1182,6 +1028,5 @@ let ultimaDicaIndex = -1;
       }
     });
   </script>
-
 </body>
 </html>
