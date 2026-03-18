@@ -947,11 +947,21 @@
     }
 
     function storeName(url){
-      const u = String(url || "").toLowerCase();
-      if (u.includes("shopee") || u.includes("shope.ee")) return "Shopee";
-      if (u.includes("aliexpress")) return "AliExpress";
-      if (u.includes("mercadolivre") || u.includes("mercadolibre") || u.includes("/sec/")) return "Mercado Livre";
-      return "Loja";
+      try {
+        const hostname = new URL(url).hostname.toLowerCase();
+    
+        if (hostname.includes("shopee")) return "Shopee";
+        if (hostname.includes("aliexpress")) return "AliExpress";
+        if (
+          hostname.includes("mercadolivre") ||
+          hostname.includes("mercadolibre") ||
+          hostname.includes("meli.la")
+        ) return "Mercado Livre";
+    
+        return "Loja";
+      } catch {
+        return "Loja";
+      }
     }
 
     function debounce(fn, wait=180){
