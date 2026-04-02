@@ -715,6 +715,40 @@
     <span class="dot"></span>
     <span id="toastText">Chave copiada!</span>
   </div>
+  
+	<!-- MODAL PRODUTO -->
+	<div id="productModal" style="
+	  position:fixed;
+	  inset:0;
+	  background:rgba(0,0,0,.75);
+	  display:none;
+	  align-items:center;
+	  justify-content:center;
+	  z-index:1000;
+	  padding:20px;
+	">
+	  <div style="
+		max-width:700px;
+		width:100%;
+		background:#0b0d12;
+		border-radius:16px;
+		overflow:hidden;
+		border:1px solid rgba(255,255,255,.1);
+		box-shadow:0 20px 50px rgba(0,0,0,.6);
+	  ">
+		<img id="modalImg" ... style="width:100%; height:300px; object-fit:contain; background:#0b0d12;">
+
+		<div style="padding:16px;">
+		  <h3 id="modalTitle" style="margin:0 0 10px;"></h3>
+		  <p id="modalDesc" class="muted" style="margin:0;"></p>
+
+		  <div style="margin-top:16px; display:flex; gap:10px;">
+			<a id="modalLink" class="btn" target="_blank">Ver produto</a>
+			<button id="closeModal" class="btn secondary">Fechar</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
 
   <script>
     // =========================================================
@@ -941,6 +975,32 @@
         label: "Câmera PTZ"
       }
     ];
+	
+	const modal = document.getElementById("productModal");
+	const modalImg = document.getElementById("modalImg");
+	const modalTitle = document.getElementById("modalTitle");
+	const modalDesc = document.getElementById("modalDesc");
+	const modalLink = document.getElementById("modalLink");
+	const closeModal = document.getElementById("closeModal");
+
+	function openModal(product){
+	  modal.style.display = "flex";
+
+	  modalImg.src = product.image || FALLBACK_IMAGE;
+	  modalTitle.textContent = product.title;
+	  modalDesc.textContent = product.label || "Produto recomendado do canal.";
+	  modalLink.href = product.productUrl;
+	}
+
+	closeModal.addEventListener("click", () => {
+	  modal.style.display = "none";
+	});
+
+	modal.addEventListener("click", (e) => {
+	  if(e.target === modal){
+		modal.style.display = "none";
+	  }
+	});
 
     function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
 
@@ -1120,7 +1180,7 @@
 
       return `
         <div class="card">
-          <div class="thumb">
+          <div class="thumb" onclick='openModal(${JSON.stringify(p).replace(/'/g, "&apos;")})' style="cursor:pointer;">
             <img src="${escapeHtml(img)}" alt="${escapeHtml(p.title)}" loading="lazy"
                  onerror="this.onerror=null; this.src='${escapeHtml(FALLBACK_IMAGE)}';" />
             ${badge}
