@@ -3,30 +3,34 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Otimizando o Altar</title>
-  <meta name="description" content="Vitrine de produtos recomendados do canal Otimizando o Altar." />
-  <link rel="icon" href="https://i.imgur.com/OqRCKIx.jpeg" />
-  <link rel="apple-touch-icon" href="https://i.imgur.com/OqRCKIx.jpeg" />
-  <link rel="canonical" href="https://otimizandooaltar.com/">
-
-  <title>Otimizando o Altar | Equipamentos para Igreja, Áudio, Vídeo e Iluminação</title>
   
-  <meta name="description" content="Equipamentos recomendados para igrejas: mesas de som, câmeras PTZ, iluminação LED, cabos, conectores e muito mais. Produtos testados e indicados pelo canal Otimizando o Altar." />
+  <title>Equipamentos para Igreja | Áudio, Vídeo e Iluminação - Otimizando o Altar</title>
+  
+  <meta name="description" content="Os melhores equipamentos para igreja com custo-benefício: mesas de som, caixas de som, iluminação, câmeras PTZ e mais. Recomendações reais do canal Otimizando o Altar." />
+  
+  <meta name="keywords" content="equipamentos para igreja, som para igreja, mesa de som igreja, caixa de som igreja, iluminação igreja, câmera PTZ igreja, áudio ao vivo igreja, multimídia igreja">
+  
+  <link rel="canonical" href="https://otimizandooaltar.com/" />
   
   <meta name="robots" content="index, follow">
   <meta name="googlebot" content="index, follow, max-image-preview:large">
   
+  <link rel="icon" href="https://i.imgur.com/OqRCKIx.jpeg" />
+  <link rel="apple-touch-icon" href="https://i.imgur.com/OqRCKIx.jpeg" />
+  
   <!-- Open Graph (WhatsApp, Instagram, Facebook) -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Otimizando o Altar | Equipamentos para Igreja">
-  <meta property="og:description" content="Produtos testados e recomendados para igrejas: áudio, vídeo e iluminação com custo-benefício.">
+  <meta property="og:title" content="Equipamentos para Igreja | Áudio, Vídeo e Iluminação">
+  <meta property="og:description" content="Veja os equipamentos que eu recomendo para igrejas: mesas de som, caixas, iluminação e câmeras com ótimo custo-benefício.">
   <meta property="og:url" content="https://otimizandooaltar.com/">
   <meta property="og:image" content="https://i.imgur.com/OqRCKIx.jpeg">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:site_name" content="Otimizando o Altar">
   
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Otimizando o Altar">
-  <meta name="twitter:description" content="Equipamentos recomendados para igrejas.">
+  <meta name="twitter:title" content="Equipamentos para Igreja | Otimizando o Altar">
+  <meta name="twitter:description" content="Produtos recomendados para igrejas com foco em custo-benefício.">
   <meta name="twitter:image" content="https://i.imgur.com/OqRCKIx.jpeg">
   
   <!-- Dados Estruturados (Google) -->
@@ -660,7 +664,7 @@
         <h3>Sobre</h3>
 
         <p>
-          Meu nome é <strong>Gabriel</strong>, tenho 22 anos e sou o criador do canal <strong>Otimizando o Altar</strong>.
+          Meu nome é <strong>Gabriel Schmeisk</strong>, tenho 22 anos e sou o criador do canal <strong>Otimizando o Altar</strong>.
           O foco do canal é ajudar pequenas e médias igrejas a melhorarem seus setups de áudio, vídeo e iluminação
           com produtos acessíveis e bom custo-benefício.
         </p>
@@ -1286,9 +1290,11 @@
 
     tabs.forEach(btn => {
       btn.addEventListener("click", async () => {
+        window.location.hash = btn.dataset.tab; // 👈 ADICIONE ISSO
+    
         tabs.forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
-
+    
         tabs.forEach(b => b.disabled = true);
         try{
           await switchSection(btn.dataset.tab);
@@ -1359,10 +1365,29 @@
     });
     toTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
 
-    setHero("produtos");
-    setActiveOnly("produtos");
+    const hash = window.location.hash.replace("#", "") || "produtos";
+    
+    setHero(hash);
+    setActiveOnly(hash);
+    
+    tabs.forEach(b => {
+      b.classList.toggle("active", b.dataset.tab === hash);
+    });
+    
     syncHeaderHeight();
-    renderWithTransition();
+    
+    if (hash === "produtos") {
+      renderWithTransition();
+    }
+    
+    window.addEventListener("hashchange", () => {
+      const hash = window.location.hash.replace("#", "") || "produtos";
+      switchSection(hash);
+    
+      tabs.forEach(b => {
+        b.classList.toggle("active", b.dataset.tab === hash);
+      });
+    });
   </script>
 </body>
 </html>
