@@ -1,8 +1,4 @@
-# 🎵 Metronome List
 
-Metrônomo online profissional e gratuito com múltiplas faixas simultâneas, pad contínuo, controle avançado de BPM e gerenciamento de setlists.
-
-🔗 [metronome-list.netlify.app](https://metronome-list.netlify.app/)
 
 ## ✨ Features
 
