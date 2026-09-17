@@ -132,9 +132,9 @@ async function authRoute(request, env, path) {
     if (!env.SETUP_TOKEN || await hmac(String(input.setupToken || ""), env.SESSION_SECRET) !==
       await hmac(env.SETUP_TOKEN, env.SESSION_SECRET)) return json({ error: "Código de configuração inválido." }, 403);
     const password = String(input.password || "");
-    if (password.length < 14 || !/[a-z]/u.test(password) || !/[A-Z]/u.test(password) ||
+    if (password.length < 8 || !/[a-z]/u.test(password) || !/[A-Z]/u.test(password) ||
       !/[0-9]/u.test(password) || !/[^A-Za-z0-9]/u.test(password))
-      return json({ error: "Use ao menos 14 caracteres, com maiúscula, minúscula, número e símbolo." }, 400);
+      return json({ error: "Use ao menos 8 caracteres, com maiúscula, minúscula, número e símbolo." }, 400);
     await setSetting(env, "admin_password", JSON.stringify(await hashPassword(password)));
     await setSetting(env, "setup_complete", "true");
     await env.DB.prepare("INSERT INTO audit_log (action,details,created_at) VALUES ('admin.setup','Painel configurado',?)").bind(now()).run();

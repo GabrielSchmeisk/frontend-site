@@ -17,3 +17,8 @@ test("hash de senha não armazena senha e valida corretamente", async () => {
   assert.equal(await verifyPassword("SenhaForte!1234", stored), true);
   assert.equal(await verifyPassword("SenhaErrada!1234", stored), false);
 });
+
+test("usa o limite de iterações aceito pela Cloudflare", async () => {
+  const stored = await hashPassword("SenhaForte!123");
+  assert.equal(stored.iterations, 100000);
+});
