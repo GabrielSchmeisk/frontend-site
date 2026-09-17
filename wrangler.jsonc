@@ -1,0 +1,24 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "otimizando-altar-catalog",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-09-17",
+  "workers_dev": true,
+  "observability": { "enabled": true },
+  "triggers": { "crons": ["17 */6 * * *"] },
+  "vars": {
+    "PUBLIC_SITE_ORIGIN": "https://www.otimizandooaltar.com",
+    "ADMIN_USERNAME": "GabrielSchmeisk"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "otimizando-altar-catalog",
+      "database_id": "5cef7dcc-0639-4a54-aefa-17326a96c7d4",
+      "migrations_dir": "worker/migrations"
+    }
+  ],
+  "rules": [
+    { "type": "Text", "globs": ["**/*.html", "**/*.css", "**/*.client.js"], "fallthrough": true }
+  ]
+}

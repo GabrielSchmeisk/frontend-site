@@ -1,0 +1,15 @@
+{
+  "name": "otimizando-o-altar-catalog",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "deploy": "wrangler deploy",
+    "db:migrate:local": "wrangler d1 migrations apply otimizando-altar-catalog --local",
+    "db:migrate:remote": "wrangler d1 migrations apply otimizando-altar-catalog --remote"
+  },
+  "devDependencies": {
+    "wrangler": "4.134.0"
+  }
+}

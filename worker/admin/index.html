@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Painel do catálogo | Otimizando o Altar</title>
+  <link rel="stylesheet" href="/admin/style.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">OTIMIZANDO O ALTAR</p>
+        <h1>Painel do catálogo</h1>
+      </div>
+      <button id="logoutButton" class="button secondary hidden" type="button">Sair</button>
+    </header>
+
+    <section id="authView" class="auth-card">
+      <p class="eyebrow" id="authEyebrow">ACESSO PROTEGIDO</p>
+      <h2 id="authTitle">Entrar no painel</h2>
+      <p class="muted" id="authDescription">Use a senha administrativa para gerenciar os produtos.</p>
+      <form id="authForm">
+        <label for="password">Senha</label>
+        <input id="password" name="password" type="password" minlength="14" autocomplete="current-password" required>
+        <div id="confirmRow" class="hidden">
+          <label for="confirmPassword">Confirme a senha</label>
+          <input id="confirmPassword" name="confirmPassword" type="password" minlength="14" autocomplete="new-password">
+          <p class="hint">Use ao menos 14 caracteres, com maiúscula, minúscula, número e símbolo.</p>
+        </div>
+        <p id="authMessage" class="message hidden" role="alert"></p>
+        <button id="authButton" class="button primary full" type="submit">Entrar</button>
+      </form>
+    </section>
+
+    <section id="dashboardView" class="hidden">
+      <div id="alertBox" class="alert hidden" role="status"></div>
+      <div class="stats" aria-label="Resumo do catálogo">
+        <article><strong id="totalCount">0</strong><span>produtos</span></article>
+        <article><strong id="activeCount">0</strong><span>publicados</span></article>
+        <article><strong id="problemCount">0</strong><span>links com alerta</span></article>
+      </div>
+
+      <div class="toolbar">
+        <label class="search"><span>Buscar</span><input id="searchInput" type="search" placeholder="Nome ou categoria"></label>
+        <div class="toolbar-actions">
+          <button id="checkButton" class="button secondary" type="button">Verificar links</button>
+          <button id="newButton" class="button primary" type="button">Adicionar produto</button>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Produto</th><th>Categoria</th><th>Publicação</th><th>Link</th><th></th></tr></thead>
+          <tbody id="productRows"></tbody>
+        </table>
+        <p id="emptyState" class="empty hidden">Nenhum produto encontrado.</p>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="productDialog">
+    <form id="productForm">
+      <div class="dialog-head"><div><p class="eyebrow">PRODUTO</p><h2 id="dialogTitle">Adicionar produto</h2></div><button id="closeDialog" class="icon-button" type="button" aria-label="Fechar">×</button></div>
+      <input id="productId" type="hidden">
+      <div class="fields two">
+        <label>Nome<input id="title" maxlength="180" required></label>
+        <label>Texto curto<input id="label" maxlength="100" placeholder="Ex.: Melhor custo-benefício"></label>
+      </div>
+      <div class="fields two">
+        <label>Categoria<select id="category" required><option value="audio">Áudio</option><option value="video">Vídeo</option><option value="iluminacao">Iluminação</option><option value="outros">Outros</option></select></label>
+        <label>Situação<select id="status"><option value="active">Publicado</option><option value="draft">Rascunho</option><option value="hidden">Oculto</option></select></label>
+      </div>
+      <label>Link do produto<input id="productUrl" type="url" inputmode="url" placeholder="https://..." required></label>
+      <label>Link da imagem<input id="imageUrl" type="url" inputmode="url" placeholder="https://..." required></label>
+      <div class="fields two">
+        <label>Vídeo no YouTube (opcional)<input id="videoUrl" type="url" inputmode="url" placeholder="https://youtu.be/..."></label>
+        <label>Ordem<input id="position" type="number" min="0" max="100000" value="0"></label>
+      </div>
+      <p id="formMessage" class="message hidden" role="alert"></p>
+      <div class="dialog-actions"><button id="deleteButton" class="button danger hidden" type="button">Excluir</button><span></span><button id="cancelButton" class="button secondary" type="button">Cancelar</button><button id="saveButton" class="button primary" type="submit">Salvar</button></div>
+    </form>
+  </dialog>
+  <script src="/admin/app.js" type="module"></script>
+</body>
+</html>

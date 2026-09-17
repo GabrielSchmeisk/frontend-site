@@ -717,7 +717,7 @@
   </div>
   
 	<!-- MODAL PRODUTO -->
-	<div id="productModal" style="
+	<div id="productModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true" style="
 	  position:fixed;
 	  inset:0;
 	  background:rgba(0,0,0,.75);
@@ -727,7 +727,7 @@
 	  z-index:1000;
 	  padding:20px;
 	">
-	  <div style="
+	  <div tabindex="-1" style="
 		max-width:700px;
 		width:100%;
 		background:#0b0d12;
@@ -736,15 +736,15 @@
 		border:1px solid rgba(255,255,255,.1);
 		box-shadow:0 20px 50px rgba(0,0,0,.6);
 	  ">
-		<img id="modalImg" ... style="width:100%; height:300px; object-fit:contain; background:#0b0d12;">
+		<img id="modalImg" alt="" style="width:100%; height:300px; object-fit:contain; background:#0b0d12;">
 
 		<div style="padding:16px;">
 		  <h3 id="modalTitle" style="margin:0 0 10px;"></h3>
 		  <p id="modalDesc" class="muted" style="margin:0;"></p>
 
 		  <div style="margin-top:16px; display:flex; gap:10px;">
-			<a id="modalLink" class="btn" target="_blank">Ver produto</a>
-			<button id="closeModal" class="btn secondary">Fechar</button>
+			<a id="modalLink" class="btn" target="_blank" rel="noopener noreferrer">Ver produto</a>
+			<button id="closeModal" class="btn secondary" type="button">Fechar</button>
 		  </div>
 		</div>
 	  </div>
@@ -752,12 +752,12 @@
 
   <script>
     // =========================================================
-    // ✅ BACKEND REMOVIDO 100%: tudo vem do array PRODUCTS
+    // Cópia local de segurança usada se o catálogo online estiver indisponível.
     // =========================================================
     const FALLBACK_IMAGE = "https://i.imgur.com/OqRCKIx.jpeg";
     const PIX_KEY = "gabrielsanto.gs31@gmail.com";
 
-    const PRODUCTS = [
+    const FALLBACK_PRODUCTS = [
       {
         productUrl: "https://meli.la/1V2ykAg",
         videoUrl: "https://youtu.be/rOQWw0-V_vk",
@@ -1056,6 +1056,21 @@
         label: "Câmera PTZ"
       }
     ];
+
+    const CATALOG_API = "https://otimizando-altar-catalog.assistenciasimplificada.workers.dev/api/products";
+    let PRODUCTS = FALLBACK_PRODUCTS.map((product, index) => ({ ...product, id: `local-${index}` }));
+
+    async function loadCatalog(){
+      try{
+        const response = await fetch(CATALOG_API, { signal: AbortSignal.timeout(8000) });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const payload = await response.json();
+        if (!Array.isArray(payload.products) || !payload.products.length) throw new Error("Catálogo vazio");
+        PRODUCTS = payload.products.map((product, index) => ({ ...product, id: product.id || `online-${index}` }));
+      }catch(error){
+        console.warn("Catálogo online indisponível; usando a cópia local.", error);
+      }
+    }
 	
 	const modal = document.getElementById("productModal");
 	const modalImg = document.getElementById("modalImg");
@@ -1064,23 +1079,46 @@
 	const modalLink = document.getElementById("modalLink");
 	const closeModal = document.getElementById("closeModal");
 
-	function openModal(product){
-	  modal.style.display = "flex";
+	let modalReturnFocus = null;
 
-	  modalImg.src = product.image || FALLBACK_IMAGE;
-	  modalTitle.textContent = product.title;
-	  modalDesc.textContent = product.label || "Produto recomendado do canal.";
-	  modalLink.href = product.productUrl;
+	function safeHttpsUrl(value, fallback = ""){
+	  try{
+		const parsed = new URL(String(value || ""));
+		return parsed.protocol === "https:" ? parsed.toString() : fallback;
+	  }catch{
+		return fallback;
+	  }
 	}
 
-	closeModal.addEventListener("click", () => {
+	function openModal(product, trigger){
+	  modalReturnFocus = trigger || document.activeElement;
+	  modal.style.display = "flex";
+	  modal.setAttribute("aria-hidden", "false");
+
+	  modalImg.src = safeHttpsUrl(product.image, FALLBACK_IMAGE);
+	  modalImg.alt = product.title || "Produto recomendado";
+	  modalTitle.textContent = product.title;
+	  modalDesc.textContent = product.label || "Produto recomendado do canal.";
+	  modalLink.href = safeHttpsUrl(product.productUrl, "#");
+	  closeModal.focus();
+	}
+
+	function hideModal(){
 	  modal.style.display = "none";
-	});
+	  modal.setAttribute("aria-hidden", "true");
+	  if (modalReturnFocus instanceof HTMLElement) modalReturnFocus.focus();
+	}
+
+	closeModal.addEventListener("click", hideModal);
 
 	modal.addEventListener("click", (e) => {
 	  if(e.target === modal){
-		modal.style.display = "none";
+		hideModal();
 	  }
+	});
+
+	document.addEventListener("keydown", (event) => {
+	  if (event.key === "Escape" && modal.style.display === "flex") hideModal();
 	});
 
     function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
@@ -1214,8 +1252,8 @@
     }
 
     function matchesFilters(p){
-      const name = String(p.title || "").toLowerCase();
-      const searchOk = !currentSearch || name.includes(currentSearch);
+      const searchable = `${p.title || ""} ${p.label || ""} ${p.category || ""}`.toLowerCase();
+      const searchOk = !currentSearch || searchable.includes(currentSearch);
       const filterOk = (currentFilter === "all") || (p.category === currentFilter);
       return searchOk && filterOk;
     }
@@ -1246,8 +1284,8 @@
     }
 
     function buildCard(p){
-      const goUrl = p.affiliateUrl || p.productUrl;
-      const img = p.image || FALLBACK_IMAGE;
+      const goUrl = safeHttpsUrl(p.affiliateUrl || p.productUrl, "#");
+      const img = safeHttpsUrl(p.image, FALLBACK_IMAGE);
       const loja = storeName(goUrl);
       const badge = p.label ? `<div class="badge">${escapeHtml(p.label)}</div>` : "";
 
@@ -1255,17 +1293,18 @@
         ? `<div class="price">${escapeHtml(p.price)}</div>`
         : `<div class="price muted" style="font-weight:600;">&nbsp;</div>`;
 
-      const videoBtn = p.videoUrl
-        ? `<a class="btn youtube" href="${escapeHtml(p.videoUrl)}" target="_blank" rel="noopener">▶ Ver vídeo</a>`
+      const videoUrl = safeHttpsUrl(p.videoUrl);
+      const videoBtn = videoUrl
+        ? `<a class="btn youtube" href="${escapeHtml(videoUrl)}" target="_blank" rel="noopener noreferrer">▶ Ver vídeo</a>`
         : "";
 
       return `
         <div class="card">
-          <div class="thumb" onclick='openModal(${JSON.stringify(p).replace(/'/g, "&apos;")})' style="cursor:pointer;">
+          <button class="thumb" type="button" data-open-product="${escapeHtml(p.id)}" aria-label="Ver detalhes de ${escapeHtml(p.title)}" style="cursor:pointer; width:100%; border:0; padding:0; color:inherit; text-align:inherit;">
             <img src="${escapeHtml(img)}" alt="${escapeHtml(p.title)}" loading="lazy"
                  onerror="this.onerror=null; this.src='${escapeHtml(FALLBACK_IMAGE)}';" />
             ${badge}
-          </div>
+          </button>
           <div class="content">
             <p class="name">${escapeHtml(p.title)}</p>
             <div class="meta">
@@ -1278,11 +1317,20 @@
 
             ${videoBtn}
 
-            <a class="btn" href="${escapeHtml(goUrl)}" target="_blank" rel="noopener">Ver no site</a>
+            <a class="btn" href="${escapeHtml(goUrl)}" target="_blank" rel="noopener noreferrer">Ver no site</a>
             <button class="btn secondary" type="button" data-share="${escapeHtml(goUrl)}">Compartilhar</button>
           </div>
         </div>
       `;
+    }
+
+    function wireProductButtons(){
+      grid.querySelectorAll("[data-open-product]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const product = PRODUCTS.find((item) => String(item.id) === button.dataset.openProduct);
+          if (product) openModal(product, button);
+        });
+      });
     }
 
     // ======= Tilt só no PC (mouse) e sempre re-aplicado após render =======
@@ -1342,6 +1390,7 @@
       }
 
       grid.innerHTML = sorted.map(buildCard).join("");
+      wireProductButtons();
       wireShareButtons();
       aplicarTilt();
     }
@@ -1423,6 +1472,7 @@
       setActiveOnly(key);
 
       if (key === "produtos"){
+        await catalogReady;
         await renderWithTransition();
       } else {
         apiHint.textContent = "";
@@ -1506,7 +1556,9 @@
     });
     toTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
 
-    const hash = window.location.hash.replace("#", "") || "produtos";
+    const catalogReady = loadCatalog();
+    const requestedHash = window.location.hash.replace("#", "") || "produtos";
+    const hash = Object.hasOwn(sections, requestedHash) ? requestedHash : "produtos";
     
     setHero(hash);
     setActiveOnly(hash);
@@ -1518,11 +1570,12 @@
     syncHeaderHeight();
     
     if (hash === "produtos") {
-      renderWithTransition();
+      catalogReady.then(renderWithTransition);
     }
     
     window.addEventListener("hashchange", () => {
-      const hash = window.location.hash.replace("#", "") || "produtos";
+      const requestedHash = window.location.hash.replace("#", "") || "produtos";
+      const hash = Object.hasOwn(sections, requestedHash) ? requestedHash : "produtos";
       switchSection(hash);
     
       tabs.forEach(b => {
