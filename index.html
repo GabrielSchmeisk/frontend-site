@@ -1099,7 +1099,7 @@
 	  modalImg.alt = product.title || "Produto recomendado";
 	  modalTitle.textContent = product.title;
 	  modalDesc.textContent = product.label || "Produto recomendado do canal.";
-	  modalLink.href = safeHttpsUrl(product.productUrl, "#");
+	  modalLink.href = safeHttpsUrl(product.stableUrl || product.productUrl, "#");
 	  closeModal.focus();
 	}
 
@@ -1284,9 +1284,9 @@
     }
 
     function buildCard(p){
-      const goUrl = safeHttpsUrl(p.affiliateUrl || p.productUrl, "#");
+      const goUrl = safeHttpsUrl(p.stableUrl || p.affiliateUrl || p.productUrl, "#");
       const img = safeHttpsUrl(p.image, FALLBACK_IMAGE);
-      const loja = storeName(goUrl);
+      const loja = storeName(p.productUrl);
       const badge = p.label ? `<div class="badge">${escapeHtml(p.label)}</div>` : "";
 
       const priceHtml = p.price

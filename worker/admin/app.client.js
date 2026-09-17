@@ -3,6 +3,15 @@ const state = { csrf: "", products: [], setupRequired: false };
 const authView = $("#authView");
 const dashboardView = $("#dashboardView");
 const dialog = $("#productDialog");
+const LINK_BASE = "https://www.otimizandooaltar.com/go.html?produto=";
+const slugify = (value) => String(value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+  .toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 64).replace(/-$/g, "");
+
+function stableUrl(slug) { return slug ? `${LINK_BASE}${slug}` : ""; }
+function showStableUrl() {
+  $("#stableUrlPreview").textContent = stableUrl($("#slug").value) || "Defina o nome do link.";
+  $("#copyStableUrl").disabled = !$("#slug").value;
+}
 
 async function api(path, options = {}) {
   const headers = { ...(options.body ? { "Content-Type": "application/json" } : {}), ...(options.headers || {}) };
@@ -85,6 +94,15 @@ function renderProducts() {
     button.type = "button"; button.className = "row-button"; button.textContent = "Editar";
     button.addEventListener("click", () => openProduct(product));
     actionCell.append(button);
+    if (product.slug) {
+      const copy = document.createElement("button");
+      copy.type = "button"; copy.className = "row-button"; copy.textContent = "Copiar link";
+      copy.addEventListener("click", async () => {
+        try { await navigator.clipboard.writeText(product.stableUrl || stableUrl(product.slug)); copy.textContent = "Copiado!"; setTimeout(() => { copy.textContent = "Copiar link"; }, 1500); }
+        catch { alert("Não foi possível copiar o link. Abra o produto para selecionar o endereço."); }
+      });
+      actionCell.append(copy);
+    }
     rows.append(row);
   }
   $("#emptyState").classList.toggle("hidden", products.length > 0);
@@ -111,9 +129,11 @@ function openProduct(product = null) {
   $("#productId").value = product?.id || "";
   $("#dialogTitle").textContent = product ? "Editar produto" : "Adicionar produto";
   $("#deleteButton").classList.toggle("hidden", !product);
-  for (const key of ["title", "label", "category", "status", "productUrl", "imageUrl", "videoUrl", "position"])
+  state.slugManuallyEdited = Boolean(product);
+  for (const key of ["title", "label", "category", "status", "productUrl", "imageUrl", "videoUrl", "position", "slug"])
     if (product && product[key] !== undefined) $(`#${key}`).value = product[key];
   if (!product) { $("#category").value = "audio"; $("#status").value = "active"; $("#position").value = String(state.products.length); }
+  showStableUrl();
   dialog.showModal();
   $("#title").focus();
 }
@@ -141,7 +161,7 @@ $("#authForm").addEventListener("submit", async (event) => {
 $("#productForm").addEventListener("submit", async (event) => {
   event.preventDefault();
   const id = $("#productId").value;
-  const payload = Object.fromEntries(["title", "label", "category", "status", "productUrl", "imageUrl", "videoUrl", "position"].map((key) => [key, $(`#${key}`).value]));
+  const payload = Object.fromEntries(["title", "label", "category", "status", "productUrl", "imageUrl", "videoUrl", "position", "slug"].map((key) => [key, $(`#${key}`).value]));
   const button = $("#saveButton");
   try {
     setBusy(button, true, "Salvando…");
@@ -172,6 +192,16 @@ $("#newButton").addEventListener("click", () => openProduct());
 $("#searchInput").addEventListener("input", renderProducts);
 $("#closeDialog").addEventListener("click", () => dialog.close());
 $("#cancelButton").addEventListener("click", () => dialog.close());
+$("#title").addEventListener("input", () => {
+  if (!state.slugManuallyEdited) { $("#slug").value = slugify($("#title").value); showStableUrl(); }
+});
+$("#slug").addEventListener("input", () => { state.slugManuallyEdited = true; showStableUrl(); });
+$("#copyStableUrl").addEventListener("click", async () => {
+  const url = stableUrl($("#slug").value);
+  if (!url) return;
+  try { await navigator.clipboard.writeText(url); $("#copyStableUrl").textContent = "Copiado!"; setTimeout(() => { $("#copyStableUrl").textContent = "Copiar link"; }, 1500); }
+  catch { message($("#formMessage"), "Não foi possível copiar automaticamente. Selecione o endereço exibido acima."); }
+});
 
 (async () => {
   try { await loadDashboard(); }

@@ -15,6 +15,10 @@ const text = (body, type, headers = {}) => new Response(body, { headers: {
 const now = () => new Date().toISOString();
 const notFound = () => json({ error: "Rota não encontrada." }, 404);
 const errorMessage = (error) => error instanceof Error ? error.message : "Erro inesperado.";
+const LINK_BASE = "https://www.otimizandooaltar.com/go.html?produto=";
+const validSlug = (value) => /^[a-z0-9]+(?:-[a-z0-9]+)*$/u.test(value) && value.length >= 3 && value.length <= 64;
+const htmlEscape = (value) => String(value ?? "").replace(/[&<>"']/gu, (character) =>
+  ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]);
 
 const securityHeaders = {
   "Content-Security-Policy": "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' https: data:; connect-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'",
@@ -101,26 +105,54 @@ function validateProduct(input, existing = {}) {
     imageUrl: validateExternalUrl(input.imageUrl ?? existing.imageUrl, "image"),
     position: Math.max(0, Math.min(100000, Math.trunc(Number(input.position ?? existing.position ?? 0)))),
     status: normalizeText(input.status ?? existing.status ?? "draft", 20),
+    slug: normalizeText(input.slug ?? existing.slug, 64).toLowerCase(),
   };
   if (product.title.length < 3) throw new Error("Informe um nome com pelo menos três caracteres.");
   if (!categorySet.has(product.category)) throw new Error("Categoria inválida.");
   if (!statusSet.has(product.status)) throw new Error("Situação inválida.");
+  if (!validSlug(product.slug)) throw new Error("O link personalizado deve ter 3 a 64 letras minúsculas, números ou hífens.");
   if (product.videoUrl) product.videoUrl = validateExternalUrl(product.videoUrl, "video");
   return product;
 }
 
 const publicProduct = (row) => ({ id: row.id, title: row.title, label: row.label,
   category: row.category, productUrl: row.product_url, videoUrl: row.video_url,
-  image: row.image_url, position: row.position, linkHealth: row.link_health });
-const adminProduct = (row) => ({ ...publicProduct(row), status: row.status,
+  image: row.image_url, position: row.position, linkHealth: row.link_health,
+  slug: row.slug, stableUrl: row.slug ? `${LINK_BASE}${row.slug}` : "" });
+const adminProduct = (row) => ({ ...publicProduct(row), imageUrl: row.image_url, status: row.status,
   lastCheckedAt: row.last_checked_at, lastCheckMessage: row.last_check_message,
   consecutiveFailures: row.consecutive_failures, createdAt: row.created_at, updatedAt: row.updated_at });
 
 async function publicCatalog(request, env) {
-  const rows = await env.DB.prepare("SELECT * FROM products WHERE status='active' ORDER BY position,title COLLATE NOCASE").all();
+  const rows = await env.DB.prepare(`SELECT p.*,l.slug FROM products p
+    LEFT JOIN link_slugs l ON l.product_id=p.id AND l.is_primary=1
+    WHERE p.status='active' ORDER BY p.position,p.title COLLATE NOCASE`).all();
   return json({ products: rows.results.map(publicProduct), generatedAt: now() }, 200, {
     ...corsHeaders(request, env), "Cache-Control": "public, max-age=60, s-maxage=300",
   });
+}
+
+async function assertSlugAvailable(env, slug, productId = "") {
+  const owner = await env.DB.prepare("SELECT product_id FROM link_slugs WHERE slug=?").bind(slug).first();
+  if (owner && owner.product_id !== productId)
+    throw Object.assign(new Error("Esse link personalizado já pertence a outro produto."), { status: 409 });
+  return Boolean(owner);
+}
+
+async function permanentLink(request, env, slug) {
+  const row = await env.DB.prepare(`SELECT p.* FROM link_slugs l
+    LEFT JOIN products p ON p.id=l.product_id WHERE l.slug=?`).bind(slug).first();
+  if (!row) return notFound();
+  if (row.status === "active" && row.link_health !== "broken") {
+    const destination = validateExternalUrl(row.product_url, "product");
+    return new Response(null, { status: 302, headers: {
+      "Location": destination, "Cache-Control": "no-store", "Referrer-Policy": "no-referrer",
+      "X-Robots-Tag": "noindex, nofollow", "X-Content-Type-Options": "nosniff",
+    } });
+  }
+  const title = row.title || "Produto";
+  const html = `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Produto indisponível | Otimizando o Altar</title><style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#0b1020;color:#e9ecf5;font:16px system-ui,sans-serif;padding:20px;box-sizing:border-box}main{max-width:540px;background:#171e2c;padding:32px;border:1px solid #3a4557;border-radius:18px}h1{margin-top:0}p{line-height:1.5;color:#b9c3d1}a{display:inline-block;padding:12px 18px;border-radius:9px;background:#f4c430;color:#161300;font-weight:700;text-decoration:none}</style></head><body><main><h1>Produto temporariamente indisponível</h1><p>${htmlEscape(title)}: o anúncio precisa ser atualizado. Estamos conferindo um novo link.</p><a href="https://www.otimizandooaltar.com/">Ver outras recomendações</a></main></body></html>`;
+  return text(html, "text/html", { "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; frame-ancestors 'none'", "Cache-Control": "no-store", "X-Robots-Tag": "noindex, nofollow", "Referrer-Policy": "no-referrer" });
 }
 
 async function authRoute(request, env, path) {
@@ -162,12 +194,15 @@ async function adminApi(request, env, path) {
   const session = await requireAdmin(request, env, mutation);
   if (path === "/api/admin/session") return json({ username: session.sub, csrf: session.csrf });
   if (path === "/api/admin/products" && request.method === "GET") {
-    const rows = await env.DB.prepare("SELECT * FROM products ORDER BY position,title COLLATE NOCASE").all();
+    const rows = await env.DB.prepare(`SELECT p.*,l.slug FROM products p
+      LEFT JOIN link_slugs l ON l.product_id=p.id AND l.is_primary=1
+      ORDER BY p.position,p.title COLLATE NOCASE`).all();
     const alerts = rows.results.filter((row) => ["warning", "broken"].includes(row.link_health)).length;
     return json({ products: rows.results.map(adminProduct), alerts });
   }
   if (path === "/api/admin/products" && request.method === "POST") {
     const product = validateProduct(await bodyJson(request));
+    await assertSlugAvailable(env, product.slug);
     const timestamp = now();
     const id = crypto.randomUUID();
     await env.DB.batch([
@@ -175,27 +210,42 @@ async function adminApi(request, env, path) {
         (id,title,label,category,product_url,video_url,image_url,position,status,created_at,updated_at)
         VALUES (?,?,?,?,?,?,?,?,?,?,?)`).bind(id, product.title, product.label, product.category,
         product.productUrl, product.videoUrl, product.imageUrl, product.position, product.status, timestamp, timestamp),
+      env.DB.prepare("INSERT INTO link_slugs (slug,product_id,is_primary,created_at) VALUES (?,?,1,?)")
+        .bind(product.slug, id, timestamp),
       env.DB.prepare("INSERT INTO audit_log (action,entity_id,details,created_at) VALUES ('product.create',?,?,?)")
         .bind(id, product.title, timestamp),
     ]);
     return json({ product: { id, ...product } }, 201);
   }
-  const match = path.match(/^\/api\/admin\/products\/([0-9a-f-]{20,50})$/u);
+  const match = path.match(/^\/api\/admin\/products\/([a-z0-9-]{10,64})$/u);
   if (match) {
     const id = match[1];
-    const row = await env.DB.prepare("SELECT * FROM products WHERE id=?").bind(id).first();
+    const row = await env.DB.prepare(`SELECT p.*,l.slug FROM products p
+      LEFT JOIN link_slugs l ON l.product_id=p.id AND l.is_primary=1 WHERE p.id=?`).bind(id).first();
     if (!row) return json({ error: "Produto não encontrado." }, 404);
     if (request.method === "PUT") {
       const product = validateProduct(await bodyJson(request), adminProduct(row));
-      await env.DB.batch([
+      const changesSlug = product.slug !== row.slug;
+      const reuseOwnSlug = changesSlug ? await assertSlugAvailable(env, product.slug, id) : false;
+      const statements = [
         env.DB.prepare(`UPDATE products SET title=?,label=?,category=?,product_url=?,video_url=?,image_url=?,position=?,status=?,
           link_health=CASE WHEN product_url<>? THEN 'unchecked' ELSE link_health END,
           consecutive_failures=CASE WHEN product_url<>? THEN 0 ELSE consecutive_failures END,updated_at=? WHERE id=?`)
           .bind(product.title, product.label, product.category, product.productUrl, product.videoUrl,
             product.imageUrl, product.position, product.status, product.productUrl, product.productUrl, now(), id),
+      ];
+      if (changesSlug) {
+        statements.push(env.DB.prepare("UPDATE link_slugs SET is_primary=0 WHERE product_id=? AND is_primary=1").bind(id));
+        statements.push(reuseOwnSlug ?
+          env.DB.prepare("UPDATE link_slugs SET is_primary=1 WHERE slug=? AND product_id=?").bind(product.slug, id) :
+          env.DB.prepare("INSERT INTO link_slugs (slug,product_id,is_primary,created_at) VALUES (?,?,1,?)")
+            .bind(product.slug, id, now()));
+      }
+      statements.push(
         env.DB.prepare("INSERT INTO audit_log (action,entity_id,details,created_at) VALUES ('product.update',?,?,?)")
           .bind(id, product.title, now()),
-      ]);
+      );
+      await env.DB.batch(statements);
       return json({ ok: true });
     }
     if (request.method === "DELETE") {
@@ -250,6 +300,8 @@ export async function runLinkChecks(env) {
 
 async function handle(request, env) {
   const url = new URL(request.url);
+  const slugMatch = url.pathname.match(/^\/go\/([a-z0-9]+(?:-[a-z0-9]+)*)\/?$/u);
+  if (slugMatch && request.method === "GET") return permanentLink(request, env, slugMatch[1]);
   if (request.method === "OPTIONS" && url.pathname === "/api/products")
     return new Response(null, { status: 204, headers: { ...corsHeaders(request, env),
       "Access-Control-Allow-Methods": "GET", "Access-Control-Allow-Headers": "Content-Type", "Access-Control-Max-Age": "86400" } });

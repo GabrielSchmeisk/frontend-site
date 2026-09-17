@@ -73,6 +73,8 @@
         <label>Situação<select id="status"><option value="active">Publicado</option><option value="draft">Rascunho</option><option value="hidden">Oculto</option></select></label>
       </div>
       <label>Link do produto<input id="productUrl" type="url" inputmode="url" placeholder="https://..." required></label>
+      <label>Nome do link permanente<input id="slug" maxlength="64" pattern="[a-z0-9]+(-[a-z0-9]+)*" placeholder="ex.: microfone-sennheiser" required><span class="hint">Pode trocar o nome depois; os endereços antigos continuam funcionando.</span></label>
+      <div class="permanent-link"><span id="stableUrlPreview"></span><button id="copyStableUrl" class="button secondary" type="button">Copiar link</button></div>
       <label>Link da imagem<input id="imageUrl" type="url" inputmode="url" placeholder="https://..." required></label>
       <div class="fields two">
         <label>Vídeo no YouTube (opcional)<input id="videoUrl" type="url" inputmode="url" placeholder="https://youtu.be/..."></label>
