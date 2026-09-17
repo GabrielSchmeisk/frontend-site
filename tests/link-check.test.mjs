@@ -32,6 +32,20 @@ test("aceita uma página válida após redirecionamento", async () => {
   assert.equal(result.status, 200);
 });
 
+test("aceita um destino de afiliado do Mercado Livre com código ref", async () => {
+  const responses = [
+    new Response(null, { status: 302, headers: { Location: "https://www.mercadolivre.com.br/social/gabriel?ref=abc" } }),
+    new Response("<html>produto</html>", { status: 200, headers: { "Content-Type": "text/html" } }),
+  ];
+  const result = await checkProductLink("https://meli.la/abc", async () => responses.shift());
+  assert.equal(result.ok, true);
+});
+
+test("falha de rede permanece inconclusiva", async () => {
+  const result = await checkProductLink("https://meli.la/abc", async () => { throw new Error("blocked"); });
+  assert.equal(result.inconclusive, true);
+});
+
 test("recusa redirecionamento para domínio externo", async () => {
   const result = await checkProductLink("https://meli.la/abc", async () =>
     new Response(null, { status: 302, headers: { Location: "https://evil.example/phishing" } }));

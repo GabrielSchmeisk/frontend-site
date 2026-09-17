@@ -48,7 +48,7 @@ async function loadDashboard() {
 }
 
 const statusLabel = { active: "Publicado", draft: "Rascunho", hidden: "Oculto" };
-const healthLabel = { unchecked: "Não verificado", healthy: "Funcionando", warning: "Requer atenção", broken: "Quebrado" };
+const healthLabel = { unchecked: "Não confirmado", healthy: "Acessível", warning: "Requer atenção", broken: "Quebrado" };
 const categoryLabel = { audio: "Áudio", video: "Vídeo", iluminacao: "Iluminação", outros: "Outros" };
 
 function appendCell(row, text) {
@@ -96,10 +96,12 @@ async function loadProducts() {
   $("#totalCount").textContent = state.products.length;
   $("#activeCount").textContent = state.products.filter((item) => item.status === "active").length;
   $("#problemCount").textContent = result.alerts;
+  const unknown = state.products.filter((item) => item.linkHealth === "unchecked").length;
+  $("#unknownCount").textContent = unknown;
   const broken = state.products.filter((item) => item.linkHealth === "broken").length;
   const warning = state.products.filter((item) => item.linkHealth === "warning").length;
   const alertBox = $("#alertBox");
-  message(alertBox, broken || warning ? `${broken} link(s) quebrado(s) e ${warning} link(s) que precisam de nova verificação.` : "");
+  message(alertBox, broken || warning || unknown ? `${broken} link(s) quebrado(s), ${warning} com alerta e ${unknown} sem confirmação automática.` : "");
   renderProducts();
 }
 

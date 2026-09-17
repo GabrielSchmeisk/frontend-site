@@ -227,12 +227,13 @@ export async function runLinkChecks(env) {
   for (let offset = 0; offset < rows.results.length; offset += 4) {
     await Promise.all(rows.results.slice(offset, offset + 4).map(async (product) => {
       const check = await checkProductLink(product.product_url);
-      const failures = check.ok ? 0 : Number(product.consecutive_failures || 0) + 1;
-      const health = check.ok ? "healthy" : failures >= 2 ? "broken" : "warning";
+      const failures = check.inconclusive ? Number(product.consecutive_failures || 0) :
+        check.ok ? 0 : Number(product.consecutive_failures || 0) + 1;
+      const health = check.inconclusive ? product.link_health : check.ok ? "healthy" : failures >= 2 ? "broken" : "warning";
       const timestamp = now();
       await env.DB.batch([
         env.DB.prepare(`UPDATE products SET link_health=?,last_checked_at=?,last_check_message=?,consecutive_failures=? WHERE id=?`)
-          .bind(health, timestamp, check.message, failures, product.id),
+          .bind(health, timestamp, check.inconclusive ? product.last_check_message : check.message, failures, product.id),
         env.DB.prepare(`INSERT INTO link_checks (product_id,checked_at,ok,http_status,final_url,message) VALUES (?,?,?,?,?,?)`)
           .bind(product.id, timestamp, check.ok ? 1 : 0, check.status, check.finalUrl, check.message),
         env.DB.prepare(`DELETE FROM link_checks WHERE id IN (SELECT id FROM link_checks WHERE product_id=? ORDER BY checked_at DESC LIMIT -1 OFFSET 20)`)

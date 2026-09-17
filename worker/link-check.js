@@ -24,7 +24,8 @@ const suspiciousDestination = (url) => {
   const parsed = new URL(url);
   const path = parsed.pathname.toLowerCase().replace(/\/+$/u, "");
   if (parsed.hostname.endsWith("mercadolivre.com.br") &&
-      (/\/social\/[^/]+\/lists$/u.test(path) || /^\/social\/[^/]+$/u.test(path)))
+      (/\/social\/[^/]+\/lists$/u.test(path) ||
+       (/^\/social\/[^/]+$/u.test(path) && !parsed.searchParams.has("ref"))))
     return "O link terminou em uma página genérica do Mercado Livre.";
   if (parsed.hostname.endsWith("shopee.com.br") && ["", "/", "/buyer/login"].includes(path))
     return "O link terminou em uma página genérica da Shopee.";
@@ -44,7 +45,7 @@ export async function checkProductLink(url, fetcher = fetch) {
         signal: AbortSignal.timeout(15000),
       });
     } catch (error) {
-      return { ok: false, status: 0, finalUrl: current, message: `Falha de conexão: ${error?.name || "erro"}.` };
+      return { ok: false, inconclusive: true, status: 0, finalUrl: current, message: `Verificação inconclusiva: ${error?.name || "erro de conexão"}.` };
     }
     if ([301, 302, 303, 307, 308].includes(response.status)) {
       const location = response.headers.get("Location");
