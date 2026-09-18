@@ -15,15 +15,15 @@
   <meta name="robots" content="index, follow">
   <meta name="googlebot" content="index, follow, max-image-preview:large">
   
-  <link rel="icon" href="https://i.imgur.com/OqRCKIx.jpeg" />
-  <link rel="apple-touch-icon" href="https://i.imgur.com/OqRCKIx.jpeg" />
+  <link rel="icon" href="/logo-canal.jpg" type="image/jpeg" />
+  <link rel="apple-touch-icon" href="/logo-canal.jpg" />
   
   <!-- Open Graph (WhatsApp, Instagram, Facebook) -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Equipamentos para Igreja | Áudio, Vídeo e Iluminação">
   <meta property="og:description" content="Veja os equipamentos que eu recomendo para igrejas: mesas de som, caixas, iluminação e câmeras com ótimo custo-benefício.">
   <meta property="og:url" content="https://otimizandooaltar.com/">
-  <meta property="og:image" content="https://i.imgur.com/OqRCKIx.jpeg">
+  <meta property="og:image" content="https://www.otimizandooaltar.com/logo-canal.jpg">
   <meta property="og:locale" content="pt_BR">
   <meta property="og:site_name" content="Otimizando o Altar">
   
@@ -31,7 +31,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Equipamentos para Igreja | Otimizando o Altar">
   <meta name="twitter:description" content="Produtos recomendados para igrejas com foco em custo-benefício.">
-  <meta name="twitter:image" content="https://i.imgur.com/OqRCKIx.jpeg">
+  <meta name="twitter:image" content="https://www.otimizandooaltar.com/logo-canal.jpg">
   
   <!-- Dados Estruturados (Google) -->
   <script type="application/ld+json">
@@ -40,16 +40,13 @@
     "@type": "Organization",
     "name": "Otimizando o Altar",
     "url": "https://otimizandooaltar.com",
-    "logo": "https://i.imgur.com/OqRCKIx.jpeg",
+    "logo": "https://www.otimizandooaltar.com/logo-canal.jpg",
     "sameAs": [
       "https://www.youtube.com/@otimizando-o-altar"
     ]
   }
   </script>
   
-  <!-- Carrega o VanillaTilt ANTES do seu script principal -->
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
-
   <style>
     :root{
       --bg:#0b1020;
@@ -539,73 +536,65 @@
       .name{ min-height: 0; }
     }
   </style>
+  <link rel="stylesheet" href="/site.css?v=2">
 </head>
 
 <body>
   <header id="siteHeader">
-    <div class="wrap" style="display:flex; align-items:center; justify-content:space-between; gap:14px;">
+    <div class="wrap header-inner">
       <div class="brand">
         <div class="logo">
-          <img src="https://i.imgur.com/OqRCKIx.jpeg" alt="Otimizando o Altar" />
+          <img src="/logo-canal.jpg" alt="" />
         </div>
         <div class="title">
           <h1>Otimizando o Altar</h1>
-          <p>Produtos recomendados</p>
+          <p>Equipamentos para servir melhor</p>
         </div>
       </div>
 
       <nav aria-label="Navegação">
-        <button class="tab active" data-tab="produtos" type="button">Produtos</button>
-        <button class="tab" data-tab="grupo" type="button">Grupo do Canal</button>
-        <button class="tab" data-tab="sobre" type="button">Sobre</button>
+        <button class="tab active" data-tab="produtos" type="button">Equipamentos</button>
+        <button class="tab" data-tab="grupo" type="button">Comunidade</button>
+        <button class="tab" data-tab="sobre" type="button">O projeto</button>
       </nav>
     </div>
   </header>
 
   <main class="wrap">
     <section class="hero" id="hero">
-      <h2 id="heroTitle">RECOMENDAÇÕES DE PRODUTOS</h2>
-      <p id="heroSubtitle">Aqui eu organizo os itens que eu indico nos vídeos. Ao clicar, você vai direto para o anúncio.</p>
-      <p id="heroHint" class="small muted" style="margin-top:8px;">Dica: pressione <strong>/</strong> para focar a busca, e <strong>Esc</strong> para limpar.</p>
+      <div class="hero-copy">
+        <span class="eyebrow"><span class="eyebrow-mark"></span> Curadoria do canal</span>
+        <h2 id="heroTitle">Equipamentos certos para cada momento do seu ministério.</h2>
+        <p id="heroSubtitle">Áudio, vídeo e iluminação que fazem sentido para a realidade da sua igreja. Uma seleção prática dos produtos indicados no canal Otimizando o Altar.</p>
+        <div class="hero-actions">
+          <a class="hero-primary" href="#catalogo">Explorar equipamentos <span aria-hidden="true">↗</span></a>
+          <a class="hero-secondary" href="https://www.youtube.com/@otimizando-o-altar" target="_blank" rel="noopener noreferrer">Conhecer o canal <span aria-hidden="true">↗</span></a>
+        </div>
+        <p id="heroHint" class="hero-footnote">Escolha uma categoria ou pesquise pelo equipamento que você procura.</p>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <img class="hero-art-image" src="/logo-canal.jpg" alt="" />
+      </div>
     </section>
 
     <section id="section-produtos" class="section active">
-      <div class="notice">
-        <strong>Fique por dentro das novidades:</strong><br/>
-        <span class="muted">
-          Aqui estão os equipamentos que eu realmente uso e recomendo no canal.
-          Se inscreva e acompanhe esta vitrine — sempre que eu indicar algo novo nos vídeos, vai aparecer aqui.
-        </span>
-
-        <div style="margin-top:10px;">
-          <a
-            class="cta-anim cta-yt"
-            href="https://www.youtube.com/@otimizando-o-altar"
-            target="_blank"
-            rel="noopener"
-            style="
-              display:inline-block;
-              padding:10px 14px;
-              border-radius:12px;
-              border:1px solid rgba(255,255,255,.15);
-              background: linear-gradient(135deg, rgba(255,0,0,.35), rgba(255,0,0,.15));
-              font-weight:900;
-              font-size:13px;
-            "
-          >
-            ▶ Inscreva-se no canal
-          </a>
+      <div class="catalog-heading" id="catalogo">
+        <div>
+          <span class="section-kicker">SELEÇÃO DO CANAL</span>
+          <h3>Encontre o que sua igreja precisa</h3>
+          <p>Produtos organizados por área para você comparar e escolher com mais clareza.</p>
         </div>
+        <span class="catalog-note">Indicações reais · links de lojas parceiras</span>
       </div>
 
       <div class="controls">
         <div class="search" role="search" aria-label="Buscar produtos">
-          <span class="muted">🔎</span>
-          <input id="searchInput" placeholder="Buscar por nome..." />
+          <span class="search-icon" aria-hidden="true">⌕</span>
+          <input id="searchInput" aria-label="Buscar equipamentos" placeholder="Qual equipamento você procura?" />
           <button id="clearSearch" class="clearBtn" aria-label="Limpar busca" title="Limpar" type="button">✕</button>
         </div>
 
-        <button class="pill active" data-filter="all" type="button">Todos</button>
+        <button class="pill active" data-filter="all" type="button">Todos os itens</button>
         <button class="pill" data-filter="audio" type="button">Áudio</button>
         <button class="pill" data-filter="video" type="button">Vídeo</button>
         <button class="pill" data-filter="iluminacao" type="button">Iluminação</button>
@@ -626,45 +615,39 @@
 
       <div id="grid" class="grid" aria-live="polite"></div>
       <div id="apiHint" class="small muted" style="margin-top:10px;"></div>
+      <div class="disclosure"><span aria-hidden="true">✳</span><p>Esta é uma vitrine de recomendações, não uma loja. Ao abrir um produto, você será levado ao anúncio do vendedor. Preços, estoque e condições podem mudar. Alguns links podem gerar uma comissão para apoiar o canal, sem custo extra para você.</p></div>
     </section>
 
     <section id="section-grupo" class="section">
-      <div class="panel" style="text-align:center;">
-        <h3>Grupo do Canal</h3>
-        <p class="muted" style="max-width:520px;margin:0 auto 16px;">
-          Entre no grupo para receber avisos de vídeos novos, equipamentos recomendados e atualizações..
+      <div class="panel community-panel">
+        <span class="section-kicker">COMUNIDADE</span>
+        <h3>Continue a conversa com o canal</h3>
+        <p>
+          Receba avisos de vídeos novos, descubra equipamentos recomendados e troque experiências com quem também cuida do áudio, vídeo e iluminação da igreja.
         </p>
 
         <a
-          class="cta-anim cta-wa"
+          class="community-link"
           href="https://chat.whatsapp.com/GwyKqx6qWqkI62HXxeDhZg"
           target="_blank"
           rel="noopener"
-          style="
-            display:inline-block;
-            padding:16px 28px;
-            border-radius:16px;
-            font-size:16px;
-            font-weight:900;
-            background:linear-gradient(135deg,#25D366,#128C7E);
-            color:white;
-          "
         >
-          📲 Entrar no grupo do WhatsApp
+          Entrar no grupo do WhatsApp <span aria-hidden="true">↗</span>
         </a>
 
-        <p class="small muted" style="margin-top:14px;">
-          Clique no botão acima para participar do grupo oficial do canal Otimizando o Altar.
+        <p class="small muted" style="margin-top:16px;">
+          Você será levado ao convite do grupo oficial do Otimizando o Altar.
         </p>
       </div>
     </section>
 
     <section id="section-sobre" class="section">
       <div class="panel">
-        <h3>Sobre</h3>
+        <span class="section-kicker">POR TRÁS DA VITRINE</span>
+        <h3>Sobre o Otimizando o Altar</h3>
 
         <p>
-          Meu nome é <strong>Gabriel Schmeisk</strong>, tenho 22 anos e sou o criador do canal <strong>Otimizando o Altar</strong>.
+          Meu nome é <strong>Gabriel Schmeisk</strong> e sou o criador do canal <strong>Otimizando o Altar</strong>.
           O foco do canal é ajudar pequenas e médias igrejas a melhorarem seus setups de áudio, vídeo e iluminação
           com produtos acessíveis e bom custo-benefício.
         </p>
@@ -687,11 +670,9 @@
           Observação: preços e disponibilidade podem mudar a qualquer momento.
         </p>
 
-        <p>ㅤ</p>
-
         <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;">
-          <button id="pixBtn" class="btn cta-anim cta-pix" type="button">
-            💜 Fazer uma doação via Pix
+          <button id="pixBtn" class="btn" type="button">
+            Apoiar o canal via Pix
           </button>
         </div>
 
@@ -704,7 +685,7 @@
     <footer>
       <div>
         <span class="muted">© </span><span id="year"></span>
-        <span class="muted"> • Otimizando o Altar | Seu canal custo benefício!</span>
+        <span class="muted"> • Otimizando o Altar</span>
       </div>
     </footer>
   </main>
@@ -1288,37 +1269,31 @@
       const img = safeHttpsUrl(p.image, FALLBACK_IMAGE);
       const loja = storeName(p.productUrl);
       const badge = p.label ? `<div class="badge">${escapeHtml(p.label)}</div>` : "";
-
-      const priceHtml = p.price
-        ? `<div class="price">${escapeHtml(p.price)}</div>`
-        : `<div class="price muted" style="font-weight:600;">&nbsp;</div>`;
+      const categoryNames = { audio: "Áudio", video: "Vídeo", iluminacao: "Iluminação", outros: "Outros" };
+      const categoryName = categoryNames[p.category] || p.category || "Equipamento";
+      const availability = p.linkHealth === "broken" ? '<span class="availability-note">Link em atualização</span>' : "";
 
       const videoUrl = safeHttpsUrl(p.videoUrl);
       const videoBtn = videoUrl
-        ? `<a class="btn youtube" href="${escapeHtml(videoUrl)}" target="_blank" rel="noopener noreferrer">▶ Ver vídeo</a>`
+        ? `<a class="video-link" href="${escapeHtml(videoUrl)}" target="_blank" rel="noopener noreferrer">▶ Assistir indicação no canal <span aria-hidden="true">↗</span></a>`
         : "";
 
       return `
         <div class="card">
-          <button class="thumb" type="button" data-open-product="${escapeHtml(p.id)}" aria-label="Ver detalhes de ${escapeHtml(p.title)}" style="cursor:pointer; width:100%; border:0; padding:0; color:inherit; text-align:inherit;">
+          <button class="thumb" type="button" data-open-product="${escapeHtml(p.id)}" aria-label="Ver detalhes de ${escapeHtml(p.title)}">
             <img src="${escapeHtml(img)}" alt="${escapeHtml(p.title)}" loading="lazy"
                  onerror="this.onerror=null; this.src='${escapeHtml(FALLBACK_IMAGE)}';" />
             ${badge}
           </button>
           <div class="content">
+            <div class="card-topline"><span>${escapeHtml(categoryName)}</span><span>${escapeHtml(loja)}</span></div>
             <p class="name">${escapeHtml(p.title)}</p>
-            <div class="meta">
-              <span>${escapeHtml(loja)}</span>
-              <span>•</span>
-              <span class="muted">${escapeHtml(p.category || "")}</span>
-            </div>
-
-            ${priceHtml}
-
+            ${availability}
             ${videoBtn}
-
-            <a class="btn" href="${escapeHtml(goUrl)}" target="_blank" rel="noopener noreferrer">Ver no site</a>
-            <button class="btn secondary" type="button" data-share="${escapeHtml(goUrl)}">Compartilhar</button>
+            <div class="card-actions">
+              <a class="btn" href="${escapeHtml(goUrl)}" target="_blank" rel="noopener noreferrer">Ver produto <span aria-hidden="true">↗</span></a>
+              <button class="btn secondary" type="button" data-share="${escapeHtml(goUrl)}" aria-label="Compartilhar ${escapeHtml(p.title)}">Compartilhar</button>
+            </div>
           </div>
         </div>
       `;
@@ -1330,25 +1305,6 @@
           const product = PRODUCTS.find((item) => String(item.id) === button.dataset.openProduct);
           if (product) openModal(product, button);
         });
-      });
-    }
-
-    // ======= Tilt só no PC (mouse) e sempre re-aplicado após render =======
-    function aplicarTilt(){
-      const canTilt = window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-      if (!canTilt) return;
-      if (!window.VanillaTilt) return;
-
-      // destrói instâncias antigas (evita acumular)
-      document.querySelectorAll(".card").forEach(el => {
-        if (el.vanillaTilt) el.vanillaTilt.destroy();
-      });
-
-      VanillaTilt.init(document.querySelectorAll(".card"), {
-        max: 15,
-        speed: 400,
-        glare: true,
-        "max-glare": 0.2,
       });
     }
 
@@ -1392,7 +1348,6 @@
       grid.innerHTML = sorted.map(buildCard).join("");
       wireProductButtons();
       wireShareButtons();
-      aplicarTilt();
     }
 
     async function renderWithTransition(){
@@ -1410,17 +1365,17 @@
 
     const TABS_COPY = {
       produtos: {
-        title: "RECOMENDAÇÕES DE PRODUTOS",
-        subtitle: "Aqui eu organizo os itens que eu indico nos vídeos. Ao clicar, você vai direto para o anúncio.",
-        hintHtml: 'Dica: pressione <strong>/</strong> para focar a busca, e <strong>Esc</strong> para limpar.'
+        title: "Equipamentos certos para cada momento do seu ministério.",
+        subtitle: "Áudio, vídeo e iluminação que fazem sentido para a realidade da sua igreja. Uma seleção prática dos produtos indicados no canal Otimizando o Altar.",
+        hintHtml: "Escolha uma categoria ou pesquise pelo equipamento que você procura."
       },
       grupo: {
-        title: "GRUPO DO CANAL",
+        title: "Uma comunidade que compartilha o que aprende.",
         subtitle: "Tenha contato com nossa comunidade para tirar dúvidas, pedir sugestões e trocar experiências.",
         hintHtml: ""
       },
       sobre: {
-        title: "SOBRE O OTIMIZANDO O ALTAR",
+        title: "Conteúdo feito para quem serve nos bastidores.",
         subtitle: "Conheça um pouco mais sobre o canal, a visão e o propósito deste projeto.",
         hintHtml: ""
       }
